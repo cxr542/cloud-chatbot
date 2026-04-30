@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>클라우드 학습 도우미</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#fff8ef; --card:#fffefb; --primary:#ff8a3d; --primary-soft:#ffe2c7; --text:#3f352d; --muted:#8b7768; --line:#f2dbc5; --ok:#4da362; --bad:#d95858; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:linear-gradient(180deg,#fff6ea,#fffdf8); color:var(--text); font-family:"Noto Sans KR",sans-serif; }
+    .app { max-width:480px; margin:0 auto; min-height:100vh; padding:12px 12px 24px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:18px; box-shadow:0 6px 18px rgba(255,138,61,.08); }
+    .header { padding:14px; display:flex; flex-direction:column; gap:10px; }
+    .title { font-family:"Gaegu",cursive; font-size:30px; margin:0; color:#e86f20; }
+    .sub { margin:0; color:var(--muted); font-size:13px; }
+    .doc-btn { border:0; background:var(--primary-soft); color:#8d4f1e; padding:10px 12px; border-radius:12px; font-weight:700; text-align:left; }
+    .tabs { margin:12px 0; display:flex; gap:8px; overflow:auto; padding-bottom:4px; }
+    .tab { border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:999px; padding:8px 12px; white-space:nowrap; font-size:13px; }
+    .tab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .view { display:none; padding:14px; }
+    .view.active { display:block; }
+    .row { display:flex; gap:8px; align-items:center; }
+    .stack { display:flex; flex-direction:column; gap:8px; }
+    input,select,button,textarea { font:inherit; }
+    input,select,textarea { width:100%; border:1px solid var(--line); border-radius:12px; padding:10px; background:#fff; }
+    button { cursor:pointer; }
+    .btn { border:0; background:var(--primary); color:#fff; padding:10px 12px; border-radius:12px; font-weight:700; }
+    .btn.ghost { background:var(--primary-soft); color:#8d4f1e; }
+    .chips { display:flex; gap:8px; overflow:auto; padding:4px 0; }
+    .chip { border:1px solid var(--line); background:#fff; color:#7f6b5c; border-radius:999px; padding:6px 10px; white-space:nowrap; font-size:12px; }
+    .messages { max-height:320px; overflow:auto; padding-right:4px; margin-bottom:8px; display:flex; flex-direction:column; gap:8px; }
+    .bubble { max-width:86%; padding:10px 12px; border-radius:14px; line-height:1.35; font-size:14px; }
+    .user { align-self:flex-end; background:#ffd9bc; }
+    .bot { align-self:flex-start; background:#fff; border:1px solid var(--line); }
+    .meta { font-size:12px; color:var(--muted); margin-top:8px; }
+    .page-card { border:1px dashed #efc69c; border-radius:12px; padding:10px; margin-top:8px; background:#fff9f2; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .badge { display:inline-flex; padding:3px 8px; border-radius:999px; background:#ffe7d1; color:#924e17; font-size:12px; font-weight:700; }
+    .list { display:flex; flex-direction:column; gap:8px; }
+    .result { border:1px solid var(--line); border-radius:12px; padding:10px; background:#fff; }
+    .quiz-box { border:1px solid var(--line); border-radius:12px; padding:10px; background:#fff; }
+    .progress { height:10px; border-radius:999px; background:#ffe6cf; overflow:hidden; }
+    .progress > div { height:100%; background:var(--primary); width:0; transition:width .25s; }
+    .opt { border:1px solid var(--line); padding:9px; border-radius:10px; margin-top:6px; background:#fff; text-align:left; width:100%; }
+    .opt.ok { border-color:#9dd5ab; background:#e9fff0; }
+    .opt.bad { border-color:#f1abab; background:#fff0f0; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+    .term { border:1px solid var(--line); border-radius:10px; padding:10px; background:#fff; text-align:center; }
+    .term.done { background:#edfff1; border-color:#a8dfb4; color:#2f7f41; font-weight:700; }
+    .diff-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .drawer-bg,.modal-bg { position:fixed; inset:0; background:rgba(55,34,20,.35); backdrop-filter:blur(4px); display:none; }
+    .drawer-bg.open,.modal-bg.open { display:block; }
+    .drawer { position:absolute; left:0; right:0; bottom:0; background:#fffdf8; border-radius:18px 18px 0 0; border:1px solid var(--line); padding:14px; transform:translateY(110%); transition:transform .22s; max-width:480px; margin:0 auto; }
+    .drawer.open { transform:translateY(0); }
+    .modal { max-width:420px; margin:10vh auto 0; background:#fff; border-radius:16px; border:1px solid var(--line); padding:12px; transform:scale(.92); opacity:0; transition:all .2s; }
+    .modal-bg.open .modal { transform:scale(1); opacity:1; }
+    .mock-img { width:100%; border-radius:12px; border:1px solid var(--line); background:#fff7ef; }
+    .difficulty-card { border:1px solid var(--line); border-radius:12px; padding:12px; background:#fff; }
+    .difficulty-card.active { border-color:#f09a57; background:#fff0e0; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header card">
+      <h1 class="title">📚 클라우드 학습 도우미</h1>
+      <p class="sub" id="headerSubtitle">현재 난이도: 초급</p>
+      <button class="doc-btn" id="docOpenBtn">문서: 클라우드 기본 용어집 (80p) ▾</button>
+    </header>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <main class="card">
+      <section class="view active" data-view="qa">
+        <div class="messages" id="qaMessages"></div>
+        <div class="chips" id="qaChips"></div>
+        <div class="row">
+          <input id="qaInput" placeholder="질문을 입력하세요" />
+          <button class="btn" id="qaSendBtn">전송</button>
+        </div>
+      </section>
+
+      <section class="view" data-view="source">
+        <div class="stack">
+          <div class="row">
+            <input id="sourceKeyword" placeholder="키워드 검색 (예: SSO)" />
+            <button class="btn" id="sourceSearchBtn">검색</button>
+          </div>
+          <div class="chips" id="sourceChips"></div>
+          <div class="list" id="sourceResults"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view="summary">
+        <div class="stack">
+          <select id="summaryMode">
+            <option value="topic">주제별</option>
+            <option value="range">페이지 범위</option>
+            <option value="all">전체</option>
+          </select>
+          <input id="summaryTopic" placeholder="주제 입력 (예: 접근제어)" />
+          <div class="row">
+            <input id="summaryStart" type="number" placeholder="시작 p" />
+            <input id="summaryEnd" type="number" placeholder="끝 p" />
+          </div>
+          <button class="btn" id="summaryRunBtn">요약 생성</button>
+          <div class="result" id="summaryResult">요약 결과가 여기에 표시됩니다.</div>
+        </div>
+      </section>
+
+      <section class="view" data-view="quiz">
+        <div id="quizSetup" class="stack">
+          <select id="quizCount"><option>5</option><option selected>10</option><option>20</option></select>
+          <select id="quizType"><option value="mcq">4지선다</option><option value="ox">OX</option><option value="mix">혼합</option></select>
+          <button class="btn" id="quizStartBtn">퀴즈 시작</button>
+        </div>
+        <div id="quizPlay" class="stack" style="display:none;">
+          <div class="row" style="justify-content:space-between;"><strong id="quizScore">점수 0</strong><span id="quizIndex">1/10</span></div>
+          <div class="progress"><div id="quizBar"></div></div>
+          <div class="quiz-box">
+            <p id="quizQuestion"></p>
+            <div id="quizOptions"></div>
+            <p class="meta" id="quizExplain"></p>
+          </div>
+        </div>
+        <div id="quizDone" style="display:none;" class="stack">
+          <div class="result" id="quizDoneText"></div>
+          <button class="btn ghost" id="quizResetBtn">다시 풀기</button>
+        </div>
+      </section>
+
+      <section class="view" data-view="wrong">
+        <div class="stack">
+          <button class="btn ghost" id="clearWrongBtn">오답노트 전체 삭제</button>
+          <div id="wrongList" class="list"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view="compare">
+        <div class="stack">
+          <div class="row"><input id="termA" placeholder="용어 A" /><input id="termB" placeholder="용어 B" /></div>
+          <div class="chips" id="compareChips"></div>
+          <button class="btn" id="compareRunBtn">비교하기</button>
+          <div id="compareResult"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view="progress">
+        <div class="stack">
+          <div class="result">
+            <strong id="progressPct">0%</strong>
+            <div class="progress" style="margin-top:8px;"><div id="progressBar"></div></div>
+            <p class="meta" id="progressStats"></p>
+          </div>
+          <div class="grid" id="progressTerms"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view="difficulty">
+        <div class="stack" id="difficultyCards"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer-bg" id="drawerBg">
+    <div class="drawer" id="drawer">
+      <h3>문서 선택</h3>
+      <div class="list" id="docList"></div>
+      <label class="btn ghost" style="display:inline-block;margin-top:8px;">PDF 업로드 <input id="pdfUpload" type="file" accept="application/pdf" hidden /></label>
+    </div>
+  </div>
+
+  <div class="modal-bg" id="modalBg">
+    <div class="modal">
+      <div class="row" style="justify-content:space-between;">
+        <strong id="modalTitle">페이지 보기</strong>
+        <button class="btn ghost" id="modalCloseBtn">닫기</button>
+      </div>
+      <img id="modalImage" class="mock-img" alt="페이지 이미지" />
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ========== 분리된 더미 데이터 객체 ========== */
+      const appConfig = Object.freeze({
+        storage: Object.freeze({ wrong: "cloud_wrong_notes_v1", progress: "cloud_progress_v1", level: "cloud_level_v1" }),
+        docs: Object.freeze(["클라우드 기본 용어집 (80p)", "AWS 기초 핸드북 (64p)", "Kubernetes 실습노트 (92p)"]),
+        tabs: Object.freeze([
+          ["qa", "💬 Q&A"], ["source", "🔍 출처 찾기"], ["summary", "📝 요약"], ["quiz", "🧠 퀴즈"],
+          ["wrong", "📌 오답노트"], ["compare", "⚖️ 용어비교"], ["progress", "📊 진도체크"], ["difficulty", "⚙️ 난이도 설정"]
+        ]),
+        uiChips: Object.freeze({
+          qa: ["SSO가 뭐야?", "RBAC 설명해줘", "쿠버네티스 핵심"],
+          source: ["SSO", "RBAC", "쿠버네티스", "MFA"],
+          compare: Object.freeze([["RBAC", "ABAC"], ["HA", "DR"], ["SSO", "MFA"]])
+        })
+      });
+
+      const qnaData = Object.freeze({
+        replies: Object.freeze([
+          { match: ["sso"], response: { reply: "SSO는 한 번의 로그인으로 여러 서비스에 접근하게 해주는 인증 방식입니다.", page: { no: 76, title: "SSO 개념" } } },
+          { match: ["쿠버네티스", "kubernetes"], response: { reply: "쿠버네티스는 컨테이너 오케스트레이션 플랫폼으로 배포/확장/복구를 자동화합니다.", page: { no: 52, title: "쿠버네티스 기초" } } },
+          { match: ["rbac"], response: { reply: "RBAC는 역할 기반 접근제어로, 역할에 따라 권한을 묶어서 관리합니다.", page: { no: 73, title: "RBAC" } } }
+        ]),
+        defaultReply: Object.freeze({ reply: "질문 감사합니다. 이 문서 기준으로 핵심 용어부터 함께 정리해볼까요?" }),
+        summaries: Object.freeze({
+          topic: Object.freeze({ text: "[주제: {topic}] 핵심은 인증(SSO/MFA)과 인가(RBAC/ABAC) 구분입니다.", pages: [73, 74, 76, 77], fallbackTopic: "클라우드 보안" }),
+          range: Object.freeze({ text: "[{start}~{end}p] 범위에서는 HA/DR, 관측성, 비용최적화 흐름이 순차적으로 다뤄집니다.", pages: [69, 70, 71, 79], fallbackStart: "1", fallbackEnd: "10" }),
+          all: Object.freeze({ text: "전체 요약: 인증/인가, 가용성, 운영 관측성, 비용관리, 컨테이너 운영이 문서의 5대 축입니다.", pages: [52, 69, 70, 73, 76, 79] })
+        }),
+        comparisons: Object.freeze({
+          RBAC_ABAC: Object.freeze({ left: "RBAC: 역할 중심, 관리 단순", right: "ABAC: 속성 기반, 정책 세밀", diff: "RBAC는 운영 단순성, ABAC는 정책 유연성이 강점입니다." }),
+          HA_DR: Object.freeze({ left: "HA: 장애 시 서비스 지속", right: "DR: 재해 후 복구", diff: "HA는 즉시성, DR은 복구 전략/절차 중심입니다." })
+        })
+      });
+
+      const sourceData = Object.freeze({
+        defaultResults: Object.freeze([{ p: 1, t: "클라우드 개요", d: "클라우드 핵심 개념 소개" }]),
+        keywordResults: Object.freeze({
+          sso: Object.freeze([{ p: 76, t: "SSO", d: "Single Sign-On 개념과 장단점" }]),
+          rbac: Object.freeze([{ p: 73, t: "RBAC", d: "역할 기반 접근제어 구성 방법" }]),
+          kubernetes: Object.freeze([{ p: 52, t: "쿠버네티스", d: "Pod/Deployment/Service 기본" }])
+        })
+      });
+
+      const quizData = Object.freeze({
+        mcq: Object.freeze([
+          { q: "SSO의 핵심 목적은?", c: ["한 번 로그인으로 여러 서비스 접근", "암호를 길게 만들기", "로그를 삭제하기", "비용 정산 자동화"], a: 0, e: "Single Sign-On은 단일 인증으로 다중 서비스 접근을 지원합니다." },
+          { q: "RBAC는 무엇을 기준으로 권한을 부여하나요?", c: ["위치", "역할(Role)", "시간", "디바이스"], a: 1, e: "RBAC는 사용자 역할을 기준으로 접근 권한을 관리합니다." },
+          { q: "ABAC의 특징은?", c: ["역할만 사용", "정책+속성 기반", "수동 승인만 가능", "네트워크 속도 측정"], a: 1, e: "ABAC는 사용자/리소스/환경 속성으로 세밀한 정책을 적용합니다." },
+          { q: "MFA는 어떤 개념인가요?", c: ["다중 장애 복구", "다중 인증 요소", "다중 클러스터", "다중 리전 과금"], a: 1, e: "MFA는 비밀번호 외 추가 인증 수단을 요구합니다." },
+          { q: "ACL은 주로 무엇을 정의하나요?", c: ["과금 예산", "접근 허용/거부 목록", "백업 주기", "테스트 케이스"], a: 1, e: "ACL은 객체 또는 네트워크 자원 접근 제어 규칙 목록입니다." },
+          { q: "HA의 목표는?", c: ["고가용성 확보", "암호화 키 회전", "로그 압축", "배포 자동화"], a: 0, e: "HA는 장애가 발생해도 서비스 연속성을 높이는 것이 목적입니다." },
+          { q: "DR은 어떤 상황을 대비하나요?", c: ["대규모 재해", "UI 변경", "문서 버전업", "권한 승인"], a: 0, e: "DR은 재해 상황에서 시스템을 복구하기 위한 계획입니다." },
+          { q: "Observability와 가장 가까운 개념은?", c: ["관찰 가능성(로그/메트릭/트레이스)", "문서 편집", "파일 압축", "계정 잠금"], a: 0, e: "Observability는 시스템 상태를 내부 신호로 파악하는 능력입니다." },
+          { q: "FinOps의 핵심은?", c: ["클라우드 비용 최적화 협업", "네트워크 방화벽", "인증 토큰 발급", "정적 웹 호스팅"], a: 0, e: "FinOps는 비용 가시화와 조직 협업으로 클라우드 비용을 최적화합니다." },
+          { q: "쿠버네티스의 대표 기능은?", c: ["컨테이너 오케스트레이션", "문서 OCR", "비밀번호 복구", "DNS 루트 관리"], a: 0, e: "쿠버네티스는 컨테이너 배포/확장/운영을 자동화합니다." }
+        ]),
+        ox: Object.freeze([
+          { q: "SSO는 한 번 로그인으로 여러 서비스 접근을 돕는다.", c: ["O", "X"], a: 0, e: "맞습니다. SSO의 핵심입니다." },
+          { q: "RBAC는 사용자 속성만으로 권한을 판단한다.", c: ["O", "X"], a: 1, e: "아닙니다. RBAC는 역할(Role) 기반입니다." },
+          { q: "HA는 재해 이후 복구 계획을 의미한다.", c: ["O", "X"], a: 1, e: "아닙니다. HA는 장애 중에도 고가용성을 유지하는 개념입니다." },
+          { q: "FinOps는 클라우드 비용 최적화를 위한 협업 방식이다.", c: ["O", "X"], a: 0, e: "맞습니다. 비용 가시화와 협업이 핵심입니다." },
+          { q: "쿠버네티스는 컨테이너 오케스트레이션 플랫폼이다.", c: ["O", "X"], a: 0, e: "맞습니다. 배포/확장/운영 자동화를 지원합니다." }
+        ])
+      });
+
+      const glossaryData = Object.freeze({
+        termPages: Object.freeze({ SSO: 76, RBAC: 73, ABAC: 74, MFA: 77, ACL: 78, HA: 69, DR: 70, Observability: 71, FinOps: 79, 쿠버네티스: 52 }),
+        terms: Object.freeze(["SSO", "RBAC", "ABAC", "MFA", "ACL", "HA", "DR", "Observability", "FinOps", "쿠버네티스", "컨테이너"])
+      });
+
+      /* ========== fetch 형태 서비스: 나중에 실제 API 호출로 교체 ========== */
+      function createFetchService() {
+        const simulateFetch = (producer) => Promise.resolve().then(producer);
+
+        return {
+          async askQuestion(text) {
+            // TODO: real API 예시
+            // const res = await fetch("/api/ask-question", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+            // return res.json();
+            return simulateFetch(() => {
+              const q = String(text).trim().toLowerCase();
+              const found = qnaData.replies.find((item) => item.match.some((k) => q.includes(k)));
+              return found ? found.response : qnaData.defaultReply;
+            });
+          },
+          async searchSource(keyword) {
+            // TODO: const res = await fetch(`/api/search-source?keyword=${encodeURIComponent(keyword)}`);
+            return simulateFetch(() => {
+              const k = String(keyword).trim().toLowerCase();
+              if (k.includes("sso")) return sourceData.keywordResults.sso;
+              if (k.includes("rbac")) return sourceData.keywordResults.rbac;
+              if (k.includes("쿠버네티스") || k.includes("kubernetes")) return sourceData.keywordResults.kubernetes;
+              return sourceData.defaultResults;
+            });
+          },
+          async getSummary(mode, topic, start, end) {
+            // TODO: const res = await fetch("/api/summary", { method: "POST", ... });
+            return simulateFetch(() => {
+              if (mode === "topic") {
+                return {
+                  text: qnaData.summaries.topic.text.replace("{topic}", topic || qnaData.summaries.topic.fallbackTopic),
+                  pages: qnaData.summaries.topic.pages
+                };
+              }
+              if (mode === "range") {
+                return {
+                  text: qnaData.summaries.range.text
+                    .replace("{start}", start || qnaData.summaries.range.fallbackStart)
+                    .replace("{end}", end || qnaData.summaries.range.fallbackEnd),
+                  pages: qnaData.summaries.range.pages
+                };
+              }
+              return qnaData.summaries.all;
+            });
+          },
+          async compareTerms(a, b) {
+            // TODO: const res = await fetch("/api/compare-terms", { method: "POST", ... });
+            return simulateFetch(() => {
+              const key = `${String(a).trim().toUpperCase()}|${String(b).trim().toUpperCase()}`;
+              if (key.includes("RBAC") && key.includes("ABAC")) return qnaData.comparisons.RBAC_ABAC;
+              if (key.includes("HA") && key.includes("DR")) return qnaData.comparisons.HA_DR;
+              return { left: `${a}: 기본 정의 중심 비교`, right: `${b}: 적용 시나리오 중심 비교`, diff: "두 용어 모두 시스템 안정성과 운영 효율에 기여합니다." };
+            });
+          },
+          async generateQuiz(type, count) {
+            // TODO: const res = await fetch("/api/generate-quiz", { method: "POST", ... });
+            return simulateFetch(() => {
+              let pool = [];
+              if (type === "ox") pool = [...quizData.ox];
+              else if (type === "mix") pool = [...quizData.mcq.slice(0, 5), ...quizData.ox];
+              else pool = [...quizData.mcq];
+
+              while (pool.length < count) pool.push(...pool);
+              return pool.slice(0, count);
+            });
+          }
+        };
+      }
+
+      const fetchService = createFetchService();
+
+      /* ========== 앱 상태 & 영속화 ========== */
+      const stateStore = (function () {
+        const parseList = (raw) => {
+          try { return JSON.parse(raw || "[]"); } catch (_) { return []; }
+        };
+        return {
+          getWrongNotes() { return parseList(localStorage.getItem(appConfig.storage.wrong)); },
+          setWrongNotes(list) { localStorage.setItem(appConfig.storage.wrong, JSON.stringify(Array.isArray(list) ? list : [])); },
+          getProgress() { return parseList(localStorage.getItem(appConfig.storage.progress)); },
+          setProgress(list) { localStorage.setItem(appConfig.storage.progress, JSON.stringify(Array.isArray(list) ? list : [])); },
+          getLevel() { return localStorage.getItem(appConfig.storage.level) || "초급"; },
+          setLevel(level) { localStorage.setItem(appConfig.storage.level, level || "초급"); }
+        };
+      })();
+
+      const store = {
+        view: "qa",
+        documents: [...appConfig.docs],
+        currentDoc: appConfig.docs[0],
+        level: stateStore.getLevel(),
+        wrong: stateStore.getWrongNotes(),
+        progress: stateStore.getProgress(),
+        quiz: { i: 0, s: 0, list: [] }
+      };
+
+      const $ = (s) => document.querySelector(s);
+      const el = {
+        tabs: $("#tabs"), subtitle: $("#headerSubtitle"), docBtn: $("#docOpenBtn"),
+        drawerBg: $("#drawerBg"), drawer: $("#drawer"), docList: $("#docList"), upload: $("#pdfUpload"),
+        modalBg: $("#modalBg"), modalTitle: $("#modalTitle"), modalImage: $("#modalImage"),
+        qaMsgs: $("#qaMessages"), qaInput: $("#qaInput"), qaChips: $("#qaChips"),
+        sourceKeyword: $("#sourceKeyword"), sourceResults: $("#sourceResults"), sourceChips: $("#sourceChips"),
+        summaryMode: $("#summaryMode"), summaryTopic: $("#summaryTopic"), summaryStart: $("#summaryStart"), summaryEnd: $("#summaryEnd"), summaryResult: $("#summaryResult"),
+        quizSetup: $("#quizSetup"), quizPlay: $("#quizPlay"), quizDone: $("#quizDone"), quizScore: $("#quizScore"), quizIndex: $("#quizIndex"), quizBar: $("#quizBar"), quizQuestion: $("#quizQuestion"), quizOptions: $("#quizOptions"), quizExplain: $("#quizExplain"), quizDoneText: $("#quizDoneText"),
+        wrongList: $("#wrongList"),
+        compareChips: $("#compareChips"), compareResult: $("#compareResult"), termA: $("#termA"), termB: $("#termB"),
+        progressTerms: $("#progressTerms"), progressPct: $("#progressPct"), progressBar: $("#progressBar"), progressStats: $("#progressStats"),
+        difficultyCards: $("#difficultyCards")
+      };
+
+      /* ========== 공통 UI: 모달·드로어 ========== */
+      const PageModal = (function () {
+        function pageImage(page, title) {
+          const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='640' height='900'><rect width='100%' height='100%' fill='#fff6e8'/><text x='50%' y='45%' dominant-baseline='middle' text-anchor='middle' fill='#a75a26' font-size='40'>${page}p</text><text x='50%' y='53%' dominant-baseline='middle' text-anchor='middle' fill='#c6773e' font-size='24'>${title}</text></svg>`;
+          return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+        }
+        return {
+          open(page, title) {
+            el.modalTitle.textContent = `${page}p - ${title}`;
+            el.modalImage.src = pageImage(page, title);
+            el.modalBg.classList.add("open");
+          },
+          close() { el.modalBg.classList.remove("open"); }
+        };
+      })();
+
+      const DocDrawer = (function () {
+        return {
+          open() { el.drawerBg.classList.add("open"); el.drawer.classList.add("open"); },
+          close() { el.drawerBg.classList.remove("open"); el.drawer.classList.remove("open"); },
+          renderList() {
+            el.docList.innerHTML = store.documents.map((d) => `<button class="result" data-doc="${d}">${d}</button>`).join("");
+            el.docList.querySelectorAll("[data-doc]").forEach((b) => {
+              b.addEventListener("click", () => {
+                store.currentDoc = b.dataset.doc;
+                el.docBtn.textContent = `문서: ${store.currentDoc} ▾`;
+                DocDrawer.close();
+              });
+            });
+          }
+        };
+      })();
+
+      /* ========== 탭 ========== */
+      const Tabs = (function () {
+        function render() {
+          el.tabs.innerHTML = appConfig.tabs.map(([id, txt]) =>
+            `<button class="tab ${store.view === id ? "active" : ""}" data-tab="${id}">${txt}</button>`
+          ).join("");
+          el.tabs.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => switchTo(b.dataset.tab)));
+        }
+        function switchTo(id) {
+          store.view = id;
+          render();
+          document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.dataset.view === id));
+          if (id === "wrong") WrongNotes.render();
+          if (id === "progress") ProgressView.render();
+        }
+        return { render, switchTo };
+      })();
+
+      /* ========== Q&A ========== */
+      const QnA = (function () {
+        function appendBubble(text, isUser, page) {
+          const d = document.createElement("div");
+          d.className = `bubble ${isUser ? "user" : "bot"}`;
+          d.textContent = text;
+          if (page && !isUser) {
+            const c = document.createElement("button");
+            c.className = "page-card";
+            c.innerHTML = `<span><span class="badge">${page.no}p</span> ${page.title}</span><strong>페이지 보기 →</strong>`;
+            c.addEventListener("click", () => PageModal.open(page.no, page.title));
+            d.appendChild(c);
+          }
+          el.qaMsgs.appendChild(d);
+          el.qaMsgs.scrollTop = el.qaMsgs.scrollHeight;
+        }
+        function typeBot(text, page) {
+          const holder = document.createElement("div");
+          holder.className = "bubble bot";
+          el.qaMsgs.appendChild(holder);
+          let i = 0;
+          const timer = setInterval(() => {
+            i += 1;
+            holder.textContent = text.slice(0, i);
+            el.qaMsgs.scrollTop = el.qaMsgs.scrollHeight;
+            if (i >= text.length) {
+              clearInterval(timer);
+              if (page) {
+                const c = document.createElement("button");
+                c.className = "page-card";
+                c.innerHTML = `<span><span class="badge">${page.no}p</span> ${page.title}</span><strong>페이지 보기 →</strong>`;
+                c.addEventListener("click", () => PageModal.open(page.no, page.title));
+                holder.appendChild(c);
+              }
+            }
+          }, 20);
+        }
+        function initChips() {
+          el.qaChips.innerHTML = appConfig.uiChips.qa.map((c) => `<button class="chip" type="button">${c}</button>`).join("");
+          el.qaChips.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => { el.qaInput.value = c.textContent; send(); }));
+        }
+        async function send() {
+          const text = el.qaInput.value.trim();
+          if (!text) return;
+          appendBubble(text, true);
+          el.qaInput.value = "";
+          const res = await fetchService.askQuestion(text);
+          typeBot(res.reply, res.page);
+        }
+        return { appendBubble, initChips, send };
+      })();
+
+      /* ========== 출처 찾기 ========== */
+      const SourceSearch = (function () {
+        function renderList(list) {
+          el.sourceResults.innerHTML = list.map((r) => `
+            <div class="result">
+              <div class="row" style="justify-content:space-between;"><strong>${r.t}</strong><span class="badge">${r.p}p</span></div>
+              <p class="meta">${r.d}</p>
+              <button class="btn ghost" type="button" data-page="${r.p}" data-title="${r.t}">페이지 보기</button>
+            </div>
+          `).join("");
+          el.sourceResults.querySelectorAll("button").forEach((b) =>
+            b.addEventListener("click", () => PageModal.open(Number(b.dataset.page), b.dataset.title))
+          );
+        }
+        async function search(keyword) {
+          const list = await fetchService.searchSource(keyword);
+          renderList(list);
+        }
+        function initChips() {
+          el.sourceChips.innerHTML = appConfig.uiChips.source.map((c) => `<button class="chip" type="button">${c}</button>`).join("");
+          el.sourceChips.querySelectorAll(".chip").forEach((c) =>
+            c.addEventListener("click", async () => { el.sourceKeyword.value = c.textContent; await search(c.textContent); })
+          );
+        }
+        return { renderList, search, initChips };
+      })();
+
+      /* ========== 요약 ========== */
+      const Summary = (function () {
+        async function run() {
+          const out = await fetchService.getSummary(el.summaryMode.value, el.summaryTopic.value, el.summaryStart.value, el.summaryEnd.value);
+          el.summaryResult.innerHTML = `<p>${out.text}</p><div>${out.pages.map((p) => `<button class="chip" type="button" data-page="${p}">${p}p</button>`).join("")}</div>`;
+          el.summaryResult.querySelectorAll(".chip").forEach((c) =>
+            c.addEventListener("click", () => PageModal.open(Number(c.dataset.page), "요약 관련 페이지"))
+          );
+        }
+        return { run };
+      })();
+
+      /* ========== 퀴즈 (문제 풀은 DummyData, 로직만 분리) ========== */
+      const QuizService = (function () {
+        async function start(count, type) {
+          const generated = await fetchService.generateQuiz(type, count);
+          store.quiz = { i: 0, s: 0, list: [...generated] };
+        }
+        return { start };
+      })();
+
+      const QuizView = (function () {
+        function showPlay() {
+          el.quizSetup.style.display = "none";
+          el.quizDone.style.display = "none";
+          el.quizPlay.style.display = "flex";
+        }
+        function showSetup() {
+          el.quizDone.style.display = "none";
+          el.quizPlay.style.display = "none";
+          el.quizSetup.style.display = "flex";
+        }
+        function finish() {
+          el.quizBar.style.width = "100%";
+          el.quizPlay.style.display = "none";
+          el.quizDone.style.display = "flex";
+          el.quizDoneText.textContent = `완료! 점수는 ${store.quiz.s}점입니다. 틀린 문제는 오답노트에 저장되었습니다.`;
+        }
+        function renderQuestion() {
+          const q = store.quiz.list[store.quiz.i];
+          if (!q) return finish();
+          el.quizIndex.textContent = `${store.quiz.i + 1}/${store.quiz.list.length}`;
+          el.quizScore.textContent = `점수 ${store.quiz.s}`;
+          el.quizBar.style.width = `${(store.quiz.i / store.quiz.list.length) * 100}%`;
+          el.quizQuestion.textContent = q.q;
+          el.quizExplain.textContent = "";
+          el.quizOptions.innerHTML = q.c.map((o, idx) => `<button class="opt" type="button" data-idx="${idx}">${idx + 1}. ${o}</button>`).join("");
+          el.quizOptions.querySelectorAll(".opt").forEach((btn) => {
+            btn.addEventListener("click", onAnswerClick(q, btn));
+          });
+        }
+        function onAnswerClick(q, btn) {
+          return () => {
+            const idx = Number(btn.dataset.idx);
+            const correct = idx === q.a;
+            el.quizOptions.querySelectorAll(".opt").forEach((b) => { b.disabled = true; });
+            el.quizOptions.children[q.a].classList.add("ok");
+            if (!correct) {
+              btn.classList.add("bad");
+              store.wrong.unshift({ q: q.q, my: q.c[idx], ans: q.c[q.a], e: q.e, t: Date.now() });
+              stateStore.setWrongNotes(store.wrong);
+            } else store.quiz.s += 10;
+            el.quizExplain.textContent = q.e;
+            setTimeout(() => { store.quiz.i += 1; renderQuestion(); }, 700);
+          };
+        }
+        async function startClicked() {
+          const count = Number($("#quizCount").value);
+          const type = $("#quizType").value;
+          await QuizService.start(count, type);
+          showPlay();
+          renderQuestion();
+        }
+        return { startClicked, showSetup };
+      })();
+
+      /* ========== 오답노트 ========== */
+      const WrongNotes = (function () {
+        function render() {
+          if (!store.wrong.length) { el.wrongList.innerHTML = `<div class="result">오답노트가 비어 있습니다.</div>`; return; }
+          el.wrongList.innerHTML = store.wrong.map((w) =>
+            `<div class="result"><strong>${w.q}</strong><p class="meta">내 답: ${w.my} / 정답: ${w.ans}</p><p>${w.e}</p></div>`
+          ).join("");
+        }
+        function clearAll() {
+          store.wrong = [];
+          stateStore.setWrongNotes(store.wrong);
+          render();
+        }
+        return { render, clearAll };
+      })();
+
+      /* ========== 용어비교 ========== */
+      const TermCompare = (function () {
+        async function render() {
+          const a = el.termA.value || "용어 A", b = el.termB.value || "용어 B";
+          const r = await fetchService.compareTerms(a, b);
+          el.compareResult.innerHTML = `
+            <div class="diff-grid">
+              <div class="result"><strong>${a}</strong><p>${r.left}</p></div>
+              <div class="result"><strong>${b}</strong><p>${r.right}</p></div>
+            </div>
+            <div class="result" style="margin-top:8px;"><strong>핵심 차이점</strong><p>${r.diff}</p></div>
+          `;
+        }
+        function initChips() {
+          el.compareChips.innerHTML = appConfig.uiChips.compare.map(([a, b]) => `<button class="chip" type="button">${a} vs ${b}</button>`).join("");
+          el.compareChips.querySelectorAll(".chip").forEach((c) => {
+            c.addEventListener("click", async () => {
+              const [a, , b] = (c.textContent || "").split(" ");
+              el.termA.value = a; el.termB.value = b; await render();
+            });
+          });
+        }
+        return { render, initChips };
+      })();
+
+      /* ========== 진도 ========== */
+      const ProgressView = (function () {
+        function toggleTerm(t) {
+          const s = new Set(store.progress);
+          s.has(t) ? s.delete(t) : s.add(t);
+          store.progress = [...s];
+          stateStore.setProgress(store.progress);
+          render();
+        }
+        function render() {
+          const done = store.progress.length, total = glossaryData.terms.length, left = total - done;
+          const pct = Math.round((done / total) * 100);
+          el.progressPct.textContent = `${pct}%`;
+          el.progressBar.style.width = `${pct}%`;
+          el.progressStats.textContent = `완료 ${done} / 남음 ${left} / 전체 ${total}`;
+          el.progressTerms.innerHTML = glossaryData.terms.map((t) =>
+            `<button class="term ${store.progress.includes(t) ? "done" : ""}" type="button" data-term="${t}">${t}</button>`
+          ).join("");
+          el.progressTerms.querySelectorAll(".term").forEach((b) =>
+            b.addEventListener("click", () => toggleTerm(b.dataset.term))
+          );
+        }
+        return { toggleTerm, render };
+      })();
+
+      /* ========== 난이도 ========== */
+      const DifficultyView = (function () {
+        function set(level) {
+          store.level = level;
+          stateStore.setLevel(store.level);
+          el.subtitle.textContent = `현재 난이도: ${level}`;
+          render();
+        }
+        function render() {
+          const levels = ["초급", "중급", "고급"];
+          el.difficultyCards.innerHTML = levels.map((l) =>
+            `<button class="difficulty-card ${store.level === l ? "active" : ""}" type="button" data-l="${l}"><strong>${l}</strong><p class="meta">현재 학습 난이도를 ${l}으로 설정</p></button>`
+          ).join("");
+          el.difficultyCards.querySelectorAll("[data-l]").forEach((b) => b.addEventListener("click", () => set(b.dataset.l)));
+        }
+        return { set, render };
+      })();
+
+      /* ========== 이벤트: 한 곳에서 등록 ========== */
+      const EventBindings = (function () {
+        function bind() {
+          el.docBtn.addEventListener("click", () => DocDrawer.open());
+          $("#modalCloseBtn").addEventListener("click", () => PageModal.close());
+          el.drawerBg.addEventListener("click", (e) => { if (e.target === el.drawerBg) DocDrawer.close(); });
+          el.modalBg.addEventListener("click", (e) => { if (e.target === el.modalBg) PageModal.close(); });
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") { PageModal.close(); DocDrawer.close(); }
+          });
+
+          el.qaInput.addEventListener("keydown", (e) => { if (e.key === "Enter") QnA.send(); });
+          $("#qaSendBtn").addEventListener("click", () => QnA.send());
+
+          $("#sourceSearchBtn").addEventListener("click", () => SourceSearch.search(el.sourceKeyword.value));
+          $("#summaryRunBtn").addEventListener("click", () => Summary.run());
+          $("#quizStartBtn").addEventListener("click", () => QuizView.startClicked());
+          $("#quizResetBtn").addEventListener("click", () => QuizView.showSetup());
+          $("#clearWrongBtn").addEventListener("click", () => WrongNotes.clearAll());
+          $("#compareRunBtn").addEventListener("click", () => TermCompare.render());
+
+          el.upload.addEventListener("change", () => {
+            const f = el.upload.files[0];
+            if (!f) return;
+            store.documents.unshift(`업로드: ${f.name}`);
+            store.currentDoc = store.documents[0];
+            el.docBtn.textContent = `문서: ${store.currentDoc} ▾`;
+            DocDrawer.renderList();
+          });
+        }
+        return { bind };
+      })();
+
+      /* ========== 부트스트랩 ========== */
+      function bootstrap() {
+        Tabs.render();
+        el.subtitle.textContent = `현재 난이도: ${store.level}`;
+        el.docBtn.textContent = `문서: ${store.currentDoc} ▾`;
+        DocDrawer.renderList();
+
+        QnA.initChips();
+        QnA.appendBubble("안녕하세요! 클라우드 문서 기반 학습을 도와드릴게요.", false);
+
+        SourceSearch.initChips();
+        SourceSearch.search("SSO");
+
+        TermCompare.initChips();
+
+        ProgressView.render();
+        WrongNotes.render();
+        DifficultyView.render();
+
+        EventBindings.bind();
+      }
+
+      bootstrap();
+    })();
+  </script>
+</body>
+</html>
