@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 대시보드</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 30px; font-size: 1.2rem; }
+        .box { border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 15px; }
+        button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #004494; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f9f9f9; }
+        .delete-btn { background: #dc3545; padding: 5px 10px; font-size: 0.8rem;}
+        .delete-btn:hover { background: #c82333; }
+        .fallback { background: #ffe6e6; }
+    </style>
+</head>
+<body>
+    <div class="container" style="position: relative;">
+        <a href="http://localhost:9999/home" style="position: absolute; top: 20px; right: 20px; font-size: 0.8rem; color: #666; text-decoration: none; padding: 6px 12px; border: 1px solid #ddd; border-radius: 6px; background: #f9f9f9;">🏠 홈으로</a>
+        <h1>🛠️ 클라우드 챗봇 관리자 대시보드</h1>
+        <p>챗봇의 시스템 프롬프트, 지식 베이스 문서, 그리고 대화 로그를 관리합니다.</p>
+
+        <h2>1. 챗봇 성격 (시스템 프롬프트) 설정</h2>
+        <div class="box">
+            <input type="text" id="prompt-input" placeholder="새로운 기본 프롬프트를 입력하세요">
+            <button onclick="savePrompt()">저장하기</button>
+            <p style="margin-top:10px; font-size:0.9rem;">현재 프롬프트: <strong id="current-prompt" style="color:#0056b3;">로딩중...</strong></p>
+        </div>
+
+        <h2>2. 지식 베이스 관리 (TXT 파일 업로드)</h2>
+        <div class="box">
+            <input type="file" id="file-input" accept=".txt">
+            <button onclick="uploadFile()">업로드</button>
+            
+            <table id="doc-table">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>문서 내용 일부</th>
+                        <th style="width: 70px;">관리</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <h2>3. 최근 대화 로그 및 실패 모니터링</h2>
+        <div class="box">
+            <button onclick="loadLogs()">새로고침</button>
+            <table id="log-table">
+                <thead>
+                    <tr>
+                        <th style="width: 150px;">시간</th>
+                        <th>사용자 질문</th>
+                        <th>챗봇 응답</th>
+                        <th style="width: 80px;">상태</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 서버와 같은 도메인/포트에서 서빙되므로 상대경로 사용
+        async function loadPrompt() {
+            const res = await fetch("/api/admin/settings/prompt");
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById('current-prompt').innerText = data.system_prompt;
+                document.getElementById('prompt-input').value = data.system_prompt;
+            }
+        }
+
+        async function savePrompt() {
+            const prompt = document.getElementById('prompt-input').value;
+            const res = await fetch("/api/admin/settings/prompt", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({prompt})
+            });
+            if (res.ok) {
+                alert("프롬프트가 변경되었습니다!");
+                loadPrompt();
+            }
+        }
+
+        async function loadDocs() {
+            const res = await fetch("/api/admin/docs/");
+            if (res.ok) {
+                const data = await res.json();
+                const tbody = document.querySelector('#doc-table tbody');
+                tbody.innerHTML = '';
+                data.chunks.forEach(c => {
+                    tbody.innerHTML += `<tr>
+                        <td>${c.title}</td>
+                        <td>${c.content.substring(0, 100)}...</td>
+                        <td><button class="delete-btn" onclick="deleteDoc('${c.title}')">삭제</button></td>
+                    </tr>`;
+                });
+            }
+        }
+
+        async function uploadFile() {
+            const file = document.getElementById('file-input').files[0];
+            if (!file) return alert("파일을 선택하세요.");
+            const formData = new FormData();
+            formData.append("file", file);
+            const res = await fetch("/api/admin/docs/upload", { method: "POST", body: formData });
+            if (res.ok) {
+                alert("업로드 완료!");
+                loadDocs();
+            }
+        }
+
+        async function deleteDoc(title) {
+            if(!confirm(`'${title}' 문서를 삭제하시겠습니까?`)) return;
+            const res = await fetch(`/api/admin/docs/${title}`, { method: "DELETE" });
+            if (res.ok) loadDocs();
+        }
+
+        async function loadLogs() {
+            const res = await fetch("/api/admin/stats/logs");
+            if (res.ok) {
+                const data = await res.json();
+                const tbody = document.querySelector('#log-table tbody');
+                tbody.innerHTML = '';
+                data.logs.forEach(l => {
+                    const statusClass = l.is_fallback ? 'fallback' : '';
+                    const statusText = l.is_fallback ? '❌ 실패' : '✅ 성공';
+                    tbody.innerHTML += `<tr class="${statusClass}">
+                        <td>${l.timestamp}</td>
+                        <td>${l.query}</td>
+                        <td>${l.response.substring(0, 80)}...</td>
+                        <td>${statusText}</td>
+                    </tr>`;
+                });
+            }
+        }
+
+        window.onload = () => {
+            loadPrompt();
+            loadDocs();
+            loadLogs();
+        };
+    </script>
+</body>
+</html>

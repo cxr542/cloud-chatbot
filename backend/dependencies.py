@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from backend.db.vector import FaissVectorStore, RetrievalChunk
+from backend.db.vector import FileVectorStore, RetrievalChunk
 from backend.services.glossary import GlossaryEngine
 from backend.services.llm import LLMService
 from backend.services.quiz import QuizEngine
@@ -31,8 +31,12 @@ def _default_chunks() -> list[RetrievalChunk]:
     ]
 
 
+store = FileVectorStore()
+if not store.load_chunks():
+    store.save_chunks(_default_chunks())
+
 _services = Services(
-    rag=RagService(FaissVectorStore(_default_chunks()), LLMService()),
+    rag=RagService(store, LLMService()),
     quiz=QuizEngine(),
     glossary=GlossaryEngine(),
     progress={"completed_terms": []},

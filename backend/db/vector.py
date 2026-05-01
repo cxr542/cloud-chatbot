@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+import json
+import os
+from dataclasses import asdict, dataclass
 
 
 @dataclass(frozen=True)
@@ -10,19 +12,49 @@ class RetrievalChunk:
     content: str
 
 
-class FaissVectorStore:
+class FileVectorStore:
     """
-    FAISS 자리.
-    현재는 간단한 키워드 검색으로 동작하며, 이후 임베딩+FAISS로 교체.
+    디스크 기반(JSON)의 임시 벡터 저장소입니다.
+    어드민 서버와 챗봇 서버가 data/vector.json 파일을 공유하여 데이터를 읽고 씁니다.
     """
 
-    def __init__(self, chunks: list[RetrievalChunk]) -> None:
-        self._chunks = chunks
+    def __init__(self, filepath: str = "data/vector.json") -> None:
+        self.filepath = filepath
+        self._ensure_file()
+
+    def _ensure_file(self) -> None:
+        os.makedirs(os.path.dirname(self.filepath), exist_ok=True)
+        if not os.path.exists(self.filepath):
+            with open(self.filepath, "w", encoding="utf-8") as f:
+                json.dump([], f)
+
+    def load_chunks(self) -> list[RetrievalChunk]:
+        try:
+            with open(self.filepath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return [RetrievalChunk(**item) for item in data]
+        except (json.JSONDecodeError, FileNotFoundError):
+            return []
+
+    def save_chunks(self, chunks: list[RetrievalChunk]) -> None:
+        with open(self.filepath, "w", encoding="utf-8") as f:
+            json.dump([asdict(c) for c in chunks], f, ensure_ascii=False, indent=2)
+
+    def add_chunk(self, chunk: RetrievalChunk) -> None:
+        chunks = self.load_chunks()
+        chunks.append(chunk)
+        self.save_chunks(chunks)
+
+    def delete_chunk(self, title: str) -> None:
+        chunks = self.load_chunks()
+        filtered = [c for c in chunks if c.title != title]
+        self.save_chunks(filtered)
 
     def search(self, query: str, top_k: int = 3) -> list[RetrievalChunk]:
         q = query.lower()
         scored: list[tuple[int, RetrievalChunk]] = []
-        for c in self._chunks:
+        chunks = self.load_chunks()
+        for c in chunks:
             text = f"{c.title} {c.content}".lower()
             score = sum(1 for token in q.split() if token in text)
             if score > 0:

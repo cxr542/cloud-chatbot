@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from backend.db.vector import FaissVectorStore, RetrievalChunk
+from backend.db.vector import FileVectorStore, RetrievalChunk
 from backend.services.llm import LLMService
 
 
 class RagService:
-    def __init__(self, vector_store: FaissVectorStore, llm_service: LLMService) -> None:
+    def __init__(self, vector_store: FileVectorStore, llm_service: LLMService) -> None:
         self.vector_store = vector_store
         self.llm_service = llm_service
 

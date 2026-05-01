@@ -63,7 +63,8 @@
 </head>
 <body>
   <div class="app">
-    <header class="header card">
+    <header class="header card" style="position: relative;">
+      <a href="http://localhost:9999/home" style="position: absolute; top: 12px; right: 12px; font-size: 0.8rem; color: #666; text-decoration: none; padding: 4px 8px; border: 1px solid #ddd; border-radius: 6px; background: #f9f9f9;">🏠 홈으로</a>
       <h1 class="title">📚 클라우드 학습 도우미</h1>
       <p class="sub" id="headerSubtitle">현재 난이도: 초급</p>
       <button class="doc-btn" id="docOpenBtn">문서: 클라우드 기본 용어집 (80p) ▾</button>
@@ -254,71 +255,56 @@
         terms: Object.freeze(["SSO", "RBAC", "ABAC", "MFA", "ACL", "HA", "DR", "Observability", "FinOps", "쿠버네티스", "컨테이너"])
       });
 
-      /* ========== fetch 형태 서비스: 나중에 실제 API 호출로 교체 ========== */
+      /* ========== fetch 형태 서비스: 실제 API 호출로 연동 ========== */
       function createFetchService() {
-        const simulateFetch = (producer) => Promise.resolve().then(producer);
-
         return {
-          async askQuestion(text) {
-            // TODO: real API 예시
-            // const res = await fetch("/api/ask-question", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
-            // return res.json();
-            return simulateFetch(() => {
-              const q = String(text).trim().toLowerCase();
-              const found = qnaData.replies.find((item) => item.match.some((k) => q.includes(k)));
-              return found ? found.response : qnaData.defaultReply;
+          async askQuestion(text, difficulty) {
+            const res = await fetch("/api/ask-question", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ text, difficulty })
             });
+            return res.json();
           },
           async searchSource(keyword) {
-            // TODO: const res = await fetch(`/api/search-source?keyword=${encodeURIComponent(keyword)}`);
-            return simulateFetch(() => {
-              const k = String(keyword).trim().toLowerCase();
-              if (k.includes("sso")) return sourceData.keywordResults.sso;
-              if (k.includes("rbac")) return sourceData.keywordResults.rbac;
-              if (k.includes("쿠버네티스") || k.includes("kubernetes")) return sourceData.keywordResults.kubernetes;
-              return sourceData.defaultResults;
-            });
+            const res = await fetch(`/api/search-source?keyword=${encodeURIComponent(keyword)}`);
+            return res.json();
           },
           async getSummary(mode, topic, start, end) {
-            // TODO: const res = await fetch("/api/summary", { method: "POST", ... });
-            return simulateFetch(() => {
-              if (mode === "topic") {
-                return {
-                  text: qnaData.summaries.topic.text.replace("{topic}", topic || qnaData.summaries.topic.fallbackTopic),
-                  pages: qnaData.summaries.topic.pages
-                };
-              }
-              if (mode === "range") {
-                return {
-                  text: qnaData.summaries.range.text
-                    .replace("{start}", start || qnaData.summaries.range.fallbackStart)
-                    .replace("{end}", end || qnaData.summaries.range.fallbackEnd),
-                  pages: qnaData.summaries.range.pages
-                };
-              }
-              return qnaData.summaries.all;
+            const res = await fetch("/api/summary", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ mode, topic, start, end })
             });
+            return res.json();
           },
           async compareTerms(a, b) {
-            // TODO: const res = await fetch("/api/compare-terms", { method: "POST", ... });
-            return simulateFetch(() => {
-              const key = `${String(a).trim().toUpperCase()}|${String(b).trim().toUpperCase()}`;
-              if (key.includes("RBAC") && key.includes("ABAC")) return qnaData.comparisons.RBAC_ABAC;
-              if (key.includes("HA") && key.includes("DR")) return qnaData.comparisons.HA_DR;
-              return { left: `${a}: 기본 정의 중심 비교`, right: `${b}: 적용 시나리오 중심 비교`, diff: "두 용어 모두 시스템 안정성과 운영 효율에 기여합니다." };
+            const res = await fetch("/api/compare-terms", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ term_a: a, term_b: b })
             });
+            return res.json();
           },
           async generateQuiz(type, count) {
-            // TODO: const res = await fetch("/api/generate-quiz", { method: "POST", ... });
-            return simulateFetch(() => {
-              let pool = [];
-              if (type === "ox") pool = [...quizData.ox];
-              else if (type === "mix") pool = [...quizData.mcq.slice(0, 5), ...quizData.ox];
-              else pool = [...quizData.mcq];
-
-              while (pool.length < count) pool.push(...pool);
-              return pool.slice(0, count);
+            const res = await fetch("/api/generate-quiz", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ type, count })
             });
+            return res.json();
+          },
+          async getProgress() {
+            const res = await fetch("/api/progress");
+            return res.json();
+          },
+          async saveProgress(completed_terms) {
+            const res = await fetch("/api/progress", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ completed_terms })
+            });
+            return res.json();
           }
         };
       }
@@ -462,7 +448,7 @@
           if (!text) return;
           appendBubble(text, true);
           el.qaInput.value = "";
-          const res = await fetchService.askQuestion(text);
+          const res = await fetchService.askQuestion(text, store.level);
           typeBot(res.reply, res.page);
         }
         return { appendBubble, initChips, send };
@@ -614,11 +600,12 @@
 
       /* ========== 진도 ========== */
       const ProgressView = (function () {
-        function toggleTerm(t) {
+        async function toggleTerm(t) {
           const s = new Set(store.progress);
           s.has(t) ? s.delete(t) : s.add(t);
           store.progress = [...s];
           stateStore.setProgress(store.progress);
+          await fetchService.saveProgress(store.progress);
           render();
         }
         function render() {
@@ -689,11 +676,20 @@
       })();
 
       /* ========== 부트스트랩 ========== */
-      function bootstrap() {
+      async function bootstrap() {
         Tabs.render();
         el.subtitle.textContent = `현재 난이도: ${store.level}`;
         el.docBtn.textContent = `문서: ${store.currentDoc} ▾`;
         DocDrawer.renderList();
+
+        // 서버에서 진도 데이터 로드
+        try {
+            const prog = await fetchService.getProgress();
+            if (prog && prog.completed_terms) {
+                store.progress = prog.completed_terms;
+                stateStore.setProgress(store.progress);
+            }
+        } catch (e) { console.error("진도 데이터 로드 실패:", e); }
 
         QnA.initChips();
         QnA.appendBubble("안녕하세요! 클라우드 문서 기반 학습을 도와드릴게요.", false);
