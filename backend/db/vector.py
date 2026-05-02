@@ -51,12 +51,16 @@ class FileVectorStore:
         self.save_chunks(filtered)
 
     def search(self, query: str, top_k: int = 3) -> list[RetrievalChunk]:
-        q = query.lower()
+        import re
+        q_clean = re.sub(r'[^\w\s]', '', query).lower()
+        tokens = q_clean.split()
+        
         scored: list[tuple[int, RetrievalChunk]] = []
         chunks = self.load_chunks()
         for c in chunks:
             text = f"{c.title} {c.content}".lower()
-            score = sum(1 for token in q.split() if token in text)
+            # 단어가 단순히 포함되었는지가 아니라, 얼마나 많이 등장하는지(빈도수)를 점수로 계산합니다.
+            score = sum(text.count(token) for token in tokens)
             if score > 0:
                 scored.append((score, c))
         scored.sort(key=lambda x: x[0], reverse=True)

@@ -1,0 +1,767 @@
+[
+  {
+    "page": 1,
+    "title": "cloud_terminology.pdf (p.1)",
+    "content": "Introduction to\nCloud Computing\n클라우드기본용어\n"
+  },
+  {
+    "page": 2,
+    "title": "cloud_terminology.pdf (p.2)",
+    "content": "1\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드기본용어\n1\nQ1\n클라우드의용어가생소하고방대한데, 어디까지얼마나알아야할까요?\n여러분들께서가지고계시는나만의노하우가있으실까요?\n"
+  },
+  {
+    "page": 3,
+    "title": "cloud_terminology.pdf (p.3)",
+    "content": "2\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드기본용어\n1\nQ1\n클라우드의용어가생소하고방대한데, 어디까지얼마나알아야할까요?\nA. 생소하고방대한용어를A-Z까지알파벳순으로외우는것도중요하겠지만, 클라우드용어를이해하기위한나만의\n지식Tree를만들어서이해하고습득하면더욱좋을것같습니다.\n즉, 대분류-중분류-소분류순으로클라우드용어를트리형태의계층관계를만들어이해하는것을의미합니다.\n또한, 유사한개념을다른용어로사용하는것, 약자를많이사용하는것등을초반에잘이해하고습득하시면클라우드\n용어를100% 정복하실수있으실겁니다.\n오케스트로아카데미교육팀에서는여러분의클라우드지식트리를만드는데도움을드리고자대분류영역을7가지\n영역으로구분한7C(Seven Cloud)를정의하였습니다.\n"
+  },
+  {
+    "page": 4,
+    "title": "cloud_terminology.pdf (p.4)",
+    "content": "3\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드컴퓨팅\n1\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 5,
+    "title": "cloud_terminology.pdf (p.5)",
+    "content": "4\n7C > 클라우드컴퓨팅\n클라우드컴퓨팅이란?\nWikipedia\n클라우드컴퓨팅\n➜\n클라우드서비스제공업체(AWS, Azure, GCP\n등)의데이터센터에IT 인프라를구축하고, 인터넷을\n통해필요한만큼자원을임대하여사용하는방식\n관련용어는,\n온프레미스, 오프프레미스, 가상화등이있습니다.\nQ1\n"
+  },
+  {
+    "page": 6,
+    "title": "cloud_terminology.pdf (p.6)",
+    "content": "5\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드컴퓨팅\n1\n온프레미스\n➜\n클라우드\n➜\n가상화\n➜\n데이터센터\n➜\n클라우드데이터센터\n➜\n네트워크가상화\n➜\n스토리지가상화\n➜\n서버가상화\n➜\n"
+  },
+  {
+    "page": 7,
+    "title": "cloud_terminology.pdf (p.7)",
+    "content": "6\n7C > 클라우드컴퓨팅\n온프레미스에대해설명해줘!!\nWikipedia\n기업이자체적으로데이터센터를구축하고서버,\n스토리지, 네트워크장비등의IT 인프라를직접\n관리하는방식\n온프레미스\n➜\n"
+  },
+  {
+    "page": 8,
+    "title": "cloud_terminology.pdf (p.8)",
+    "content": "7\n7C > 클라우드컴퓨팅\n클라우드서비스제공업체(AWS, Azure, GCP\n등)의데이터센터에IT 인프라를구축하고, 인터넷을\n통해필요한만큼자원을임대하여사용하는방식\n온프레미스와반대되는개념으로오프프레미스(Off-\nPremise)라고도함\n클라우드에대해설명해줘!!\nWikipedia\n클라우드\n➜\n"
+  },
+  {
+    "page": 9,
+    "title": "cloud_terminology.pdf (p.9)",
+    "content": "8\n7C > 클라우드컴퓨팅\n온프레미스는높은수준의보안및제어가필요한\n기업에적합하며,\n클라우드는비용효율성, 확장성, 유연성이중요한\n기업에적합함\n온프레미스와클라우드의차이점은?\nWikipedia\n클라우드\n➜\n"
+  },
+  {
+    "page": 10,
+    "title": "cloud_terminology.pdf (p.10)",
+    "content": "9\n7C > 클라우드컴퓨팅\n물리적인자원을소프트웨어를사용하여추상화하고,\n이를논리적인형태로제공하는기술\n대표적인가상화종류는서버가상화, 네트워크\n가상화, 스토리지가상화가있음\n가상화에대해설명해줘…\nWikipedia\n가상화\n➜\n"
+  },
+  {
+    "page": 11,
+    "title": "cloud_terminology.pdf (p.11)",
+    "content": "10\n7C > 클라우드컴퓨팅\n하나의물리적인서버를여러개의가상서버로\n분할하여사용하는가상화기술입니다.\n물리서버를가상화하면가상서버(VM)이되며,\n클라우드컴퓨팅에서이야기하는서버는기본적으로\n가상서버가됨\n서버가상화는무슨뜻이야?\nWikipedia\n서버가상화\n➜\n"
+  },
+  {
+    "page": 12,
+    "title": "cloud_terminology.pdf (p.12)",
+    "content": "11\n7C > 클라우드컴퓨팅\n물리적인네트워크자원을소프트웨어적으로\n분리하고, 이를논리적인네트워크로구성하는기술\n한개의물리스위치장비를가상화하면여러개의\n가상스위치가되며, 클라우드컴퓨팅에서의\n네트워크는일반적으로가상스위치중심의가상\n네트워크라고이야기합니다.\n네트워크가상화는무슨뜻이야?\nWikipedia\n네트워크가상화\n➜\n"
+  },
+  {
+    "page": 13,
+    "title": "cloud_terminology.pdf (p.13)",
+    "content": "12\n7C > 클라우드컴퓨팅\n여러개의물리적인스토리지장치를하나의논리적인\n풀로통합하여사용하는기술입니다.\n하나의논리적인풀을스토리지클러스터라고도\n합니다.\n스토리지가상화는무슨뜻이야?\nWikipedia\n스토리지가상화\n➜\n"
+  },
+  {
+    "page": 14,
+    "title": "cloud_terminology.pdf (p.14)",
+    "content": "13\n7C > 클라우드컴퓨팅\n데이터센터는인터넷기반서비스를제공하는데\n필요한서버, 스토리지, 네트워크장비등IT 인프라를\n한곳에모아관리하는시설입니다.\n데이터센터는다양한기준으로분류될수있으며,\n대표적으로기업데이터센터, 코로케이션센터,\n클라우드데이터센터, 하이퍼스케일데이터센터\n등으로분류됨\n데이터센터가뭐고, 어떤종류가있어?\nWikipedia\n데이터센터(DC)\n➜\n"
+  },
+  {
+    "page": 15,
+    "title": "cloud_terminology.pdf (p.15)",
+    "content": "14\n7C > 클라우드컴퓨팅\n클라우드컴퓨팅서비스를제공하기위해최적화된\n데이터센터를말합니다.\n클라우드서비스제공업체(AWS, Azure, GCP\n등)가구축하고운영하며, 인터넷을통해필요한만큼\n자원을임대하여사용하는형태입니다.\n클라우드컴퓨팅서비스(IaaS, PaaS, SaaS)를\n제공하는데주로사용됩니다.\n클라우드데이터센터는뭐야?\nWikipedia\n클라우드데이터센터\n➜\n"
+  },
+  {
+    "page": 16,
+    "title": "cloud_terminology.pdf (p.16)",
+    "content": "15\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드이용모델\n2\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 17,
+    "title": "cloud_terminology.pdf (p.17)",
+    "content": "16\n7C > 클라우드이용모델\n클라우드이용모델\n➜\n클라우드이용모델이란?\nWikipedia\n클라우드컴퓨팅서비스를사용하는방식을\n의미합니다. 각모델은제공되는서비스범위와\n사용자의관리책임범위가다르며,\n대표적인이용모델은제공하는방식에따라\nIaaS, PaaS, SaaS 등이있습니다.\n관련용어는,\nIaaS, PaaS, SaaS, XaaS 등이있습니다.\nQ2\n"
+  },
+  {
+    "page": 18,
+    "title": "cloud_terminology.pdf (p.18)",
+    "content": "17\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드이용모델\n2\nIaaS\n➜\nPaaS\n➜\nSaaS\n➜\nFaaS\n➜\nXaaS\n➜\n클라우드이용모델\n➜\nas a Service\n➜\n"
+  },
+  {
+    "page": 19,
+    "title": "cloud_terminology.pdf (p.19)",
+    "content": "18\n7C > 클라우드이용모델\naaS(as a Service)\n➜\n“as a Service”는클라우드컴퓨팅환경에서\n다양한IT 자원과서비스를필요에따라제공하는\n방식을의미합니다.\nas a Service의주요유형으로는IaaS, PaaS, \nSaaS 등이있습니다.\nas a Service가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 20,
+    "title": "cloud_terminology.pdf (p.20)",
+    "content": "19\n7C > 클라우드이용모델\nIaaS\n➜\nInfrastructure as a Service(서비스형인프라)\n클라우드컴퓨팅서비스모델중하나로, 서버,\n스토리지, 네트워크등IT 인프라자원을인터넷을\n통해필요한만큼빌려사용하는서비스입니다.\n사용자는물리적인하드웨어를직접구축하고관리할\n필요없이, 클라우드제공업체의인프라를활용하여\nIT 환경을구축하고운영할수있습니다.\nIaaS가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 21,
+    "title": "cloud_terminology.pdf (p.21)",
+    "content": "20\n7C > 클라우드이용모델\nPaaS\n➜\nPlatform as a Service(서비스형플랫폼)\n클라우드컴퓨팅서비스모델중하나로,\n애플리케이션개발, 실행, 관리에필요한플랫폼을\n클라우드환경에서제공하는서비스입니다.\n대표적인활용사례로는,\n웹애플리케이션개발및배포, 모바일애플리케이션\n개발, API 개발및관리, 빅데이터분석등\nPaaS가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 22,
+    "title": "cloud_terminology.pdf (p.22)",
+    "content": "21\n7C > 클라우드이용모델\nSaaS\n➜\nSoftware as a Service(서비스형소프트웨어)\n클라우드컴퓨팅서비스모델중하나로,\n소프트웨어애플리케이션을인터넷을통해제공하는\n서비스입니다.\n대표적인활용사례는,\n이메일, 협업도구, CRM, 온라인오피스도구등\nSaaS가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 23,
+    "title": "cloud_terminology.pdf (p.23)",
+    "content": "22\n7C > 클라우드이용모델\nFaaS\nFunction as a Service(서비스형함수)\n클라우드컴퓨팅서비스모델중하나로,\n서버리스컴퓨팅의핵심기술입니다.\n개발자는서버인프라를관리할필요없이특정\n이벤트에반응하는코드(함수)를작성하고실행할수\n있습니다.\n대표적인활용사례는,\nAPI 개발, 실시간데이터처리, 이미지.비디오처리,\n챗봇, IoT 백엔드처리\nFaaS가뭐야?\nWikipedia\n➜\n"
+  },
+  {
+    "page": 24,
+    "title": "cloud_terminology.pdf (p.24)",
+    "content": "23\n7C > 클라우드이용모델\nXaaS\n➜\nEverything as a Service(서비스형모든것)\n클라우드컴퓨팅환경에서제공되는다양한서비스\n모델을포괄하는용어입니다.\n즉, IT 자원뿐만아니라다양한서비스와솔루션을\n인터넷을통해제공하는것을의미합니다.\nXaaS의주요유형으로는,\nIaaS, PaaS, SaaS, FaaS, DaaS(Desktop as\na Service), DBaaS(Database as a Service),\nSECaaS(Security as a Service) 등\nXaaS가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 25,
+    "title": "cloud_terminology.pdf (p.25)",
+    "content": "24\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드배포모델\n3\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 26,
+    "title": "cloud_terminology.pdf (p.26)",
+    "content": "25\n7C > 클라우드배포모델\n클라우드배포모델\n➜\nQ3\n클라우드배포모델이란?\nWikipedia\n클라우드배포모델은조직이클라우드컴퓨팅\n서비스를구축, 관리및액세스하는방법을정의하는\n프레임워크입니다.\n주요클라우드배포모델은프라이빗클라우드,\n퍼블릭클라우드, 멀티클라우드, 하이브리드\n클라우드등이있습니다.\n관련용어는, 프라이빗/퍼블릭클라우드,\n멀티/하이브리드클라우드, 커뮤니티클라우드, 엣지\n클라우드등이있습니다.\n"
+  },
+  {
+    "page": 27,
+    "title": "cloud_terminology.pdf (p.27)",
+    "content": "26\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드배포모델\n3\n프라이빗클라우드\n➜\n퍼블릭클라우드\n➜\n멀티클라우드\n➜\n하이브리드클라우드\n➜\n커뮤니티클라우드\n➜\n엣지클라우드\n➜\n"
+  },
+  {
+    "page": 28,
+    "title": "cloud_terminology.pdf (p.28)",
+    "content": "27\n7C > 클라우드배포모델\n프라이빗클라우드\n➜\n클라우드배포모델중하나로, 단일조직에서\n독점적으로사용하는클라우드환경입니다.\n조직내부데이터센터에구축하거나타사\n제공업체에서호스팅할수있습니다.\n대표적인사례는OpenStack, VM웨어등이\n있습니다.\n프라이빗클라우드가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 29,
+    "title": "cloud_terminology.pdf (p.29)",
+    "content": "28\n7C > 클라우드배포모델\n퍼블릭클라우드\n➜\n퍼블릭클라우드(Public Cloud)는클라우드\n서비스제공업체(CSP)가인터넷을통해일반\n대중에게제공하는클라우드컴퓨팅서비스입니다.\n대표적인사례는AWS, MS Azure, GCP, 네이버\n클라우드, KT클라우드, NHN 클라우드등이\n있습니다.\n퍼블릭클라우드가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 30,
+    "title": "cloud_terminology.pdf (p.30)",
+    "content": "29\n7C > 클라우드배포모델\n멀티클라우드\n➜\n멀티클라우드(Multi-Cloud)는기업이두개\n이상의CSP의클라우드컴퓨팅서비스를사용하는\n것을의미합니다.\n즉, 여러벤더의퍼블릭클라우드, 프라이빗클라우드,\n또는하이브리드클라우드를조합하여사용하는\n환경을말합니다.\n멀티클라우드가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 31,
+    "title": "cloud_terminology.pdf (p.31)",
+    "content": "30\n7C > 클라우드배포모델\n하이브리드클라우드\n➜\n하이브리드클라우드(Hybrid Cloud)는퍼블릭\n클라우드와프라이빗클라우드를결합하여사용하는\n컴퓨팅환경입니다.\n즉, 기업이자체데이터센터(프라이빗클라우드)와\n외부클라우드서비스제공업체(퍼블릭클라우드)의\n리소스를함께활용하는방식입니다.\n하이브리드클라우드가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 32,
+    "title": "cloud_terminology.pdf (p.32)",
+    "content": "31\n7C > 클라우드배포모델\n커뮤니티클라우드\n➜\n커뮤니티클라우드(Community Cloud)는특정\n커뮤니티의여러조직이공동으로사용하는클라우드\n컴퓨팅환경입니다.\n즉, 공통의관심사, 요구사항또는목표를가진\n조직들이함께클라우드인프라를공유하고활용하는\n방식입니다.\n대표적인활용사례로는정부기관간, 의료기관간,\n금융기간간, 연구기관간커뮤니티클라우드사례가\n있습니다.\n커뮤니티클라우드는뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 33,
+    "title": "cloud_terminology.pdf (p.33)",
+    "content": "32\n7C > 클라우드배포모델\n엣지클라우드\n➜\n엣지클라우드(Edge Cloud)는클라우드컴퓨팅의\n핵심기능을데이터가생성되는물리적위치또는\n최종사용자에게더가까운곳에배치하는기술입니다.\n기존의중앙집중식클라우드컴퓨팅과달리, 데이터\n처리및분석을네트워크의‘엣지’에서수행하여지연\n시간을줄이고효율성을높입니다.\n주요활용사례는자율주행자동차, 스마트공장,\n증강현실(AR) 및가상현실(VR), 사물인터넷(IoT)\n등이있습니다.\n엣지클라우드란?\nWikipedia\n"
+  },
+  {
+    "page": 34,
+    "title": "cloud_terminology.pdf (p.34)",
+    "content": "33\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드서비스제공업체\n4\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 35,
+    "title": "cloud_terminology.pdf (p.35)",
+    "content": "34\n7C > 클라우드서비스제공업체\n클라우드서비스제공업체란?\nWikipedia\n클라우드서비스제공업체(Cloud Service \nProvider, CSP)는기업이나개인에게인터넷을\n통해다양한클라우드컴퓨팅서비스를제공하는\n회사를의미합니다.\n대표적인CSP는AWS, Azure, GCP 등이\n있습니다.\n관련용어는AWS, Azure, GCP, MSP 등이\n있습니다.\n클라우드서비스제공업체\n➜\nQ4\n"
+  },
+  {
+    "page": 36,
+    "title": "cloud_terminology.pdf (p.36)",
+    "content": "35\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드서비스제공업체\n4\nAWS\n➜\nAzure\n➜\nGCP\n➜\nVM웨어\n➜\n레드햇\n➜\n델테크놀로지스\n➜\nHPE\n➜\n국내\n➜\nMSP\n➜\n"
+  },
+  {
+    "page": 37,
+    "title": "cloud_terminology.pdf (p.37)",
+    "content": "36\n7C > 클라우드서비스제공업체\n퍼블릭클라우드\n제공업체\n➜\nAWS : 약32%로가장높은시장점유율차지\nMS Azure : 약22%로시장점유율2위\nGCP : 약11%의시장점유율보유로3위\n국내에서는네이버클라우드, KT클라우드, NHN\n클라우드등이성장하고있음\n주요클라우드제공업체의시장점유율은?\nWikipedia\n"
+  },
+  {
+    "page": 38,
+    "title": "cloud_terminology.pdf (p.38)",
+    "content": "37\n7C > 클라우드서비스제공업체\nAWS\n➜\nAWS(Amazon Web Services)는아마존에서\n제공하는클라우드컴퓨팅플랫폼입니다.\nAWS의주요서비스는EC2(Elastic Compute\nCloud), S3(Simple Storage Service),\nRDS(Relational Database Service),\nLambda, SageMaker 등이있습니다.\nAWS란?\nWikipedia\n"
+  },
+  {
+    "page": 39,
+    "title": "cloud_terminology.pdf (p.39)",
+    "content": "38\n7C > 클라우드서비스제공업체\nMS Azure\n➜\nMS Azure(마이크로소프트애저)는\n마이크로소프트에서제공하는클라우드컴퓨팅\n플랫폼입니다.\nMS Azure의주요서비스는Azure Storage,\nAzure SQL Database, Azure Functions,\nAzure AI 등이있습니다.\nMS Azure란?\nWikipedia\n"
+  },
+  {
+    "page": 40,
+    "title": "cloud_terminology.pdf (p.40)",
+    "content": "39\n7C > 클라우드서비스제공업체\nGCP\n➜\nGCP(Google Cloud Platform)는구글에서\n제공하는클라우드컴퓨팅서비스입니다.\n구글검색, 유튜브, Gmail 등구글의서비스에서\n사용되는것과동일한인프라를기반으로다양한\n클라우드컴퓨팅서비스를제공합니다.\nGCP의주요서비스는Compute Engine,\nCloud Storage, BigQuery, Vertex AI 등이\n있습니다.\nGCP는뭐고, 주요서비스는뭐가있나요?\nWikipedia\n"
+  },
+  {
+    "page": 41,
+    "title": "cloud_terminology.pdf (p.41)",
+    "content": "40\n7C > 클라우드서비스제공업체\n➜\n프라이빗클라우드시장은기업들이자체데이터센터\n내에구축하는클라우드환경을의미하며,\n주요제공업체는VM웨어, 레드햇, 델테크놀로지스,\nHPE가있습니다.\n프라이빗클라우드시장에서의주요강자는?\nWikipedia\n프라이빗클라우드\n제공업체\n"
+  },
+  {
+    "page": 42,
+    "title": "cloud_terminology.pdf (p.42)",
+    "content": "41\n7C > 클라우드서비스제공업체\nVM웨어\n➜\nVM웨어는하드웨어, 소프트웨어, 미들웨어등과는\n달리기업의이름입니다.\n가상화기술의선두주자로서, 프라이빗클라우드\n구축에필수적인가상화솔루션을제공합니다.\n대표적인제품군은vSphere, vSAN, NSX 등이\n있습니다.\nVM웨어는무슨웨어인가요?\nWikipedia\n"
+  },
+  {
+    "page": 43,
+    "title": "cloud_terminology.pdf (p.43)",
+    "content": "42\n7C > 클라우드서비스제공업체\n레드햇\n➜\n레드햇(Red Hat)은오픈소스기반의프라이빗\n클라우드솔루션을제공하며, Openshift를통해\n컨테이너기반의프라이빗클라우드환경을구축할수\n있도록지원합니다.\n레드햇은OS 업체아닌가요?\nWikipedia\n"
+  },
+  {
+    "page": 44,
+    "title": "cloud_terminology.pdf (p.44)",
+    "content": "43\n7C > 클라우드서비스제공업체\n델테크놀로지스\n➜\n델테크놀로지스(Dell Technologies)는\n하드웨어인프라와소프트웨어솔루션을통합하여\n프라이빗클라우드구축에필요한종합적인솔루션을\n제공합니다.\n대표적인제품으로는VxRail, PowerEdge 등이\n있으며, 다양한제품군을통해HCI 기반의프라이빗\n클라우드환경을구축할수있도록지원함\n델테크놀로지의클라우드제품에대해알려줘\nWikipedia\n"
+  },
+  {
+    "page": 45,
+    "title": "cloud_terminology.pdf (p.45)",
+    "content": "44\n7C > 클라우드서비스제공업체\nHPE(HP Enterprise)\n➜\nHPE는그린레이크(GreenLake)와같은서비스를\n통해프라이빗클라우드솔루션을제공하고있습니다.\n하드웨어, 인프라, 소프트웨어및서비스를결합하여\n기업이자체데이터센터에서클라우드와유사한\n경험을얻을수있도록지원합니다.\nHPE의클라우드방향은?\nWikipedia\n"
+  },
+  {
+    "page": 46,
+    "title": "cloud_terminology.pdf (p.46)",
+    "content": "45\n7C > 클라우드서비스제공업체\n국내기업\n➜\n국내에서는\n오케스트로, 이노그리드, NHN인재,에이블클라우드,\n나무기술, 효성인포메이션시스템, 등이프라이빗\n클라우드시장에서활발하게활동하고있습니다.\n국내의프라이빗클라우드기업도있나요?\nWikipedia\n"
+  },
+  {
+    "page": 47,
+    "title": "cloud_terminology.pdf (p.47)",
+    "content": "46\n7C > 클라우드서비스제공업체\nMSP\n➜\nManaged Service Provider의약자로,\n기업의IT 시스템운영및관리를전문적으로\n대행하는서비스를제공하는기업을의미합니다.\n메가존클라우드는CSP인AWS의국내대표적인\nMSP 기업입니다.\nCSP와관련용어로MSP라는것도있던데, MSP는뭐에요?\nWikipedia\n"
+  },
+  {
+    "page": 48,
+    "title": "cloud_terminology.pdf (p.48)",
+    "content": "47\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C>클라우드구현기술\n5\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 49,
+    "title": "cloud_terminology.pdf (p.49)",
+    "content": "48\n7C> 클라우드구현기술\n클라우드구현기술이란?\nWikipedia\n클라우드구현기술은클라우드컴퓨팅환경을\n구축하고운영하는데필요한다양한기술을\n의미합니다.\n관련용어는,\nIaaS/PaaS를구현하는기술, 클라우드네이티브를\n구현하는기술, CMP, 프로비저닝등이있습니다.\n클라우드구현기술\n➜\nQ5\n"
+  },
+  {
+    "page": 50,
+    "title": "cloud_terminology.pdf (p.50)",
+    "content": "49\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C>클라우드구현기술\n5\nIaaS 구현기술\n➜\n➜\nPaaS 구현기술\n➜\n클라우드통합운영및관리\n구현기술\n➜\n클라우드네이티브\n구현기술\n"
+  },
+  {
+    "page": 51,
+    "title": "cloud_terminology.pdf (p.51)",
+    "content": "50\n7C > 클라우드구현기술\nIaaS 구현기술\n➜\nIaaS 구현기술의핵심요소는가상화기술,\n클라우드관리플랫폼, 스토리지기술, 네트워킹기술,\n자동화및오케스트레이션등이있습니다.\n관련용어는하이퍼바이저, Ceph, SDN,\nOpenStack, 자동화및오케스트레이션도구등이\n있습니다.\nIaaS 구현을위한핵심기술은?\nWikipedia\n"
+  },
+  {
+    "page": 52,
+    "title": "cloud_terminology.pdf (p.52)",
+    "content": "51\n7C > 클라우드구현기술\nPaaS 구현기술\n➜\nPaaS 구현기술의핵심요소는컨테이너기술,\n오케스트레이션기술, 마이크로서비스아키텍처,\nAPI 관리, 개발도구및서비스등이있습니다.\n관련용어는컨테이너가상화, 컨테이너런타임,\n컨테이너오케스트레이션, 쿠버네티스, 클라우드\n네이티브등이있습니다.\nPaaS 구현을위한핵심기술은?\nWikipedia\n"
+  },
+  {
+    "page": 53,
+    "title": "cloud_terminology.pdf (p.53)",
+    "content": "52\n7C > 클라우드구현기술\n클라우드네이\n티브\n구현기술\n➜\n클라우드네이티브는클라우드컴퓨팅환경의장점을\n최대한활용하여애플리케이션을개발하고운영하는\n방식을의미합니다.\n클라우드네이티브구현기술이란클라우드\n네이티브를제대로구축하기위해필요한핵심\n기술들을의미합니다.\n관련용어로는컨테이너, 컨테이너오케스트레이션,\nDevOps(CI/CD), MSA 등이있습니다.\n클라우드네이티브구현기술이란?\nWikipedia\n"
+  },
+  {
+    "page": 54,
+    "title": "cloud_terminology.pdf (p.54)",
+    "content": "53\n7C > 클라우드구현기술\n클라우드통합\n운영및관리핵\n심기술\n➜\n클라우드통합운영및관리를위한핵심기술은\nCMP, 자동화및오케스트레이션, 모니터링및로깅,\n비용관리, 보안관리, 멀티클라우드관리등이\n있습니다.\n관련용어는프로비저닝, Terraform, Ansible,\nIaC, ELK Stack, IAM 등이있습니다.\n클라우드통합운영및관리를위한핵심기술은?\nWikipedia\n"
+  },
+  {
+    "page": 55,
+    "title": "cloud_terminology.pdf (p.55)",
+    "content": "54\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드전환\n6\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 56,
+    "title": "cloud_terminology.pdf (p.56)",
+    "content": "55\n7C > 클라우드전환\n클라우드전환이란?\nWikipedia\n클라우드전환(Cloud Migration)은기업이나\n조직이기존의온프레미스(On-Premise) IT \n인프라는클라우드컴퓨팅환경으로이동시키는\n과정을의미합니다.\n이는단순히데이터를넘어, 애플리케이션, 시스템,\n비즈니스프로세스등IT 자산전반을클라우드\n환경에최적화하는포괄적인변화를포함합니다.\n관련용어로는,\nVM 마이그레이션, 가트너의7R 전략등이있습니다.\n클라우드전환\n➜\nQ6\n"
+  },
+  {
+    "page": 57,
+    "title": "cloud_terminology.pdf (p.57)",
+    "content": "56\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드전환\n6\nVM 마이그레이션\n➜\n가트너의7R 전략\n➜\n라이브마이그레이션\n➜\n콜드마이그레이션\n➜\n스토리지마이그레이션\n➜\nP2V\n➜\nV2V\n➜\nV2P\n➜\n"
+  },
+  {
+    "page": 58,
+    "title": "cloud_terminology.pdf (p.58)",
+    "content": "57\n7C > 클라우드전환\nVM 마이그레이션\n➜\nVM 마이그레이션(VM Migration)은가상\n머신(VM)을한호스트환경에서다른호스트\n환경으로이동시키는프로세스를의미합니다.\n이는물리적서버간의VM 이동을포함하며, 시스템\n유지보수, 하드웨어업그레이드, 데이터센터이전등\n다양한상황에수행됩니다.\n마이그레이션방식에따라라이브마이그레이션,\n콜드마이그레이션, 스토리지마이그레이션의유형이\n있고, 마이그레이션대상에따라P2V, V2V, V2P\n유형이있습니다.\nVM 마이그레이션이뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 59,
+    "title": "cloud_terminology.pdf (p.59)",
+    "content": "58\n7C > 클라우드전환\n라이브마이그레이션\n➜\nVM이실행중인상태에서중단없이다른호스트로\n이동하는방식입니다. 핫마이그레이션도동일한\n의미입니다.\n서비스중단시간을최소화하여고가용성을유지해야\n하는환경에적합합니다.\n라이브마이그레이션이뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 60,
+    "title": "cloud_terminology.pdf (p.60)",
+    "content": "59\n7C > 클라우드전환\n콜드마이그레이션\n➜\nVM을종료한후다른호스트로이동하는방식입니다.\n라이브마이그레이션에비해단순하지만, 서비스\n중단시간이발생합니다.\n콜드마이그레이션이뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 61,
+    "title": "cloud_terminology.pdf (p.61)",
+    "content": "60\n7C > 클라우드전환\n스토리지마이그레이션\n➜\nVM의저장소(데이터스토어)만다른호스트로\n이동하는방식입니다.\n저장공간관리및성능최적화에사용됩니다.\n스토리지마이그레이션이뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 62,
+    "title": "cloud_terminology.pdf (p.62)",
+    "content": "61\n7C > 클라우드전환\nP2V\n➜\nPhysical to Virtual의약자로,\n물리서버(Physical Server)에서설치된\n운영체제, 애플리케이션, 데이터를\n가상머신(VM)으로변환하는마이그레이션\n유형입니다.\n즉, 물리적환경에서가상환경으로의전환을\n이야기합니다.\nP2V가무슨말이야?\nWikipedia\n"
+  },
+  {
+    "page": 63,
+    "title": "cloud_terminology.pdf (p.63)",
+    "content": "62\n7C > 클라우드전환\nV2V\n➜\nVirtual to Virtual의약자로,\n가상머신(VM)을다른가상머신호스트로\n이동시키는마이그레이션유형입니다.\n즉, 가상환경에서가상환경으로의전환을\n이야기합니다. (VM웨어to OpenStack)\nV2V가무슨말이야?\nWikipedia\n"
+  },
+  {
+    "page": 64,
+    "title": "cloud_terminology.pdf (p.64)",
+    "content": "63\n7C > 클라우드전환\nV2P\n➜\nVirtual to Physical의약자로,\n가상머신(VM)을물리적서버(Physical\nServer)로변환하는마이그레이션유형입니다.\n즉, 가상환경에서물리적환경으로의전환을\n이야기합니다.\nV2P는무슨말이야?\nWikipedia\n"
+  },
+  {
+    "page": 65,
+    "title": "cloud_terminology.pdf (p.65)",
+    "content": "64\n7C > 클라우드전환\n7R\n➜\n기업이클라우드로애플리케이션을이전할때\n고려해야할7가지전략을의미합니다.\n각R은애플리케이션마이그레이션방법을나타내며,\n기업은각애플리케이션의특성과요구사항에따라\n가장적합한전략을선택해야합니다.\nRehost, Replatform, Repurchase,\nRefactor, Rearchitect, Retain, Retire\n가트너의7R이뭐에요?\nWikipedia\n"
+  },
+  {
+    "page": 66,
+    "title": "cloud_terminology.pdf (p.66)",
+    "content": "65\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드보안및관리\n7\nOke \nWiki\n(7C)\n클라우드\n컴퓨팅\n클라우드\n이용모델\n클라우드\n배포모델\n클라우드\n서비스\n제공업체\n클라우드\n구현기술\n클라우드\n전환\n클라우드\n보안및관\n리\n"
+  },
+  {
+    "page": 67,
+    "title": "cloud_terminology.pdf (p.67)",
+    "content": "66\n7C > 클라우드보안및관리\n클라우드보안및관리란?\nWikipedia\n클라우드보안및관리는클라우드컴퓨팅환경에서\n데이터, 애플리케이션및인프라를보호하고\n효율적으로운영하기위한종합적인접근방식을\n의미합니다.\n이는단순히기술적인측면뿐만아니라정책,\n프로세스, 사람등다양한요소를포함합니다.\n관련용어는,\n고가용성(HA), DR, 접근제어관리, RBAC,\nABAC 등이있습니다.\n클라우드보안및관리\n➜\nQ7\n"
+  },
+  {
+    "page": 68,
+    "title": "cloud_terminology.pdf (p.68)",
+    "content": "67\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n7C > 클라우드보안및관리\n7\n고가용성(HA)\n➜\nDR\n➜\nObservability\n➜\nRBAC\n➜\nABAC\n➜\nSSO\n➜\nMFA\n➜\nACL\n➜\n미터링/빌링\n➜\nFinOps\n➜\n"
+  },
+  {
+    "page": 69,
+    "title": "cloud_terminology.pdf (p.69)",
+    "content": "68\n7C > 클라우드보안및관리\n고가용성(HA)\n➜\n고가용성(HA, High Availability)은시스템이나\n서비스가예상치못한장애상황에서도지속적으로\n정상운영될수있도록설계된능력을의미합니다.\n즉, 시스템이항상‘사용가능’한상태를유지하여\n사용자에게중단없는서비스를제공하는것으로\n목표로합니다.\n관련용어이자구현방법으로는이중화(삼중화),\n클러스터링, 로드밸런싱, 자동장애복구, 지속적인\n모니터링등이있습니다.\n고가용성(HA)이뭔말이야?\nWikipedia\n"
+  },
+  {
+    "page": 70,
+    "title": "cloud_terminology.pdf (p.70)",
+    "content": "69\n7C > 클라우드보안및관리\nDR\n➜\nDisaster Recovery의약자로, 재해복구를\n의미합니다.\n이는자연재해, 시스템오류, 사이버공격등예상치\n못한재난으로인해IT 시스템이중단되었을때,\n데이터를복구하고시스템을정상화하는과정을\n말합니다.\n관련용어는데이터백업, 클라우드기반복구,\nActive-Active DR, Active-Standby DR 등이\n있습니다.\nDR은무슨말이야?\nWikipedia\n"
+  },
+  {
+    "page": 71,
+    "title": "cloud_terminology.pdf (p.71)",
+    "content": "70\n7C > 클라우드보안및관리\n접근제어관리\n➜\n클라우드리소스에대한접근권한을안전하게\n관리하고통제하는것을의미합니다.\n관련용어는RBAC, ABAC, MFA, ACL 등이\n있습니다.\n클라우드에서말하는접근제어관리가무슨말이\n야?\nWikipedia\n"
+  },
+  {
+    "page": 72,
+    "title": "cloud_terminology.pdf (p.72)",
+    "content": "71\n7C > 클라우드보안및관리\nRBAC\n➜\nRole-Based Access Control의약자로\n역할기반접근제어라고합니다.\n시스템접근권한을사용자의역할에따라접근\n권한을부여하는방식입니다.\n사용자가어떤역할을맡고있는지에따라시스템의\n특정기능이나데이터에접근할수있는권한이\n결정됩니다.\n클라우드접근제어관리방법중하나인RBAC이\n뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 73,
+    "title": "cloud_terminology.pdf (p.73)",
+    "content": "72\n7C > 클라우드보안및관리\nABAC\n➜\nAttribute-Based Access Control의약자로\n속성기반접근제어라고합니다.\n사용자, 리소스, 환경등다양한속성(사용자의부서,\n직책, 위치, 리소스의유형, 민감도등)을기반으로\n접근권한을부여하는방식입니다.\n클라우드접근제어관리방법중하나인ABAC이\n뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 74,
+    "title": "cloud_terminology.pdf (p.74)",
+    "content": "73\n7C > 클라우드보안및관리\nMFA\n➜\nMulti-Factor Authentication의약자로\n사용자의신원을확인하기위해두가지이상의인증\n요소를요구하는보안시스템입니다.\n관련용어는지식기반인증, 소유기반인증, 생체\n인식인증등이있습니다.\n클라우드접근제어관리방법중하나인MFA가뭐\n야?\nWikipedia\n"
+  },
+  {
+    "page": 75,
+    "title": "cloud_terminology.pdf (p.75)",
+    "content": "74\n7C > 클라우드보안및관리\nACL\n➜\nAccess Control List의약자로시스템자원에\n대한접근권한을정의하고관리하는보안\n매커니즘입니다.\n누가, 어떤자원에, 어떤방식으로접근할수있는지를\n명시적으로설정하여무단접근을방지하고데이터\n보안을강화합니다.\n클라우드접근제어관리방법중하나인ACL이뭐\n야?\nWikipedia\n"
+  },
+  {
+    "page": 76,
+    "title": "cloud_terminology.pdf (p.76)",
+    "content": "75\n7C > 클라우드보안및관리\nSSO\n➜\nSingle Sign On의약자로, 사용자가한번의\n로그인으로여러클라우드기반애플리케이션및\n서비스에접근할수있도록하는인증방식입니다.\n즉, 사용자가여러클라우드서비스를이용할때\n각각의서비스에대해개별적으로로그인할필요없이,\n단한번의인증만으로모든서비스에접근할수있게\n해줍니다.\n관련기술이자용어는SAML, Oauth,\nOpenID Connect 등이있습니다.\n클라우드의SSO는뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 77,
+    "title": "cloud_terminology.pdf (p.77)",
+    "content": "76\n7C > 클라우드보안및관리\nObeservability\n➜\n시스템의내부상태를외부출력(로그, 매트릭,\n트레이스등)을통해파악하고이해하는능력을\n의미합니다.\n기존의모니터링방식이시스템의특정지표를사전에\n정의된기준으로측정하는데초점을맞춘다면,\n옵저버빌리티는시스템의모든측면을포괄적으로\n관찰하고분석하여예상치못한문제의원인을\n파악하고해결하는데중점을둡니다.\n관련용어는로그, 매트릭, 트레이스, AIOps 등이\n있습니다.\n클라우드에서말하는옵저버빌리티가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 78,
+    "title": "cloud_terminology.pdf (p.78)",
+    "content": "77\n7C > 클라우드보안및관리\nAIOps\n➜\nAI for IT Operation의약자로인공지능(AI)\n기술을IT 운영에접목하여시스템관리및운영\n효율성을극대화하는것을의미합니다.\nAI와머신러닝을활용하여IT 시스템의문제를\n예측하고자동으로해결하며, 성능을최적화하는\n것을목표로합니다.\n주요용어는이상징후감지및예측, 근본원인\n분석(RCA), 자동화된문제해결, 성능최적화등이\n있습니다.\nAIOps가무슨말이야?\nWikipedia\n"
+  },
+  {
+    "page": 79,
+    "title": "cloud_terminology.pdf (p.79)",
+    "content": "78\n7C > 클라우드보안및관리\n미터링/빌링\n➜\n미터링은사용자가클라우드리소스를얼마나\n사용했는지측정하고기록하는과정입니다. CPU 및\n메모리사용량, 스토리지용량, 네트워크트래픽등\n다양한지표를측정합니다.\n빌링은미터링데이터를기반으로사용자가데이터를\n실제로지불해야할금액을계산하고청구서를\n발행하는과정입니다.\n즉, 미터링은빌링의기초데이터역할을합니다.\n미터링과빌링의차이점은?\nWikipedia\n"
+  },
+  {
+    "page": 80,
+    "title": "cloud_terminology.pdf (p.80)",
+    "content": "79\n7C > 클라우드보안및관리\nFinOps\n➜\nCloud Financial Operations의약자로,\n클라우드컴퓨팅환경에서비용효율성을극대화하기\n위한재무관리방식입니다.\n관련용어는클라우드비용분석및예측, 클라우드\n리소스최적화, 클라우드비용거버넌스, 클라우드\n비용문화조성등이있습니다.\nFinOps가뭐야?\nWikipedia\n"
+  },
+  {
+    "page": 1,
+    "title": "Cloud_Overview.pdf",
+    "content": "Introduction to\nCloud Computing\n클라우드개요\n"
+  },
+  {
+    "page": 2,
+    "title": "Cloud_Overview.pdf",
+    "content": "Introduction to\nCloud Computing\n클라우드란?\n"
+  },
+  {
+    "page": 3,
+    "title": "Cloud_Overview.pdf",
+    "content": "2\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅이란?\n1\n위키백과에서＂클라우드컴퓨팅”을검색해봅시다!!\n"
+  },
+  {
+    "page": 4,
+    "title": "Cloud_Overview.pdf",
+    "content": "3\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅이란?\n1\n위키백과에서＂클라우드컴퓨팅”을검색해봅시다!!\n클라우드컴퓨팅(cloud computing)은\n사용자의직접적인활발한관리없이특히, 스토리지(클라우드\n스토리지)와컴퓨팅파워같은컴퓨팅시스템리소스를필요시\n바로제공(on-demand availability)하는것을말한다.\n일반적으로는인터넷기반컴퓨팅의일종으로정보를자신의\n컴퓨터가아닌클라우드에연결된다른컴퓨터로처리하는기술을\n의미한다.\n…\n"
+  },
+  {
+    "page": 5,
+    "title": "Cloud_Overview.pdf",
+    "content": "4\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅이란?\n1\nAI에게＂클라우드컴퓨팅”에대해물어봅시다!!\n"
+  },
+  {
+    "page": 6,
+    "title": "Cloud_Overview.pdf",
+    "content": "5\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅이란?\n1\nAI에게＂클라우드컴퓨팅”에대해물어봅시다!!\n클라우드컴퓨팅은마치하늘의구름처럼인터넷을통해\n컴퓨팅자원을필요한만큼빌려쓰는것을말합니다. \n예전에는컴퓨터를사용하려면컴퓨터를직접구매하고, \n프로그램을설치하고, 저장공간을확보해야했지만, 클\n라우드컴퓨팅덕분에이러한번거로운과정없이언제\n어디서든인터넷에연결된기기로원하는프로그램을사\n용하고, 데이터를저장할수있게되었습니다.\n…\n"
+  },
+  {
+    "page": 7,
+    "title": "Cloud_Overview.pdf",
+    "content": "6\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅이란?\n1\n클라우드컴퓨팅은확장가능하고\n탄력적인IT 지원기능을\n인터넷기술을사용하여\n서비스로제공되는컴퓨팅서비스\n클라우드컴퓨팅이란, 공유구성이\n가능한컴퓨팅리소스통합을통해\n어디서나간편하게요청에따라\n네트워크를통해접근하는것을\n가능하게하는모델\n클라우드컴퓨팅은IT리소스를\n인터넷을통해온디맨드로제공하고\n사용한만큼만비용을지불하는것\n물리적데이터센터와서버를구입,\n소유및유지관리하는대신,\nAWS와같은클라우드공급자로부터\n필요에따라컴퓨팅파워, 스토리지,\n데이터베이스같은기술서비스액세스\n[클라우드컴퓨팅법제2조]\n직접·공유된정보통신기기,\n정보통신설비, 소프트웨어등\n정보통신자원을가상으로결합하거나\n분할하여사용하게하는기술\nGartner, NIST, AWS 등기관및기업에서다양하게클라우드를정의하고있음\n"
+  },
+  {
+    "page": 8,
+    "title": "Cloud_Overview.pdf",
+    "content": "7\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅이란?\n1\n클라우드컴퓨팅은확장가능하고\n탄력적인IT 지원기능을\n인터넷기술을사용하여\n서비스로제공되는컴퓨팅서비스\n클라우드컴퓨팅이란, 공유구성이\n가능한컴퓨팅리소스통합을통해\n어디서나간편하게요청에따라\n네트워크를통해접근하는것을\n가능하게하는모델\n클라우드컴퓨팅은IT리소스를\n인터넷을통해온디맨드로제공하고\n사용한만큼만비용을지불하는것\n물리적데이터센터와서버를구입,\n소유및유지관리하는대신,\nAWS와같은클라우드공급자로부터\n필요에따라컴퓨팅파워, 스토리지,\n데이터베이스같은기술서비스액세스\n[클라우드컴퓨팅법제2조]\n직접·공유된정보통신기기,\n정보통신설비, 소프트웨어등\n정보통신자원을가상으로결합하거나\n분할하여사용하게하는기술\n오케스트로가생각하는클라우드정의\n공유구성이가능한컴퓨팅리소스(네트워크, 서버, 스토리지, 애플리케이션서비스)의통합을통해\n어디서나간편하게, 요청에따라네트워크를통해접근하는것을가능하게하는모델이라생각합니다.\n클라우드를이용하는고객이클라우드에서제공하는인프라, 플랫폼, 애플리케이션등을사용할만한서비스로서\n느끼게하는게오케스트로가지향하는클라우드입니다.\nGartner, NIST, AWS 등기관및기업에서다양하게클라우드를정의하고있음\n"
+  },
+  {
+    "page": 9,
+    "title": "Cloud_Overview.pdf",
+    "content": "8\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅의정의와특징(1/2)\n2\n공유구성이가능한컴퓨팅리소스(네트워크, 서버, 스토리지, 애플리케이션서비스)의통합을통해어디서나간편\n하게, 요청에따라네트워크를통해접근하는것을가능하게하는모델\n클라우드컴퓨팅\n클라우드특/장점\n경제성\n사용한만큼만지불하므로초기구축및유지보수비용, 인건비등을절감\n가능\n유연성\n필요한자원과서비스를필요에따라확장및축소가능\n가용성\n뛰어난성능과장애발생시에도지속적인서비스사용가능\n구축속도\n가상서버인스턴스를쉽고빠르게프로비저닝및배포할수있음\n"
+  },
+  {
+    "page": 10,
+    "title": "Cloud_Overview.pdf",
+    "content": "9\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅의정의와특징(2/2)\n2\n온프레미스환경에서클라우드환경으로전환하게되면경제성, 유연성, 가용성, 구축속도등다양한방면에서이점을확보\nOn-Premise\nCloud\n경제성\n사전에시스템이용피크타임을예측해서그만큼의장비와소프트웨어를사야만\n하며,\n피크타임이외에는리소스낭비가발생\n사용하고자하는기능과이용기간에대한유연성으로경제적낭비를최소화\n클라우드에비해규모의경제가작동하지않으므로가격인하를기대하기어려움\n(5년단위시스템업그레이드)\n소프트웨어및데이터를클라우드로통합관리함으로써소프트웨어의\n업데이트작업및데이터의관리를효율적으로하여비용절약가능\n유연성\n서버구축과시스템확장에는고도의기술과엄청난비용이필요하므로\n기구축된시스템을확장하거나축소하는것이어려움\n사용자가컴퓨팅리소스를떼어서사용할수있기에필요할때원하는수준의\n시스템을확장하고, 필요성이줄어들경우에는쉽게축소가능\n가용성\n서버장애조치가필요한경우시스템이중화및백업등이필요\n재해대비데이터센터를이용하거나장애대비시스템을구성하여\n시스템가용성을높였기때문에자체시스템보다신뢰성이높음\n사업자가가용성에대해계약하는\nSLA(Service Level Agreement, 이용약정약관)를공개하고있음\n구축속도\n시스템설계후HW와SW를조달하고배치하는데시간소요\n클라우드사업자가준비한인프라를활용하여신속하게시스템구축착수가능\n"
+  },
+  {
+    "page": 11,
+    "title": "Cloud_Overview.pdf",
+    "content": "10\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅의정의와특징(2/2)\n2\n온프레미스환경에서클라우드환경으로전환하게되면경제성, 유연성, 가용성, 구축속도등다양한방면에서이점을확보\nOn-Premise\nCloud\n경제성\n사전에시스템이용피크타임을예측해서그만큼의장비와소프트웨어를사야만\n하며,\n피크타임이외에는리소스낭비가발생\n사용하고자하는기능과이용기간에대한유연성으로경제적낭비를최소화\n클라우드에비해규모의경제가작동하지않으므로가격인하를기대하기어려움\n(5년단위시스템업그레이드)\n소프트웨어및데이터를클라우드로통합관리함으로써소프트웨어의\n업데이트작업및데이터의관리를효율적으로하여비용절약가능\n"
+  },
+  {
+    "page": 12,
+    "title": "Cloud_Overview.pdf",
+    "content": "11\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅의정의와특징(2/2)\n2\n온프레미스환경에서클라우드환경으로전환하게되면경제성, 유연성, 가용성, 구축속도등다양한방면에서이점을확보\nOn-Premise\nCloud\n경제성\n사전에시스템이용피크타임을예측해서그만큼의장비와소프트웨어를사야만\n하며,\n피크타임이외에는리소스낭비가발생\n사용하고자하는기능과이용기간에대한유연성으로경제적낭비를최소화\n클라우드에비해규모의경제가작동하지않으므로가격인하를기대하기어려움\n(5년단위시스템업그레이드)\n소프트웨어및데이터를클라우드로통합관리함으로써소프트웨어의\n업데이트작업및데이터의관리를효율적으로하여비용절약가능\n유연성\n서버구축과시스템확장에는고도의기술과엄청난비용이필요하므로\n기구축된시스템을확장하거나축소하는것이어려움\n사용자가컴퓨팅리소스를떼어서사용할수있기에필요할때원하는수준의\n시스템을확장하고, 필요성이줄어들경우에는쉽게축소가능\n"
+  },
+  {
+    "page": 13,
+    "title": "Cloud_Overview.pdf",
+    "content": "12\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅의정의와특징(2/2)\n2\n온프레미스환경에서클라우드환경으로전환하게되면경제성, 유연성, 가용성, 구축속도등다양한방면에서이점을확보\nOn-Premise\nCloud\n경제성\n사전에시스템이용피크타임을예측해서그만큼의장비와소프트웨어를사야만\n하며,\n피크타임이외에는리소스낭비가발생\n사용하고자하는기능과이용기간에대한유연성으로경제적낭비를최소화\n클라우드에비해규모의경제가작동하지않으므로가격인하를기대하기어려움\n(5년단위시스템업그레이드)\n소프트웨어및데이터를클라우드로통합관리함으로써소프트웨어의\n업데이트작업및데이터의관리를효율적으로하여비용절약가능\n유연성\n서버구축과시스템확장에는고도의기술과엄청난비용이필요하므로\n기구축된시스템을확장하거나축소하는것이어려움\n사용자가컴퓨팅리소스를떼어서사용할수있기에필요할때원하는수준의\n시스템을확장하고, 필요성이줄어들경우에는쉽게축소가능\n가용성\n서버장애조치가필요한경우시스템이중화및백업등이필요\n재해대비데이터센터를이용하거나장애대비시스템을구성하여\n시스템가용성을높였기때문에자체시스템보다신뢰성이높음\n사업자가가용성에대해계약하는\nSLA(Service Level Agreement, 이용약정약관)를공개하고있음\n"
+  },
+  {
+    "page": 14,
+    "title": "Cloud_Overview.pdf",
+    "content": "13\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드컴퓨팅의정의와특징(2/2)\n2\n온프레미스환경에서클라우드환경으로전환하게되면경제성, 유연성, 가용성, 구축속도등다양한방면에서이점을확보\nOn-Premise\nCloud\n경제성\n사전에시스템이용피크타임을예측해서그만큼의장비와소프트웨어를사야만\n하며,\n피크타임이외에는리소스낭비가발생\n사용하고자하는기능과이용기간에대한유연성으로경제적낭비를최소화\n클라우드에비해규모의경제가작동하지않으므로가격인하를기대하기어려움\n(5년단위시스템업그레이드)\n소프트웨어및데이터를클라우드로통합관리함으로써소프트웨어의\n업데이트작업및데이터의관리를효율적으로하여비용절약가능\n유연성\n서버구축과시스템확장에는고도의기술과엄청난비용이필요하므로\n기구축된시스템을확장하거나축소하는것이어려움\n사용자가컴퓨팅리소스를떼어서사용할수있기에필요할때원하는수준의\n시스템을확장하고, 필요성이줄어들경우에는쉽게축소가능\n가용성\n서버장애조치가필요한경우시스템이중화및백업등이필요\n재해대비데이터센터를이용하거나장애대비시스템을구성하여\n시스템가용성을높였기때문에자체시스템보다신뢰성이높음\n사업자가가용성에대해계약하는\nSLA(Service Level Agreement, 이용약정약관)를공개하고있음\n구축속도\n시스템설계후HW와SW를조달하고배치하는데시간소요\n클라우드사업자가준비한인프라를활용하여신속하게시스템구축착수가능\n"
+  },
+  {
+    "page": 15,
+    "title": "Cloud_Overview.pdf",
+    "content": "14\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드의사용자\n3\n개인\n"
+  },
+  {
+    "page": 16,
+    "title": "Cloud_Overview.pdf",
+    "content": "15\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드의사용자\n3\n개인\n기업\n급증하는이용자수, 데이터량감당불가\n(2008년데이터베이스손상으로3일간DVD 배송지연)\n2008년8월부터클라우드도입본격화\n2016년1월, 자사의데이터센터문을닫고\n모든서비스를클라우드로이전\n지속적인성장세큰부담없이새로운시도가능\n(ex. 유저별컨텐츠추천기능)\n"
+  },
+  {
+    "page": 17,
+    "title": "Cloud_Overview.pdf",
+    "content": "16\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드의사용자\n3\n정부\n개인\n기업\nCOVID19로‘국가예방접종시스템’에사용량급등\n행정· 공공기관정보자원클라우드\n전환/통합추진계획으로\n‘국가예방접종시스템’을클라우드로전환\nCOVID19 예방접종증명등의\n디지털행정서비스를안정적으로제공\n급증하는이용자수, 데이터량감당불가\n(2008년데이터베이스손상으로3일간DVD 배송지연)\n2008년8월부터클라우드도입본격화\n2016년1월, 자사의데이터센터문을닫고\n모든서비스를클라우드로이전\n지속적인성장세큰부담없이새로운시도가능\n(ex. 유저별컨텐츠추천기능)\n"
+  },
+  {
+    "page": 18,
+    "title": "Cloud_Overview.pdf",
+    "content": "17\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스의분류\n4\n클라우드서비스는서비스유형과배포방식에따라클라우드서비스이용모델과서비스배포모델로분류됩니다.\n클라우드서비스이용모델\nIaaS\nPaaS\nSaaS\nXaaS\nDaaS\n"
+  },
+  {
+    "page": 19,
+    "title": "Cloud_Overview.pdf",
+    "content": "18\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스의분류\n4\n클라우드서비스는서비스유형과배포방식에따라클라우드서비스이용모델과서비스배포모델로분류됩니다.\n클라우드서비스이용모델\n클라우드서비스배포모델\nIaaS\nPaaS\nSaaS\nXaaS\nPrivate\nCloud\nPublic\nCloud\nHybrid\nCloud\nMulti\nCloud\nDaaS\n"
+  },
+  {
+    "page": 20,
+    "title": "Cloud_Overview.pdf",
+    "content": "19\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(1/3)\n5\n클라우드서비스이용모델은일반적으로가상인프라서비스의IaaS, 어플리케이션플랫폼서비스의PaaS, 사용자SW 서비스의SaaS 로분류됩니다.\nServers\nServers\nMiddleware/OS\nServers\nMiddleware/OS\nApplications\nMiddleware/OS\nApplications\nApplications\nSoftware as a Service\nSaaS\nInfrastructure as a Service\nIaaS\nPlatform as a Service\nPaaS\n컴퓨팅리소스가상화를통해\n사용자에게IT 인프라를서비스형태로제공\n소프트웨어개발및배포환경을\n서비스형태로제공\n애플리케이션과IT 인프라및플랫폼을아우르는\n클라우드서비스를사용자에게제공\n"
+  },
+  {
+    "page": 21,
+    "title": "Cloud_Overview.pdf",
+    "content": "20\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(2/3)\n5\n사용자가클라우드서비스제공업체로부터얼마만큼자원을제공받고, 얼마만큼자원을직접관리하는가에따라3가지서비스모델로나뉘어짐\n물리적자원제공\n소프트웨어개발을돕는플랫폼제공\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\n고객이사용하는소프트웨어제공\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사업자\n제공영역\nSaaS\nIaaS\nPaaS\n"
+  },
+  {
+    "page": 22,
+    "title": "Cloud_Overview.pdf",
+    "content": "21\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(2/3)\n5\n사용자가클라우드서비스제공업체로부터얼마만큼자원을제공받고, 얼마만큼자원을직접관리하는가에따라3가지서비스모델로나뉘어짐\n물리적자원제공\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\nIaaS\n"
+  },
+  {
+    "page": 23,
+    "title": "Cloud_Overview.pdf",
+    "content": "22\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(2/3)\n5\n사용자가클라우드서비스제공업체로부터얼마만큼자원을제공받고, 얼마만큼자원을직접관리하는가에따라3가지서비스모델로나뉘어짐\n물리적자원제공\n소프트웨어개발을돕는플랫폼제공\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\nIaaS\nPaaS\n"
+  },
+  {
+    "page": 24,
+    "title": "Cloud_Overview.pdf",
+    "content": "23\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(2/3)\n5\n사용자가클라우드서비스제공업체로부터얼마만큼자원을제공받고, 얼마만큼자원을직접관리하는가에따라3가지서비스모델로나뉘어짐\n물리적자원제공\n소프트웨어개발을돕는플랫폼제공\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사용자\n관리영역\n사업자\n제공영역\n고객이사용하는소프트웨어제공\n네트워크\n스토리지\n서버\n가상화\n운영체제\n미들웨어\n런타임\n데이터\n애플리케이션\n사업자\n제공영역\nSaaS\nIaaS\nPaaS\n"
+  },
+  {
+    "page": 25,
+    "title": "Cloud_Overview.pdf",
+    "content": "24\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(3/3)\n5\n사용자는환경을고려하여IaaS, PaaS, SaaS 각서비스를도입하여사용할수있음\nIaaS(Infrastructure as a Service)는컴퓨팅리소스\n가상화를통해사용자에게IT 인프라를서비스\n형태로제공\n장점\n물리적자원을서비스형태로사용하기때문에\n고정비가들지않음\n물리적자원에대한자동화된배포가가능\n물리적자원에대한규모의확장또는축소가\n자유로움\nIaaS\n+\n애플리케이션\n데이터\n런타임\n미들웨어\n운영체제\n가상화\n서버\n스토리지\n네트워크\n식기세팅\n조리\n요리재료\n프라이팬\n가스레인지\n사용자관리영역사용자관리영역서비스제공\n물리적자원제공\n공유부엌\n"
+  },
+  {
+    "page": 26,
+    "title": "Cloud_Overview.pdf",
+    "content": "25\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(3/3)\n5\n사용자는환경을고려하여IaaS, PaaS, SaaS 각서비스를도입하여사용할수있음\n+\n애플리케이션\n데이터\n런타임\n미들웨어\n운영체제\n가상화\n서버\n스토리지\n네트워크\n식기세팅\n조리\n요리재료\n프라이팬\n가스레인지\n사용자관리영역사용자관리영역서비스제공\n소프트웨어개발을\n돕는플랫폼제공\n편하게드실수있는밀키트\nPaaS\nPaaS(Platform as a Service)는소프트웨어개발및\n배포환경을서비스형태로제공\n장점\n개발을위해필요한모듈을모두제공받아즉각적인\n업무수행이가능\n애플리케이션개발및배포프로세스에집중하여\n기간을단축\nIaaS(Infrastructure as a Service)는컴퓨팅리소스\n가상화를통해사용자에게IT 인프라를서비스\n형태로제공\n장점\n물리적자원을서비스형태로사용하기때문에\n고정비가들지않음\n물리적자원에대한자동화된배포가가능\n물리적자원에대한규모의확장또는축소가\n자유로움\nIaaS\n+\n애플리케이션\n데이터\n런타임\n미들웨어\n운영체제\n가상화\n서버\n스토리지\n네트워크\n식기세팅\n조리\n요리재료\n프라이팬\n가스레인지\n사용자관리영역사용자관리영역서비스제공\n물리적자원제공\n공유부엌\n"
+  },
+  {
+    "page": 27,
+    "title": "Cloud_Overview.pdf",
+    "content": "26\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스이용모델(3/3)\n5\n사용자는환경을고려하여IaaS, PaaS, SaaS 각서비스를도입하여사용할수있음\n+\n애플리케이션\n데이터\n런타임\n미들웨어\n운영체제\n가상화\n서버\n스토리지\n네트워크\n식기세팅\n조리\n요리재료\n프라이팬\n가스레인지\n사용자관리영역사용자관리영역서비스제공\n소프트웨어개발을\n돕는플랫폼제공\n편하게드실수있는밀키트\n애플리케이션\n데이터\n런타임\n미들웨어\n운영체제\n가상화\n서버\n스토리지\n네트워크\n식기세팅\n조리\n요리재료\n프라이팬\n가스레인지\n사용자관리영역사용자관리영역서비스제공\n고객이사용하는\n소프트웨어제공\n완성된요리제공(배달음식)\nSaaS\nSaaS (software as a Service)는애플리케이션과IT \n인프라및플랫폼을아우르는클라우드서비스를\n사용자에게제공\n장점\n소프트웨어설치를위한물리적자원이필요하지\n않음\n소프트웨어개발및운영에관한인적자원절감이\n가능\nPaaS\nPaaS(Platform as a Service)는소프트웨어개발및\n배포환경을서비스형태로제공\n장점\n개발을위해필요한모듈을모두제공받아즉각적인\n업무수행이가능\n애플리케이션개발및배포프로세스에집중하여\n기간을단축\nIaaS(Infrastructure as a Service)는컴퓨팅리소스\n가상화를통해사용자에게IT 인프라를서비스\n형태로제공\n장점\n물리적자원을서비스형태로사용하기때문에\n고정비가들지않음\n물리적자원에대한자동화된배포가가능\n물리적자원에대한규모의확장또는축소가\n자유로움\nIaaS\n+\n애플리케이션\n데이터\n런타임\n미들웨어\n운영체제\n가상화\n서버\n스토리지\n네트워크\n식기세팅\n조리\n요리재료\n프라이팬\n가스레인지\n사용자관리영역사용자관리영역서비스제공\n물리적자원제공\n공유부엌\n"
+  },
+  {
+    "page": 28,
+    "title": "Cloud_Overview.pdf",
+    "content": "27\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(1/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n퍼블릭클라우드\nPublic Cloud\n대표서비스\n클라우드사업자가시스템을구축하고, \n인터넷등의네트워크를통해불특정다수의\n기업과개인에게서비스를제공하는형태\n기업또는개인이방화벽외부에구축\n운영하는방식\n사용자기업에서자사의IT자산을보유하지\n않더라도컴퓨터리소스서비스사용가능\n"
+  },
+  {
+    "page": 29,
+    "title": "Cloud_Overview.pdf",
+    "content": "28\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(1/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n퍼블릭클라우드\nPublic Cloud\n대표서비스\n프라이빗클라우드\nPrivate Cloud\n대표서비스\n클라우드사업자가시스템을구축하고, \n인터넷등의네트워크를통해불특정다수의\n기업과개인에게서비스를제공하는형태\n기업또는개인이방화벽외부에구축\n운영하는방식\n사용자기업에서자사의IT자산을보유하지\n않더라도컴퓨터리소스서비스사용가능\n클라우드서비스사용자의데이터센터에\n클라우드관련기술이활용하여자사전용\n환경을구축하는형태\n가상화, 자동화와같은클라우드기술을\n활용하여시스템의성능과비용을최적화\n하고유연한사용자정의가가능\n기업또는기관내부환경에서만사용\n가능하여해당기업및기관에속하지않는\n사람은사용불가\n"
+  },
+  {
+    "page": 30,
+    "title": "Cloud_Overview.pdf",
+    "content": "29\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(1/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n퍼블릭클라우드\nPublic Cloud\n클라우드사업자가시스템을구축하고, \n인터넷등의네트워크를통해불특정다수의\n기업과개인에게서비스를제공하는형태\n기업또는개인이방화벽외부에구축\n운영하는방식\n사용자기업에서자사의IT자산을보유하지\n않더라도컴퓨터리소스서비스사용가능\n대표서비스\n프라이빗클라우드\nPrivate Cloud\n클라우드서비스사용자의데이터센터에\n클라우드관련기술이활용하여자사전용\n환경을구축하는형태\n가상화, 자동화와같은클라우드기술을\n활용하여시스템의성능과비용을최적화\n하고유연한사용자정의가가능\n기업또는기관내부환경에서만사용\n가능하여해당기업및기관에속하지않는\n사람은사용불가\n대표서비스\n멀티클라우드\nMulti Cloud\n1\n2\n3\n서로다른업체에서2개이상의퍼블릭또는\n프라이빗클라우드를이용하여하나의\n서비스를운영하는것\n각클라우드시스템업체를다르게하여이중\n구성하는형태\n종속성을피하고특정클라우드시스템에\n장애발생시서비스에타격을주지않기위해\n이용\n멀티클라우드\nPublic\nPublic\n"
+  },
+  {
+    "page": 31,
+    "title": "Cloud_Overview.pdf",
+    "content": "30\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(1/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n하이브리드클라우드\nHybrid Cloud\n퍼블릭클라우드와하이브리드클라우드\n같은\n클라우드서비스와온프레미스시스템을\n연계하여활용하는시스템및서비스\n하이브리드클라우드\nPublic\nPrivate\n온프레미스로애플리케이션을제공하되트래픽이증가하게될경우\n필요한만큼의인프라를퍼블릭클라우드서비스로제공받는것\n운영에따른구분\n온프레미스로데이터센터와퍼블릭\n클라우드에서의애플리케이션실행\n용도와목적에따른구분\nPublic\nPublic\nOn-premise \nPrivate\nOn-premise\nPrivate\n"
+  },
+  {
+    "page": 32,
+    "title": "Cloud_Overview.pdf",
+    "content": "31\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(2/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n스마트팩토리, 자율주행자동차데이터분석처리\n(실시간신호처리가능)\n예\n뉴욕증권거래소유로넥스트의\n‘Capital Markets Community Platform’\n예\n엣지클라우드\nEdge Cloud\n클라우드서비스사용자의데이터센터에\n클라우드관련기술이활용하여자사전용\n환경을구축하는형태\n가상화, 자동화와같은클라우드기술을\n활용하여시스템의성능과비용을최적화\n하고유연한사용자정의가가능\n기업또는기관내부환경에서만사용\n가능하여해당기업및기관에속하지않는\n사람은사용불가\n대표서비스\n커뮤니티클라우드\nCommunity Cloud\n클라우드사업자가시스템을구축하고,\n인터넷등의네트워크를통해불특정다수의\n기업과개인에게서비스를제공하는형태\n기업또는개인이방화벽외부에구축\n운영하는방식\n사용자기업에서자사의IT자산을보유하지\n않더라도컴퓨터리소스서비스사용가능\n대표서비스\n"
+  },
+  {
+    "page": 33,
+    "title": "Cloud_Overview.pdf",
+    "content": "32\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(2/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n뉴욕증권거래소유로넥스트의\n‘Capital Markets Community Platform’\n예\n커뮤니티클라우드\nCommunity Cloud\n대표서비스\n클라우드사업자가시스템을구축하고,\n인터넷등의네트워크를통해불특정다수의\n기업과개인에게서비스를제공하는형태\n기업또는개인이방화벽외부에구축\n운영하는방식\n사용자기업에서자사의IT자산을보유하지\n않더라도컴퓨터리소스서비스사용가능\n"
+  },
+  {
+    "page": 34,
+    "title": "Cloud_Overview.pdf",
+    "content": "33\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드서비스배포모델(2/2)\n6\n클라우드서비스배포모델은클라우드서비스환경을누가구축하고운영하는것에따라구분됨\n스마트팩토리, 자율주행자동차데이터분석처리\n(실시간신호처리가능)\n예\n뉴욕증권거래소유로넥스트의\n‘Capital Markets Community Platform’\n예\n엣지클라우드\nEdge Cloud\n대표서비스\n커뮤니티클라우드\nCommunity Cloud\n대표서비스\n클라우드서비스사용자의데이터센터에\n클라우드관련기술이활용하여자사전용\n환경을구축하는형태\n가상화, 자동화와같은클라우드기술을\n활용하여시스템의성능과비용을최적화\n하고유연한사용자정의가가능\n기업또는기관내부환경에서만사용\n가능하여해당기업및기관에속하지않는\n사람은사용불가\n클라우드사업자가시스템을구축하고,\n인터넷등의네트워크를통해불특정다수의\n기업과개인에게서비스를제공하는형태\n기업또는개인이방화벽외부에구축\n운영하는방식\n사용자기업에서자사의IT자산을보유하지\n않더라도컴퓨터리소스서비스사용가능\n"
+  },
+  {
+    "page": 35,
+    "title": "Cloud_Overview.pdf",
+    "content": "Introduction to\nCloud Computing\n클라우드서비스\n"
+  },
+  {
+    "page": 36,
+    "title": "Cloud_Overview.pdf",
+    "content": "35\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드제공하는다양한서비스\n1\n포털사이트에접속하여셀프서비\n스로다양한기능사용가능\n가상라우터\n(VPN게이트웨이)\n베어메탈서버\n가상서버\n로드밸런서\n클라우드안에구축하는\n시스템의이미지\n스토리지\n데이터베이스\n<IaaS>\n데이터분석서비스\nIoT 서비스\nAI/기계학습서비스\n<PaaS / SaaS>\n네트워크\n"
+  },
+  {
+    "page": 37,
+    "title": "Cloud_Overview.pdf",
+    "content": "36\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드제공하는다양한서비스\n1\n포털사이트에접속하여셀프서비\n스로다양한기능사용가능\n가상라우터\n(VPN게이트웨이)\n베어메탈서버\n가상서버\n로드밸런서\n스토리지\n데이터베이스\n<IaaS>\n네트워크\n"
+  },
+  {
+    "page": 38,
+    "title": "Cloud_Overview.pdf",
+    "content": "37\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n가상서버서비스(1/2)\n2\n하이퍼바이저\n하드웨어\nAPP\nGuest\nOS\n(ubuntu)\nAPP\nGuest\nOS\n(win)\nAPP\nGuest\nOS\n(suse)\n가상화한서버구조\nHost OS\nO/S\nAPP\n하드웨어\n전통적인서버구조\nO/S\nAPP\n하드웨어\nHost OS\nAPP\n하드웨어\n소프트웨어(하이퍼바이저)를통해\n물리서버를다수의가상서버로분할하는기술\n가상서버란?\n하나의물리서버에서애플리케이션이동작하기위해\n필요한자원들을묶어하나의객체형태로사용가능\n클라우드서비스에서버를사용할때일반적으로물리서버가아닌\n가상화된서버를제공받음(베어메탈도제공하는경우있음)\n"
+  },
+  {
+    "page": 39,
+    "title": "Cloud_Overview.pdf",
+    "content": "38\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n가상서버서비스(2/2)\n2\nVM\nVM\nZone1\nZone2\n로드밸런서\n로드밸런서: 외부의통신데이터양에따라부하를분산\n가상서버에도움을주는옵션\n1\n1\n"
+  },
+  {
+    "page": 40,
+    "title": "Cloud_Overview.pdf",
+    "content": "39\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n가상서버서비스(2/2)\n2\nZone1\nZone2\n로드밸런서\n오토스케일\n오토스케일\n‘오토스케일링’ 종류\n스케일아웃\n스케일인\n스케일업\n스케일다운\n①스케일인/아웃\n: 서버를추가하거나감소하여시스템을수평적으로확장/축소.\n②스케일업/다운\n: 서버자체의성능변화를통해시스템을수직적으로확장/축소\n로드밸런서: 외부의통신데이터양에따라부하를분산\n오토스케일: 통신량에따라가상서버의개수를자동으로늘이거나줄이\n는기능\n가상서버에도움을주는옵션\n1\n2\n1\n2\n"
+  },
+  {
+    "page": 41,
+    "title": "Cloud_Overview.pdf",
+    "content": "40\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n가상서버서비스(2/2)\n2\nZone1\nZone2\n로드밸런서\n오토스케일\n오토스케일\n‘오토스케일링’ 종류\n스케일아웃\n스케일인\n스케일업\n스케일다운\n①스케일인/아웃\n: 서버를추가하거나감소하여시스템을수평적으로확장/축소.\n②스케일업/다운\n: 서버자체의성능변화를통해시스템을수직적으로확장/축소\n로드밸런서: 외부의통신데이터양에따라부하를분산\n오토스케일: 통신량에따라가상서버의개수를자동으로늘이거나줄이는기능\n정기적인스냅샷(백업기능) : 이용자가설정한주기별로관리서버디스크의백업을\n생성하여복제\n가상서버에도움을주는옵션\n1\n3\n2\n1\n2\n"
+  },
+  {
+    "page": 42,
+    "title": "Cloud_Overview.pdf",
+    "content": "41\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드네트워크서비스\n3\n클라우드네트워크서비스는클라우드서비스위에전용네트워크환경을구축가능하게해주는서비스를의미함\n인터넷\n고정IP주소\nIP-VPN/전용선\n통신필터링\n(방화벽기능)\nVPN 게이트웨\n이\nZone A\nDNS서비스\n로드밸런\n서\n인터넷\n게이트웨\n이\nZone B\nIPsec을통한거점간\n인터넷VPN\nIPsec VPN\n지원방화\n벽\nSubnet\nSubnet\nSubnet\nSubnet\n"
+  },
+  {
+    "page": 43,
+    "title": "Cloud_Overview.pdf",
+    "content": "42\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드네트워크서비스\n3\n클라우드네트워크서비스는클라우드서비스위에전용네트워크환경을구축가능하게해주는서비스를의미함\n인터넷\n고정IP주소\nIP-VPN/전용선\n통신필터링\n(방화벽기능)\nVPN 게이트웨\n이\nZone A\nDNS서비스\n로드밸런\n서\n인터넷\n게이트웨\n이\nZone B\nIPsec을통한거점간\n인터넷VPN\nIPsec VPN\n지원방화\n벽\nSubnet\nSubnet\nSubnet\nSubnet\n①Subnet\n하나의큰네트워크가분할되어나눠진작은네\n트워크\n고유한IP 주소범위를가지며, 이범위내에서\nIP 주소를할당받아사용함\n1\n1\n"
+  },
+  {
+    "page": 44,
+    "title": "Cloud_Overview.pdf",
+    "content": "43\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드네트워크서비스\n3\n클라우드네트워크서비스는클라우드서비스위에전용네트워크환경을구축가능하게해주는서비스를의미함\n인터넷\n고정IP주소\nIP-VPN/전용선\n통신필터링\n(방화벽기능)\nVPN 게이트웨\n이\nZone A\nDNS서비스\n로드밸런\n서\n인터넷\n게이트웨\n이\nZone B\nIPsec을통한거점간\n인터넷VPN\nIPsec VPN\n지원방화\n벽\nSubnet\nSubnet\nSubnet\nSubnet\n②VPN(Virtual Private Network) 서비스\n공중네트워크를통해한회사나몇몇단\n체가내용을외부에드러내지않고통신\n할목적으로쓰이는사설통신망\n1\n2\n①Subnet\n하나의큰네트워크가분할되어나눠진작은네\n트워크\n고유한IP 주소범위를가지며, 이범위내에서\nIP 주소를할당받아사용함\n1\n2\n"
+  },
+  {
+    "page": 45,
+    "title": "Cloud_Overview.pdf",
+    "content": "44\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드네트워크서비스\n3\n클라우드네트워크서비스는클라우드서비스위에전용네트워크환경을구축가능하게해주는서비스를의미함\n인터넷\n고정IP주소\nIP-VPN/전용선\n통신필터링\n(방화벽기능)\nVPN 게이트웨\n이\nZone A\nDNS서비스\n로드밸런\n서\n인터넷\n게이트웨\n이\nZone B\nIPsec을통한거점간\n인터넷VPN\nIPsec VPN\n지원방화\n벽\nSubnet\nSubnet\nSubnet\nSubnet\n1\n2\n3\n①Subnet\n하나의큰네트워크가분할되어나눠진작\n은네트워크\n고유한IP 주소범위를가지며, 이범위내\n에서IP 주소를할당받아사용함\n1\n②DNS(Domain Name Service)\n특정컴퓨터의주소를찾기위해, 사람이\n이해하기쉬운도메인이름을숫자로된\n식별번호(IP주소)로변환하며, 흔히‘전화\n번호부’에비유\n3\n②VPN(Virtual Private Network) 서비스\n공중네트워크를통해한회사나몇몇단\n체가내용을외부에드러내지않고통신\n할목적으로쓰이는사설통신망\n2\n"
+  },
+  {
+    "page": 46,
+    "title": "Cloud_Overview.pdf",
+    "content": "45\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드스토리지서비스\n4\n클라우드스토리지서비스는블록/파일/오브젝트스토리지로구분되며, 저장소. 보관(아카이브), 백업(보호), 파일서버, 재해대책등의용도로사용\n폴더와파일로이루어지는계층구조를갖는스토리지\n정해진블록안에데이터를저장하는형식\n블록이나폴더에보관하는대신각각독립적인객체로저장\n오브젝트스토리지\n파일스토리지\n블록스토리지\n데이터를찾기위해경로를알아야함\n데이터양이늘어나면파일과폴더를계속\n추적하기위한자원요구가늘어나성능떨어짐\nNAS 에서자주사용\n파일스토리지와같이단일데이터경로에\n의존하지않아서좀더신속하게검색\n효율적이고안정적인저장방법\nSAN에서자주사용\n저장된위치를알필요없이키값만알면접근\n가능\n이미지, 동영상데이터저장에활용\n확장성우수\nP\nP\n데이터종류와양이많아질수록오브젝트스토리지사용증가\n참고\n"
+  },
+  {
+    "page": 47,
+    "title": "Cloud_Overview.pdf",
+    "content": "46\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드스토리지서비스\n4\n클라우드스토리지서비스는블록/파일/오브젝트스토리지로구분되며, 저장소. 보관(아카이브), 백업(보호), 파일서버, 재해대책등의용도로사용\n폴더와파일로이루어지는계층구조를갖는스토리지\n파일스토리지\n데이터를찾기위해경로를알아야함\n데이터양이늘어나면파일과폴더를계속\n추적하기위한자원요구가늘어나성능떨어짐\nNAS 에서자주사용\n"
+  },
+  {
+    "page": 48,
+    "title": "Cloud_Overview.pdf",
+    "content": "47\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드스토리지서비스\n4\n클라우드스토리지서비스는블록/파일/오브젝트스토리지로구분되며, 저장소. 보관(아카이브), 백업(보호), 파일서버, 재해대책등의용도로사용\n폴더와파일로이루어지는계층구조를갖는스토리지\n정해진블록안에데이터를저장하는형식\n파일스토리지\n블록스토리지\n데이터를찾기위해경로를알아야함\n데이터양이늘어나면파일과폴더를계속\n추적하기위한자원요구가늘어나성능떨어짐\nNAS 에서자주사용\n파일스토리지와같이단일데이터경로에\n의존하지않아서좀더신속하게검색\n효율적이고안정적인저장방법\nSAN에서자주사용\nP\nP\n"
+  },
+  {
+    "page": 49,
+    "title": "Cloud_Overview.pdf",
+    "content": "48\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드스토리지서비스\n4\n클라우드스토리지서비스는블록/파일/오브젝트스토리지로구분되며, 저장소. 보관(아카이브), 백업(보호), 파일서버, 재해대책등의용도로사용\n폴더와파일로이루어지는계층구조를갖는스토리지\n정해진블록안에데이터를저장하는형식\n블록이나폴더에보관하는대신각각독립적인객체로저장\n오브젝트스토리지\n파일스토리지\n블록스토리지\n데이터를찾기위해경로를알아야함\n데이터양이늘어나면파일과폴더를계속\n추적하기위한자원요구가늘어나성능떨어짐\nNAS 에서자주사용\n파일스토리지와같이단일데이터경로에\n의존하지않아서좀더신속하게검색\n효율적이고안정적인저장방법\nSAN에서자주사용\n저장된위치를알필요없이키값만알면접근\n가능\n이미지, 동영상데이터저장에활용\n확장성우수\nP\nP\n데이터종류와양이많아질수록오브젝트스토리지사용증가\n참고\n"
+  },
+  {
+    "page": 50,
+    "title": "Cloud_Overview.pdf",
+    "content": "49\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드데이터베이스서비스\n5\n클라우드데이터베이스서비스는저장및관리하는데이터의유형에따라관계형데이터베이스와비관계형데이터베이스로구분됩니다.\n데이터를테이블형태(스키마)로구성하는\n관계형모델에따라구조화해저장및관리\n장점\n- 분류, 정렬, 탐색속도가비교적빠름\n- 중복없이한번만저장\n단점\n- 부하발생시, 처리가어려움\n- 스케일업만지원하여비용이기하급수적으로늘어\n날\n수있음\n예시: 오라클, MySQL 등\n관계형데이터베이스와반대되는방식으로\n보다자유롭게데이터저장\n장점\n- 대규모의데이터를유연하게처리, 설계단순,\n수평확장에용이\n- 데이터분산이용이하여스케일업과스케일아웃\n모두가능\n단점: 데이터중복이발생할수있음\n예시: 몽고DB, 하둡, 아파치카산드라\n비관계형데이터베이스관리시스템(NoSQL)\n관계형데이터베이스관리시스템(RDBMS)\n"
+  },
+  {
+    "page": 51,
+    "title": "Cloud_Overview.pdf",
+    "content": "50\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드데이터베이스서비스\n5\n클라우드데이터베이스서비스는저장및관리하는데이터의유형에따라관계형데이터베이스와비관계형데이터베이스로구분됩니다.\n데이터를테이블형태(스키마)로구성하는\n관계형모델에따라구조화해저장및관리\n장점\n- 분류, 정렬, 탐색속도가비교적빠름\n- 중복없이한번만저장\n단점\n- 부하발생시, 처리가어려움\n- 스케일업만지원하여비용이기하급수적으로늘어\n날\n수있음\n예시: 오라클, MySQL 등\n관계형데이터베이스관리시스템(RDBMS)\n"
+  },
+  {
+    "page": 52,
+    "title": "Cloud_Overview.pdf",
+    "content": "51\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드데이터베이스서비스\n5\n클라우드데이터베이스서비스는저장및관리하는데이터의유형에따라관계형데이터베이스와비관계형데이터베이스로구분됩니다.\n데이터를테이블형태(스키마)로구성하는\n관계형모델에따라구조화해저장및관리\n장점\n- 분류, 정렬, 탐색속도가비교적빠름\n- 중복없이한번만저장\n단점\n- 부하발생시, 처리가어려움\n- 스케일업만지원하여비용이기하급수적으로늘어\n날\n수있음\n예시: 오라클, MySQL 등\n관계형데이터베이스와반대되는방식으로\n보다자유롭게데이터저장\n장점\n- 대규모의데이터를유연하게처리, 설계단순,\n수평확장에용이\n- 데이터분산이용이하여스케일업과스케일아웃\n모두가능\n단점: 데이터중복이발생할수있음\n예시: 몽고DB, 하둡, 아파치카산드라\n비관계형데이터베이스관리시스템(NoSQL)\n관계형데이터베이스관리시스템(RDBMS)\n"
+  },
+  {
+    "page": 53,
+    "title": "Cloud_Overview.pdf",
+    "content": "52\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한기타서비스\n6\nPaaS, SaaS 형태로구현되는다양한클라우드를이용한기타서비스들도존재합니다.\n빅데이터활용을위해데이터를‘수집⇨저장⇨분석’의각단계를지원하는\n서비스\n1. 데이터분석서비스\nBigQuery\n서버리스데이터웨어하\n우스\nCloud Dataflow\n파이프라인구축/운영서비\n스\nCloud Dataprep\n지능형데이터준비웹애플리\n케이션\n"
+  },
+  {
+    "page": 54,
+    "title": "Cloud_Overview.pdf",
+    "content": "53\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한기타서비스\n6\nPaaS, SaaS 형태로구현되는다양한클라우드를이용한기타서비스들도존재합니다.\n빅데이터활용을위해데이터를‘수집⇨저장⇨분석’의각단계를지원하는\n서비스\n인터넷에연결된IoT 디바이스가수집한저장분석통제위한서\n비스\n- 데이터수집/저\n장\n- 이벤트관리\n- 데이터처리/분\n석\n2. IoT 서비스\n1. 데이터분석서비스\n디바이스연결/\n인증/메시지교환\n소프트웨어\n개발키트\nBigQuery\n서버리스데이터웨어하\n우스\nCloud Dataflow\n파이프라인구축/운영서비\n스\nCloud Dataprep\n지능형데이터준비웹애플리\n케이션\n"
+  },
+  {
+    "page": 55,
+    "title": "Cloud_Overview.pdf",
+    "content": "54\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한기타서비스\n6\nPaaS, SaaS 형태로구현되는다양한클라우드를이용한기타서비스들도존재합니다.\n빅데이터활용을위해데이터를‘수집⇨저장⇨분석’의각단계를지원하는\n서비스\n인터넷에연결된IoT 디바이스가수집한저장분석통제위한서\n비스\n방대한데이터와빠른연산에활용되는클라우드서\n비스\n- 미리준비된기능(라이브러리)을이용하여사용자스스로기계를학습\n- 클라우드사용자가미리대량의데이터로학습을시켜두고, 그결과를사용자에게제\n공하는것\n- 데이터수집/저\n장\n- 이벤트관리\n- 데이터처리/분\n석\n2. IoT 서비스\n3. AI/기계학습서비스\n1. 데이터분석서비스\n디바이스연결/\n인증/메시지교환\n소프트웨어\n개발키트\nBigQuery\n서버리스데이터웨어하\n우스\nCloud Dataflow\n파이프라인구축/운영서비\n스\nCloud Dataprep\n지능형데이터준비웹애플리\n케이션\n"
+  },
+  {
+    "page": 56,
+    "title": "Cloud_Overview.pdf",
+    "content": "Introduction to\nCloud Computing\n클라우드전환및구축\n"
+  },
+  {
+    "page": 57,
+    "title": "Cloud_Overview.pdf",
+    "content": "56\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드전환\n1\n기간계시스템을클라우드로이전하기위한전략3가지\n특히VMware를지원하는서비스가\n리프트앤시프트방식으로많이이전되고있습\n니다.\n리프트앤시프\n트\n기존의온프레미스시스템을변경없이\n클라우드로옮기고(Lift)\n지속적으로클라우드에최적화하기위해개\n선(Shift)\n클라우드에최적화된정도\n기존IT 시스템과클라우드네이티브의\n공존\n기존의온프레미스시스템을\n클라우드로마이그레이션한후에\n클라우드기능중일부를표준화와자동화\n클라우드네이티브시프트\n클라우드의기능활용을전제한전체시스\n템개선\n"
+  },
+  {
+    "page": 58,
+    "title": "Cloud_Overview.pdf",
+    "content": "57\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드전환> 클라우드마이그레이션전략\n1\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nReplace\nSaaS 솔루션으로재구매또는\n대체하는전략\nRefactor\n애플리케이션을작고유연한구조로\n재설계하는전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRetire\n사용하지않는서비스를중단하거나\n폐기하는전략\nRetain\n온프레미스에현재상태를\n그대로유지하는전략\nRe-platform\n빌드및배포자동화와함께\n새플랫폼으로이동하는전략\nRe-locate\nVMware on AWS으로\n기존의인프라를옮기는등재배치\n하는전략\n"
+  },
+  {
+    "page": 59,
+    "title": "Cloud_Overview.pdf",
+    "content": "58\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\n"
+  },
+  {
+    "page": 60,
+    "title": "Cloud_Overview.pdf",
+    "content": "59\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRe-locate\nVMware on AWS로기존의\n인프라를옮기는등재배치하는\n전략\n"
+  },
+  {
+    "page": 61,
+    "title": "Cloud_Overview.pdf",
+    "content": "60\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRetire\n사용하지않는서비스를\n중단하거나폐기하는전략\nRe-locate\nVMware on AWS 으로기존의\n인프라를옮기는등재배치하는\n전략\n"
+  },
+  {
+    "page": 62,
+    "title": "Cloud_Overview.pdf",
+    "content": "61\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nReplace\nSaaS 솔루션으로재구매또는\n대체하는전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRetire\n사용하지않는서비스를\n중단하거나폐기하는전략\nRe-locate\nVMware on AWS 으로기존의\n인프라를옮기는등재배치하는\n전략\n"
+  },
+  {
+    "page": 63,
+    "title": "Cloud_Overview.pdf",
+    "content": "62\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nReplace\nSaaS 솔루션으로재구매또는\n대체하는전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRetire\n사용하지않는서비스를\n중단하거나폐기하는전략\nRe-platform\n빌드및배포자동화와함께\n새플랫폼으로이동하는전략\nRe-locate\nVMware on AWS 으로기존의\n인프라를옮기는등재배치하는\n전략\n"
+  },
+  {
+    "page": 64,
+    "title": "Cloud_Overview.pdf",
+    "content": "63\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nReplace\nSaaS 솔루션으로재구매또는\n대체하는전략\nRefactor\n애플리케이션을작고유연한\n구조로재설계하는전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRetire\n사용하지않는서비스를\n중단하거나폐기하는전략\nRe-platform\n빌드및배포자동화와함께\n새플랫폼으로이동하는전략\nRe-locate\nVMware on AWS 으로기존의\n인프라를옮기는등재배치하는\n전략\n"
+  },
+  {
+    "page": 65,
+    "title": "Cloud_Overview.pdf",
+    "content": "64\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드마이그레이션전략\n2\n클라우드를활용하기위해서는새로운인프라환경으로기존데이터와애플리케이션을옮기는‘클라우드마이그레이션’ 이필요\n클라우드마이그레이션7R 전략\nReplace\nSaaS 솔루션으로재구매또는\n대체하는전략\nRefactor\n애플리케이션을작고유연한\n구조로재설계하는전략\nRe-host\n코드수정없이클라우드내에서\n애플리케이션을이동하는\n“Lift and shift” 전략\nRetire\n사용하지않는서비스를\n중단하거나폐기하는전략\nRetain\n온프레미스에현재상태를그대로\n유지하는전략\nRe-platform\n빌드및배포자동화와함께\n새플랫폼으로이동하는전략\nRe-locate\nVMware on AWS 으로기존의\n인프라를옮기는등재배치하는\n전략\n"
+  },
+  {
+    "page": 66,
+    "title": "Cloud_Overview.pdf",
+    "content": "65\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한시스템구축시고려사항\n3\n로드밸런서와오토스케일기능으로시스템을확장할수있도록\n만든다.\n1\n"
+  },
+  {
+    "page": 67,
+    "title": "Cloud_Overview.pdf",
+    "content": "66\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한시스템구축시고려사항\n3\n로드밸런서와오토스케일기능으로시스템을확장할수있도록\n만든다.\n하나의존에서장애가발생하더라도문제가없도록멀티존으로\n구성한다.\n1\n2\n"
+  },
+  {
+    "page": 68,
+    "title": "Cloud_Overview.pdf",
+    "content": "67\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한시스템구축시고려사항\n3\n로드밸런서와오토스케일기능으로시스템을확장할수있도록\n만든다.\n하나의존에서장애가발생하더라도문제가없도록멀티존으로\n구성한다.\n서버등의다운을모니터링하고자동으로복구하도록구성한다.\n1\n3\n2\n"
+  },
+  {
+    "page": 69,
+    "title": "Cloud_Overview.pdf",
+    "content": "68\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한시스템구축시고려사항\n3\n로드밸런서와오토스케일기능으로시스템을확장할수있도록\n만든다.\n하나의존에서장애가발생하더라도문제가없도록멀티존으로\n구성한다.\n서버등의다운을모니터링하고자동으로복구하도록구성한다.\n시스템을자동으로복사하여, 백업할수있도록한다.\n1\n3\n2\n4\n"
+  },
+  {
+    "page": 70,
+    "title": "Cloud_Overview.pdf",
+    "content": "69\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한시스템구축시고려사항\n3\n로드밸런서와오토스케일기능으로시스템을확장할수있도록\n만든다.\n하나의존에서장애가발생하더라도문제가없도록멀티존으로\n구성한다.\n서버등의다운을모니터링하고자동으로복구하도록구성한다.\n시스템을자동으로복사하여, 백업할수있도록한다.\nAPI를통해다른서비스와연계시키는환경을유지한다.\n1\n3\n5\n2\n4\n"
+  },
+  {
+    "page": 71,
+    "title": "Cloud_Overview.pdf",
+    "content": "70\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드를이용한시스템구축시고려사항\n3\n로드밸런서와오토스케일기능으로시스템을확장할수있도록\n만든다.\n하나의존에서장애가발생하더라도문제가없도록멀티존으로\n구성한다.\n서버등의다운을모니터링하고자동으로복구하도록구성한다.\n시스템을자동으로복사하여, 백업할수있도록한다.\nAPI를통해다른서비스와연계시키는환경을유지한다.\n온프레미스및기타클라우드서비스로이전할가능성도\n고려한다.\n1\n3\n5\n2\n4\n6\n"
+  },
+  {
+    "page": 72,
+    "title": "Cloud_Overview.pdf",
+    "content": "71\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드구현기술\n4\n서버가상화기술(SDC)\n네트워크가상화\n기술(SDN)\n스토리지가상화\n기술(SDS)\n하이퍼바이저형, HostOS형\nOverlay Network, VLAN, NFV, SDN SAN 스토리지, 분산스토리지\n인프라가상화솔루션\nOpenStack, vmware, Nutanix 등\nHCI\nFunction\nFunction\n컨테이너오케스트레이션기술\nK8s(Kubernetes)\n클라우드네이티브\nMSA, CI/CD, DevOps, \nGitOps\n컨테이너런타임기술\nDocker\n컨테이너가상화\nNS, Cgroup\nIaaS\n클라우드\n인프라\nPaaS\nAPP\nAPP\nAPP\nAPP\nSaaS\nFaaS\nFunction\nFunction\n서버기능\n관리 기능\n스토리지 기능\n네트워크 기능\n미들웨어/\nOS\nCMP\n통합인터페\n이스\n통합프로비\n저닝\n자원효율화\n(AIOps)\n비용효율화\n(FinOps)\n보안및거버넌\n스\n통합가시성\n"
+  },
+  {
+    "page": 73,
+    "title": "Cloud_Overview.pdf",
+    "content": "72\nⓒ2026. OKESTRO Co., Ltd. All Rights Reserved.\n클라우드구현기술\n서버가상화\n기술(SDC)\n네트워크가상화\n기술(SDN)\n스토리지가상화\n기술(SDS)\n하이퍼바이저형, HostOS형Overlay Network, VLAN, NFV, SDNSAN 스토리지, 분산스토리지\n인프라가상화솔루션\nOpenStack, vmware, Nutanix 등\nHCI\nFunction\nFunction\n컨테이너오케스트레이션기술\nK8s(Kubernetes)\n클라우드네이티브\nMSA, CI/CD, DevOps, \nGitOps\n컨테이너런타임기술\nDocker\n컨테이너가상화\nNS, Cgroup\nIaaS\n클라우드\n인프라\nPaaS\nAPP\nAPP\nAPP\nAPP\nSaaS\nFaaS\nFunction\nFunction\n서버기능\n관리 기능\n스토리지 기능\n네트워크 기능\n미들웨어/\nOS\nCMP\n통합인터페\n이스\n통합프로비\n저닝\n자원효율화\n(AIOps)\n비용효율화\n(FinOps)\n보안및거버\n넌스\n통합가시\n성\nCONTRABSS\nVIOLA\nOKESTRO CMP\nTROMBONE\n"
+  }
+]

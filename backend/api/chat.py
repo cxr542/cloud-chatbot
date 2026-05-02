@@ -12,14 +12,14 @@ router = APIRouter()
 @router.post("/api/ask-question", response_model=AskQuestionResponse)
 def ask_question(body: AskQuestionRequest) -> AskQuestionResponse:
     services = get_services()
-    reply, chunk = services.rag.ask(body.text, body.difficulty)
-    page = PageRef(no=chunk.page, title=chunk.title) if chunk else None
+    reply, chunks = services.rag.ask(body.text, body.difficulty)
+    pages = [PageRef(no=c.page, title=c.title) for c in chunks]
     
     # SQLite에 로그 저장
-    is_fallback = chunk is None
+    is_fallback = not chunks
     log_chat(body.text, body.difficulty, is_fallback, reply)
     
-    return AskQuestionResponse(reply=reply, page=page)
+    return AskQuestionResponse(reply=reply, pages=pages, page=pages[0] if pages else None)
 
 
 @router.post("/chat", response_model=ChatResponse)

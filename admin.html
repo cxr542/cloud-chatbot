@@ -9,15 +9,22 @@
         h1 { color: #333; }
         h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 30px; font-size: 1.2rem; }
         .box { border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 15px; }
-        button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+        button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
         button:hover { background: #004494; }
-        input[type="text"], input[type="file"] { width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; }
+        input[type="text"], input[type="file"], textarea { width: 100%; padding: 12px; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
+        textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #f9f9f9; }
-        .delete-btn { background: #dc3545; padding: 5px 10px; font-size: 0.8rem;}
-        .delete-btn:hover { background: #c82333; }
-        .fallback { background: #ffe6e6; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f8fafc; color: #475569; }
+        .delete-btn { background: #ef4444; padding: 6px 12px; font-size: 0.8rem;}
+        .delete-btn:hover { background: #dc2626; }
+        .fallback { background: #fff1f2; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stats-card { padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .stats-card.blue { background: #eff6ff; border-color: #bfdbfe; }
+        .stats-card.green { background: #f0fdf4; border-color: #bbf7d0; }
+        .stats-card h4 { margin: 0 0 5px 0; font-size: 0.85rem; color: #64748b; }
+        .stats-card .value { font-size: 1.5rem; font-weight: bold; color: #1e293b; }
     </style>
 </head>
 <body>
@@ -28,15 +35,32 @@
 
         <h2>1. 챗봇 성격 (시스템 프롬프트) 설정</h2>
         <div class="box">
-            <input type="text" id="prompt-input" placeholder="새로운 기본 프롬프트를 입력하세요">
-            <button onclick="savePrompt()">저장하기</button>
-            <p style="margin-top:10px; font-size:0.9rem;">현재 프롬프트: <strong id="current-prompt" style="color:#0056b3;">로딩중...</strong></p>
+            <p style="margin-bottom:10px; font-size:0.9rem; color:#666;">챗봇의 역할, 말투, 지식 범위에 대한 지침을 상세히 입력하세요.</p>
+            <textarea id="prompt-input" placeholder="예: 당신은 친절한 클라우드 학습 멘토입니다. 복잡한 개념을 쉬운 비유로 설명하고 항상 존댓말을 사용하세요."></textarea>
+            <button onclick="savePrompt()">성격 적용하기</button>
+            <div style="margin-top:15px; padding:10px; background:#f8fafc; border-radius:6px; border-left:4px solid #0056b3;">
+                <p style="margin:0; font-size:0.85rem; color:#475569;">현재 적용된 프롬프트:</p>
+                <p id="current-prompt" style="margin:5px 0 0 0; font-size:0.9rem; font-weight:500; white-space: pre-wrap;">로딩중...</p>
+            </div>
         </div>
 
-        <h2>2. 지식 베이스 관리 (TXT 파일 업로드)</h2>
+        <h2>2. 지식 베이스 관리</h2>
+        <div class="stats-grid">
+            <div class="stats-card blue">
+                <h4>📚 등록된 문서</h4>
+                <div class="value" id="doc-count">0</div>
+            </div>
+            <div class="stats-card green">
+                <h4>🧩 검색 가능한 지식(Chunk)</h4>
+                <div class="value" id="chunk-count">0</div>
+            </div>
+        </div>
         <div class="box">
-            <input type="file" id="file-input" accept=".txt">
-            <button onclick="uploadFile()">업로드</button>
+            <p style="margin-bottom:10px; font-size:0.9rem; color:#666;">PDF 또는 TXT 파일을 업로드하여 챗봇에게 새로운 지식을 가르칠 수 있습니다.</p>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="file" id="file-input" accept=".txt,.pdf" style="margin:0;">
+                <button onclick="uploadFile()" style="white-space:nowrap;">파일 업로드</button>
+            </div>
             
             <table id="doc-table">
                 <thead>
@@ -97,6 +121,12 @@
                 const data = await res.json();
                 const tbody = document.querySelector('#doc-table tbody');
                 tbody.innerHTML = '';
+                
+                // 통계 업데이트
+                const uniqueDocs = new Set(data.chunks.map(c => c.title.split(' (p.')[0])).size;
+                document.getElementById('doc-count').innerText = uniqueDocs;
+                document.getElementById('chunk-count').innerText = data.chunks.length;
+
                 data.chunks.forEach(c => {
                     tbody.innerHTML += `<tr>
                         <td>${c.title}</td>

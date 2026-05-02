@@ -17,7 +17,8 @@ class AskQuestionRequest(BaseModel):
 
 class AskQuestionResponse(BaseModel):
     reply: str
-    page: PageRef | None = None
+    pages: list[PageRef] = []
+    page: PageRef | None = None  # 하위 호환성 유지
 
 
 class SourceItem(BaseModel):

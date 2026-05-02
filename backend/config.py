@@ -4,8 +4,8 @@ import os
 
 from dotenv import load_dotenv
 
-# 로컬 .env 파일 로드
-load_dotenv()
+# 로컬 .env 파일 로드 (시스템 환경변수보다 우선하도록 override=True 추가)
+load_dotenv(override=True)
 
 class Settings:
     # 관리자 시스템(포트 8001) 접속용 인증 정보
