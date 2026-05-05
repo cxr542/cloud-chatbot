@@ -34,9 +34,19 @@ class SummaryRequest(BaseModel):
     end: str | None = None
 
 
+class SummaryBullet(BaseModel):
+    """요약 카드·PNG 등 시각화용 한 줄 요약."""
+
+    page: int
+    text: str
+    source: str = ""
+
+
 class SummaryResponse(BaseModel):
     text: str
     pages: list[int]
+    headline: str = ""
+    bullets: list[SummaryBullet] = Field(default_factory=list)
 
 
 class CompareTermsRequest(BaseModel):

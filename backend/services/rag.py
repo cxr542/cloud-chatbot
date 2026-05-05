@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from backend.db.vector import FileVectorStore, RetrievalChunk
-from backend.services.llm import LLMService
+from backend.services.llm import LLMService, is_greeting_query
 
 
 class RagService:
@@ -10,9 +10,8 @@ class RagService:
         self.llm_service = llm_service
 
     def ask(self, query: str, difficulty: str = "초급") -> tuple[str, list[RetrievalChunk]]:
-        # 인사말 예외 처리: 검색 생략 및 출처 카드(버튼) 숨김
-        greetings = ["안녕", "하이", "반갑", "hello", "hi"]
-        if any(g in query.lower() for g in greetings):
+        # 인사말 예외 처리: 검색 생략 및 출처 카드(버튼) 숨김 (판별 로직은 llm과 동일)
+        if is_greeting_query(query):
             answer = self.llm_service.answer(query, [], difficulty)
             return answer, []
             

@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-# 로컬 .env 파일 로드 (시스템 환경변수보다 우선하도록 override=True 추가)
-load_dotenv(override=True)
+# 프로젝트 루트(backend/ 상위)의 .env를 항상 읽습니다. (uvicorn CWD와 무관)
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(_PROJECT_ROOT / ".env", override=True)
 
 class Settings:
     # 관리자 시스템(포트 8001) 접속용 인증 정보

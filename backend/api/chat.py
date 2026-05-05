@@ -25,10 +25,10 @@ def ask_question(body: AskQuestionRequest) -> AskQuestionResponse:
 @router.post("/chat", response_model=ChatResponse)
 def chat(body: ChatRequest) -> ChatResponse:
     services = get_services()
-    reply, chunk = services.rag.ask(body.message, "초급")
-    
-    # SQLite에 로그 저장
-    is_fallback = chunk is None
+    reply, chunks = services.rag.ask(body.message, "초급")
+
+    # SQLite에 로그 저장 (rag.ask는 두 번째 값으로 항상 list를 반환함)
+    is_fallback = not chunks
     log_chat(body.message, "초급", is_fallback, reply)
     
     return ChatResponse(reply=reply)
