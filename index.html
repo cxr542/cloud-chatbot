@@ -77,9 +77,18 @@
     }
     .doc-btn:hover { background:#ffd9b8; transform:translateY(-1px); box-shadow:0 4px 12px rgba(255,138,61,.15); }
     .doc-btn:active { transform:translateY(0); }
-    .tabs { margin:10px 0 12px; display:flex; flex-wrap:wrap; gap:10px; overflow:visible; padding:4px 2px 8px; }
+    .tabs {
+      margin:10px 0 12px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:8px 10px;
+      overflow:visible;
+      padding:4px 2px 8px;
+    }
     .tab {
-      border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:var(--radius-pill); padding:9px 14px; white-space:nowrap; font-size:13px; font-weight:500;
+      flex-shrink:0;
+      border:1px solid var(--line); background:#fff; color:var(--muted); border-radius:var(--radius-pill); padding:8px 12px; white-space:nowrap; font-size:12px; font-weight:500;
       cursor:pointer; transition:background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease), transform .15s var(--ease);
       box-shadow:0 1px 2px rgba(63,53,45,.04);
     }
@@ -87,6 +96,38 @@
     .tab.active {
       background:linear-gradient(145deg,#ff9750,#ff7a2e); color:#fff; border-color:transparent;
       box-shadow:0 4px 14px rgba(255,138,61,.35); transform:none;
+    }
+    /* 학습 탭 줄 오른쪽 끝: 머리 식히기만(퀴즈는 학습 탭 줄·용어 비교 옆). */
+    .tabs-cluster {
+      display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center;
+    }
+    .tabs-cluster--trailing {
+      margin-left:auto;
+      justify-content:flex-end;
+    }
+    .tabs-relax-wrap { flex-shrink:0; position:relative; align-self:flex-start; }
+    .tabs-relax-wrap .settings-menu {
+      left:auto;
+      right:0;
+      min-width:216px;
+    }
+    .tab.tab--relax {
+      flex-shrink:0;
+      font-size:11.5px;
+      padding:8px 10px;
+      background:linear-gradient(180deg,#f4fbf7,#eaf6f1);
+      border-color:#cbe8d9;
+      color:#3d5945;
+      font-weight:600;
+    }
+    .tab.tab--relax:hover { border-color:#a8dac4; color:#294033; box-shadow:0 3px 10px rgba(60,140,105,.14); transform:translateY(-1px); }
+    .tab.tab--relax.active,
+    .tab.tab--relax.active:hover {
+      background:linear-gradient(145deg,#ff9750,#ff7a2e);
+      color:#fff;
+      border-color:transparent;
+      box-shadow:0 4px 14px rgba(255,138,61,.35);
+      transform:none;
     }
     .view { display:none; padding:16px 18px 18px; flex:1; flex-direction:column; min-height:0; overflow-x:hidden; overflow-y:auto; }
     .view.active { display:flex; flex-direction:column; }
@@ -165,6 +206,14 @@
     .messages::-webkit-scrollbar { width:7px; }
     .messages::-webkit-scrollbar-thumb { background:rgba(139,119,104,.35); border-radius:999px; }
     .messages::-webkit-scrollbar-track { background:transparent; }
+    /* MBTI: 대화 패널이 세로 높이를 받도록 보강(stack 단독이면 메시지 flex가 붕괴될 수 있음) */
+    section.view[data-view="mbti"] {
+      gap:12px;
+    }
+    section.view[data-view="mbti"] > .messages {
+      flex:1 1 0;
+      min-height:min(420px,calc(100vh - 320px));
+    }
     .bubble {
       padding:14px 18px; border-radius:var(--radius-md); line-height:1.65; font-size:14px; white-space:pre-wrap; word-break:break-word;
       margin-bottom:0; box-shadow:0 2px 12px rgba(63,53,45,.06); border:1px solid rgba(242,219,197,.95);
@@ -190,6 +239,17 @@
     }
     .qa-loading__text { margin:0; font-weight:700; color:#5c3310; font-size:14px; text-align:center; }
     .qa-loading__hint { margin:0; text-align:center; line-height:1.45; }
+    /* 출처 찾기: Q&A 로딩과 동일한 스피너·톤을 카드 형태로 표시 */
+    .source-results-loading {
+      max-width: min(100%, 520px);
+      margin: 0 auto 14px;
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      background: #fffef9;
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 12px rgba(63,53,45,.06);
+    }
+    .source-results-loading[aria-busy="true"] { pointer-events: none; }
     .bot-md-root { white-space: normal; word-break: break-word; max-width: 100%; overflow-x: auto; }
     .bot-md-root .md-plain + .md-plain { margin-top: 0.35em; }
     .bot-md-root .md-plain + table.md-table { margin-top: 10px; }
@@ -210,6 +270,64 @@
       display:flex; justify-content:space-between; align-items:center; gap:10px; cursor:pointer;
       transition:border-color .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
       box-shadow:0 1px 4px rgba(63,53,45,.05);
+    }
+    /* 동영상·이미지 출처: 뱃지와 제목을 세로로 쌓아 파일명 줄이 과하게 길게 보이지 않게 함 */
+    .page-card.page-card--media {
+      align-items:flex-start;
+    }
+    .page-card__stack {
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:6px;
+      min-width:0;
+      flex:1;
+      text-align:left;
+    }
+    .page-card__stack .badge { flex-shrink:0; }
+    .page-card__title-line {
+      font-size:14px;
+      font-weight:600;
+      color:#3f352d;
+      line-height:1.45;
+      word-break:keep-all;
+    }
+    .page-card__cta { flex-shrink:0; font-size:13px; font-weight:700; margin-top:1px; }
+    .page-card__thumb-wrap {
+      flex-shrink:0;
+      width:128px;
+      max-height:92px;
+      border-radius:8px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#0f0f0f;
+      align-self:flex-start;
+    }
+    .page-card__thumb { width:100%; height:auto; display:block; vertical-align:top; object-fit:cover; aspect-ratio:16/9; }
+    .page-card__hint-time { margin-top:2px !important; font-size:11px !important; line-height:1.35 !important; }
+    .modal-video-shell { margin-top:10px; }
+    .modal-video-player {
+      width:100%;
+      max-height:62vh;
+      border-radius:10px;
+      background:#111;
+      border:1px solid var(--line);
+    }
+    .qa-inline-player-wrap {
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px dashed rgba(242,219,197,.95);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .qa-inline-video-cap { font-size:12px; font-weight:700; color:#5c3310; margin-bottom:4px; }
+    .qa-inline-video {
+      width:100%;
+      max-height:340px;
+      border-radius:10px;
+      background:#111;
+      border:1px solid var(--line);
     }
     .source-hit { cursor:pointer; text-align:left; flex-wrap:wrap; }
     .badge { display:inline-flex; padding:3px 8px; border-radius:999px; background:#ffe7d1; color:#924e17; font-size:12px; font-weight:700; }
@@ -315,15 +433,74 @@
     @keyframes summarySpin { to { transform:rotate(360deg); } }
     .summary-loading__msg { margin:0; font-weight:700; color:#5c3310; font-size:15px; text-align:center; }
     .summary-loading__hint { margin:0; text-align:center; max-width:300px; line-height:1.5; }
-    .quiz-box { border:1px solid var(--line); border-radius:12px; padding:10px; background:#fff; }
+    .quiz-box { border:1px solid var(--line); border-radius:14px; padding:18px 20px 20px; background:#fff;
+      display:flex; flex-direction:column; gap:2px;
+      box-shadow:0 1px 3px rgba(63,53,45,.06);
+    }
+    .quiz-q-title { margin:0 0 4px; font-size:17px; font-weight:700; color:#3f352d; line-height:1.55; }
+    .quiz-option-list { display:flex; flex-direction:column; gap:10px; margin:14px 0 6px; width:100%; padding:0; }
+    .quiz-opt {
+      display:flex; align-items:flex-start; gap:12px;
+      width:100%; box-sizing:border-box; margin:0; padding:12px 14px;
+      border:1px solid rgba(242,219,197,.95); border-radius:12px;
+      background:linear-gradient(180deg,#fffdfb,#fffaf4);
+      text-align:left; cursor:pointer; font-size:15px; line-height:1.5;
+      color:#3f352d; font-family:inherit;
+      transition:border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+    }
+    .quiz-opt:hover:not(:disabled) { border-color:var(--primary-soft); box-shadow:0 2px 12px rgba(255,146,71,.14); }
+    .quiz-opt:disabled { cursor:default; opacity:.96; }
+    .quiz-opt__num {
+      flex:0 0 30px; width:30px; height:30px;
+      border-radius:9px; font-weight:800; font-size:13px; line-height:30px; text-align:center;
+      background:rgba(255,146,71,.15); color:var(--primary);
+    }
+    .quiz-opt--correct .quiz-opt__num { background:rgba(74,173,118,.28); color:#1a7a42; }
+    .quiz-opt--wrong .quiz-opt__num { background:rgba(229,114,114,.28); color:#9b2f2f; }
+    .quiz-opt__text { flex:1; min-width:0; }
+    .quiz-opt--correct { border-color:rgba(74,173,118,.72); background:linear-gradient(180deg,#f0fff5,#eafaf0); box-shadow:inset 0 0 0 1px rgba(74,173,118,.08); }
+    .quiz-opt--wrong { border-color:rgba(229,114,114,.72); background:linear-gradient(180deg,#fff8f8,#fff0f0); }
+    .quiz-feedback { margin:10px 0 0; min-height:1.35em; line-height:1.55; color:#71655c; padding:10px 0 0;
+      border-top:1px dashed rgba(242,219,197,.85);
+    }
+    .quiz-feedback:empty { min-height:0; margin:4px 0 0; padding:0; border:none; }
+    .quiz-next-wrap { margin-top:12px; width:100%; }
+    .quiz-next-wrap .btn { width:100%; padding:11px 16px; font-weight:700; border-radius:12px; }
+    #quizLoading { margin-top:2px; }
+    .compare-result-stack { margin-top:8px; min-height:8px; }
+    .compare-card { margin-top:10px; padding:14px 16px; border:1px solid var(--line); border-radius:12px;
+      background:#fffdfb; box-shadow:0 1px 3px rgba(63,53,45,.05); }
+    .compare-card h4 { margin:0 0 8px; font-size:14px; color:var(--primary); }
+    .compare-card p { margin:0; line-height:1.6; color:#3f352d; white-space:pre-wrap; word-break:break-word; }
+    .sticker-pack-intro { margin:0 0 10px; line-height:1.55; color:#5c5149; font-size:0.88rem; }
+    .sticker-preview-wrap {
+      margin:10px 0 14px; padding:12px; border:1px dashed rgba(242,219,197,.95); border-radius:12px;
+      background:linear-gradient(180deg,#fffdfb,#fff7ef); text-align:center;
+    }
+    .sticker-preview { max-width:100%; max-height:220px; border-radius:10px; background:#fff; border:1px solid var(--line); }
+    .sticker-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:14px; }
+    .sticker-card {
+      border:1px solid var(--line); border-radius:12px; padding:10px; background:#fffdfb;
+      box-shadow:0 1px 3px rgba(63,53,45,.06); display:flex; flex-direction:column; gap:8px; align-items:stretch;
+    }
+    .sticker-card img { width:100%; height:148px; object-fit:contain; background:#fff; border-radius:8px; border:1px solid rgba(226,217,207,.85); }
+    .sticker-card .sticker-label { font-size:12px; font-weight:700; color:#574a42; margin:2px 0 0; line-height:1.35; }
+    .sticker-card .btn { width:100%; padding:9px 8px; font-size:12px; border-radius:10px; }
+    .sticker-run--idle { opacity:0.78; }
+    #stickerLoading {
+      display:none;
+      width:100%;
+      margin-top:2px;
+      margin-bottom:4px;
+    }
+    #stickerLoading.is-active { display:flex; flex-direction:column; }
+    .sticker-batch-wrap { flex-wrap:wrap; gap:8px; align-items:center; }
     .progress { height:10px; border-radius:999px; background:#ffe6cf; overflow:hidden; }
     .progress > div { height:100%; background:var(--primary); width:0; transition:width .25s; }
     .opt { border:1px solid var(--line); padding:9px; border-radius:10px; margin-top:6px; background:#fff; text-align:left; width:100%; cursor:pointer; }
     .opt.ok { border-color:#9dd5ab; background:#e9fff0; }
     .opt.bad { border-color:#f1abab; background:#fff0f0; }
     .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
-    .term { border:1px solid var(--line); border-radius:10px; padding:10px; background:#fff; text-align:center; cursor:pointer; }
-    .term.done { background:#edfff1; border-color:#a8dfb4; color:#2f7f41; font-weight:700; }
     .diff-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
     .drawer-bg,.modal-bg { position:fixed; inset:0; background:rgba(55,34,20,.35); backdrop-filter:blur(4px); display:none; z-index:1000; }
     .drawer-bg.open,.modal-bg.open { display:block; }
@@ -360,7 +537,7 @@
       </div>
       <div class="header-actions">
         <button class="doc-btn" id="docBtn" type="button">📚 지식 베이스 ▾</button>
-        <a class="home-link" href="http://localhost:9999/home">🏠 홈</a>
+        <a class="home-link" href="/home">🏠 홈</a>
         <div class="settings-wrap" id="settingsWrap">
           <button type="button" class="settings-trigger doc-btn" id="settingsBtn" aria-expanded="false" aria-haspopup="true" aria-controls="settingsMenu">⚙️ 설정 ▾</button>
           <div class="settings-menu" id="settingsMenu" role="menu" aria-hidden="true"></div>
@@ -368,7 +545,7 @@
       </div>
     </header>
 
-    <nav class="tabs" id="tabs"></nav>
+    <nav class="tabs" id="tabs" aria-label="학습 탭 및 줄 오른쪽 끝 머리 식히기"></nav>
 
     <main class="card">
       <div id="modeBanner" class="mode-banner" style="display: none;">
@@ -394,7 +571,7 @@
         <div class="stack">
           <div class="row search-inline">
             <button type="button" class="btn ghost voice-btn" id="voiceSourceBtn" aria-label="말로 검색어 입력">🎤</button>
-            <input id="sourceKeyword" type="search" placeholder="키워드 검색 · 🎤 음성 가능 (예: SSO)" autocomplete="off" />
+            <input id="sourceKeyword" type="search" placeholder="검색어 (단어·짧은 문장 가능) · 🎤 음성 · 예: 가상화" autocomplete="off" />
             <button type="button" class="btn" id="sourceSearchBtn">검색</button>
           </div>
           <div class="chips" id="sourceChips"></div>
@@ -428,20 +605,77 @@
         <div id="quizSetup" class="stack">
           <select id="quizCount"><option>5</option><option selected>10</option><option>20</option></select>
           <select id="quizType"><option value="mcq">4지선다</option><option value="ox">OX</option><option value="mix">혼합</option></select>
-          <button class="btn" id="quizStartBtn">퀴즈 시작</button>
+          <button type="button" class="btn" id="quizStartBtn">퀴즈 시작</button>
+        </div>
+        <div id="quizLoading" class="stack" style="display:none;" role="status" aria-live="polite">
+          <div class="summary-loading" aria-busy="true">
+            <div class="summary-loading__spinner" aria-hidden="true"></div>
+            <p class="summary-loading__msg">퀴즈를 생성하고 있습니다…</p>
+            <p class="summary-loading__hint meta">학습 문서를 바탕으로 문제를 만드는 중입니다. 분량과 AI 응답에 따라 잠시 걸릴 수 있습니다.</p>
+          </div>
         </div>
         <div id="quizPlay" class="stack" style="display:none;">
           <div class="row" style="justify-content:space-between;"><strong id="quizScore">점수 0</strong><span id="quizIndex">1/10</span></div>
           <div class="progress"><div id="quizBar"></div></div>
           <div class="quiz-box">
-            <p id="quizQuestion"></p>
-            <div id="quizOptions"></div>
-            <p class="meta" id="quizExplain"></p>
+            <p id="quizQuestion" class="quiz-q-title"></p>
+            <div id="quizOptions" class="quiz-option-list"></div>
+            <p class="quiz-feedback meta" id="quizExplain"></p>
+            <div id="quizNextWrap" class="quiz-next-wrap" aria-live="polite"></div>
           </div>
         </div>
         <div id="quizDone" style="display:none;" class="stack">
           <div class="result" id="quizDoneText"></div>
-          <button class="btn ghost" id="quizResetBtn">다시 풀기</button>
+          <button type="button" class="btn ghost" id="quizResetBtn">다시 풀기</button>
+        </div>
+      </section>
+
+      <section class="view" data-view="mbti">
+        <p class="meta" style="margin:0;line-height:1.65;">
+          8개 문항 후 유형 안내와 간단한 성향 분석까지 이어집니다.
+          각 질문에 <strong>A/B</strong>처럼 짧게 답하면 됩니다. <strong>참고·유희용</strong>이며 정식 검사는 아니에요.
+        </p>
+        <div class="row" style="margin-bottom:0;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="btn" id="mbtiStartBtn">대화 시작</button>
+          <button type="button" class="btn ghost" id="mbtiResetBtn" disabled>처음부터</button>
+        </div>
+        <div class="messages" id="mbtiMessages" aria-live="polite"></div>
+        <div class="row voice-input-row" style="margin-top:0;">
+          <input id="mbtiInput" placeholder="먼저 '대화 시작'을 누른 뒤 답을 입력해 주세요." autocomplete="off" disabled readonly />
+          <button class="btn" id="mbtiSendBtn" disabled style="white-space:nowrap;">전송</button>
+        </div>
+      </section>
+
+      <section class="view" data-view="stickers">
+        <div class="stack sticker-pack">
+          <p class="sticker-pack-intro">
+            얼굴이 잘 보이는 <strong>사진 한 장</strong>으로 귀여운 손그림 스티커 <strong>12종</strong>을 순서대로 만들어 줍니다
+            (감동·멍때리기·경악 등). 흰 배경·외곽선·파스텔 느낌이며, 끝날 때까지 <strong>몇 분</strong> 걸릴 수 있어요.
+            아래에서 그림 전부를 <strong>ZIP 파일로 한 번에</strong> 받을 수도 있어요.
+          </p>
+          <label class="row" style="flex-wrap:wrap;gap:8px;align-items:center;">
+            <span class="meta" style="white-space:nowrap;">참조 사진</span>
+            <input type="file" id="stickerFile" accept="image/*" />
+          </label>
+          <p id="stickerNeedPhotoHint" class="meta" style="margin:4px 0 0;line-height:1.5;">
+            위에서 사진을 고르면 생성이 시작됩니다. 버튼을 눌렀는데 반응이 없다면, 먼저 파일이 선택됐는지 확인해 주세요.
+          </p>
+          <div id="stickerPreviewWrap" class="sticker-preview-wrap" style="display:none;">
+            <img id="stickerPreview" class="sticker-preview" alt="선택한 참조 미리보기" />
+          </div>
+          <div id="stickerLoading" class="" role="status" aria-live="assertive">
+            <div class="summary-loading" aria-busy="true">
+              <div class="summary-loading__spinner" aria-hidden="true"></div>
+              <p class="summary-loading__msg" id="stickerLoadingMsg">생성 준비 중…</p>
+              <p class="summary-loading__hint meta" id="stickerLoadingSub"></p>
+            </div>
+          </div>
+          <button type="button" class="btn sticker-run--idle" id="stickerRunBtn">🪄 스티커 12종 만들기</button>
+          <p id="stickerHints" class="meta" style="margin:10px 0 0;display:none;"></p>
+          <div id="stickerBatchWrap" class="sticker-batch-wrap row" style="display:none;margin-top:4px;">
+            <button type="button" class="btn ghost" id="stickerZipBtn" disabled>📦 ZIP으로 전체 저장</button>
+          </div>
+          <div id="stickerGrid" class="sticker-grid" aria-live="polite"></div>
         </div>
       </section>
 
@@ -456,19 +690,8 @@
         <div class="stack">
           <div class="row"><input id="termA" placeholder="용어 A" /><input id="termB" placeholder="용어 B" /></div>
           <div class="chips" id="compareChips"></div>
-          <button class="btn" id="compareRunBtn">비교하기</button>
-          <div id="compareResult"></div>
-        </div>
-      </section>
-
-      <section class="view" data-view="progress">
-        <div class="stack">
-          <div class="result">
-            <strong id="progressPct">0%</strong>
-            <div class="progress" style="margin-top:8px;"><div id="progressBar"></div></div>
-            <p class="meta" id="progressStats"></p>
-          </div>
-          <div class="grid" id="progressTerms"></div>
+          <button type="button" class="btn" id="compareRunBtn">비교하기</button>
+          <div id="compareResult" class="compare-result-stack"></div>
         </div>
       </section>
 
@@ -493,29 +716,37 @@
         <button class="btn ghost" id="modalCloseBtn">닫기</button>
       </div>
       <img id="modalImage" class="mock-img" alt="페이지 이미지" />
+      <div id="modalMediaPanel" class="meta" style="display:none;margin-top:4px;line-height:1.55;padding:12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;"></div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script>
     (function () {
       "use strict";
 
       /** Q&A·후속 안내에서 쓰는 기능 안내(마크다운). 메인 탭 + 설정 메뉴 구조와 맞춥니다. */
       const FEATURE_GUIDE_TABLE_MD =
+        "상단 줄 **왼쪽**은 학습 탭 순서 그대로( Q&A→출처→요약→용어 비교→🧠 퀴즈 ). **머리 식히기 ▾**만 줄 **오른쪽 끝**에 따로 둡니다.\n\n" +
         "**메인 탭**\n\n" +
         "| 메뉴 | 설명 |\n" +
         "| :--- | :--- |\n" +
         "| 💬 Q&A | 학습 문서를 근거로 질문에 답합니다 |\n" +
-        "| 🔍 출처 찾기 | 키워드로 관련 페이지를 찾습니다 |\n" +
+        "| 🔍 출처 찾기 | 문서에서 관련 페이지 검색(의미+키워드) |\n" +
         "| 📝 요약 | 주제별·페이지별·전체 요약을 봅니다 |\n" +
+        "| ⚖️ 용어 비교 | 두 용어의 차이를 비교합니다 |\n" +
         "| 🧠 퀴즈 | 4지선다·OX·혼합으로 복습합니다 |\n" +
-        "| ⚖️ 용어 비교 | 두 용어의 차이를 비교합니다 |\n\n" +
-        "**⚙️ 설정 메뉴**(홈 오른쪽)\n\n" +
+        "| ☕ 머리 식히기 ▾ | 줄 오른쪽 끝 버튼. 이모티콘·나의 MBTI 등(아래 참고) |\n\n" +
+        "**☕ 머리 식히기**(드롭다운 내용)\n\n" +
+        "| 메뉴 | 설명 |\n" +
+        "| :--- | :--- |\n" +
+        "| 🎨 이모티콘 | 손그림 느낌 스티커 패널 12종(저장·ZIP 가능) |\n" +
+        "| 📊 나의 MBTI 찾기 | 질문에 답하며 간단히 성향을 살펴 봅니다(참고용) |\n\n" +
+        "**⚙️ 설정 메뉴**(홈 오른쪽 ▾)\n\n" +
         "| 메뉴 | 설명 |\n" +
         "| :--- | :--- |\n" +
         "| 📌 오답노트 | 틀린 문제를 모아 다시 봅니다 |\n" +
-        "| 📊 진도 체크 | 용어 학습 완료 현황을 봅니다 |\n" +
-        "| ⚙️ 난이도 설정 | 초급·중급·고급 설명 깊이를 바꿉니다 |\n";
+        "| ⚙️ 난이도 설정 | 초급·중급·고급 설명 깊이를 바꿉니다(Q&A·퀴즈 생성에 반영) |\n";
 
       function homeIntroMarkdown() {
         return (
@@ -536,62 +767,120 @@
         );
       }
 
+      function inferUploadedDocKind(entry) {
+        const k = entry && entry.kind;
+        if (k === "pdf" || k === "video" || k === "image") return k;
+        const f = String((entry && entry.file) || "").toLowerCase();
+        if (/\.(mp4|webm|mov|mpeg|mpg|m4v)$/i.test(f)) return "video";
+        if (/\.(png|jpe?g|gif|webp)$/i.test(f)) return "image";
+        return "pdf";
+      }
+
+      const KNOWN_DOC_META_FOR_KB = {
+        "cloud_terminology.pdf": {
+          title: "클라우드 기본 용어집",
+          desc: "클라우드 핵심 용어를 총정리한 입문서입니다.",
+          tags: ["입문", "용어정리"],
+        },
+        "Cloud_Overview.pdf": {
+          title: "클라우드 개요 가이드",
+          desc: "클라우드 도입 전략과 구성 요소를 다루는 가이드입니다.",
+          tags: ["아키텍처", "실무"],
+        },
+      };
+
       const appConfig = {
-        storage: { wrong: "cloud_wrong_notes_v1", progress: "cloud_progress_v1", level: "cloud_level_v1" },
+        storage: { wrong: "cloud_wrong_notes_v1", level: "cloud_level_v1" },
         docs: [
           { file: "cloud_terminology.pdf", title: "클라우드 기본 용어집", desc: "클라우드 핵심 용어를 총정리한 입문서입니다.", tags: ["입문", "용어정리"], pages: 80 },
           { file: "Cloud_Overview.pdf", title: "클라우드 개요 가이드", desc: "클라우드 도입 전략과 구성 요소를 다루는 가이드입니다.", tags: ["아키텍처", "실무"], pages: 73 }
         ],
-        mainTabs: [
-          ["qa", "💬 Q&A"],
-          ["source", "🔍 출처 찾기"],
-          ["summary", "📝 요약"],
-          ["quiz", "🧠 퀴즈"],
-          ["compare", "⚖️ 용어비교"]
+        /** 상단 학습 탭 줄: 학습 목록 전부(마지막이 🧠 퀴즈)가 왼쪽 뭉치, 줄 **오른쪽 끝**에만 ☕ 「머리 식히기」▼(이모티콘·MBTI)를 둡니다. */
+        mainTabGroups: [
+          {
+            slug: "learn",
+            label: "학습",
+            tabs: [
+              ["qa", "💬 Q&A"],
+              ["source", "🔍 출처 찾기"],
+              ["summary", "📝 요약"],
+              ["compare", "⚖️ 용어 비교"],
+              ["quiz", "🧠 퀴즈"],
+            ],
+          },
+        ],
+        /** 줄 **오른쪽 끝** 「머리 식히기」▼에 넣을 항목입니다. 설정 메뉴와 동형 버튼·패널 UI입니다. */
+        breakMenuItems: [
+          ["stickers", "🎨 이모티콘"],
+          ["mbti", "📊 나의 MBTI 찾기"],
         ],
         /** 홈 오른쪽 ⚙️ 설정 패널에서 전환하는 보조 화면 */
         settingsMenuItems: [
-          ["wrong", "📌 오답노트"], ["progress", "📊 진도체크"], ["difficulty", "⚙️ 난이도 설정"]
+          ["wrong", "📌 오답노트"], ["difficulty", "⚙️ 난이도 설정"]
         ],
         uiChips: {
           qa: ["클라우드란?", "IaaS와 PaaS 차이", "공공 클라우드"],
           source: ["클라우드", "가상화", "오케스트로"],
-          compare: [["IaaS", "PaaS"], ["공용", "사설"], ["온프레미스", "클라우드"]]
+          compare: [["IaaS", "PaaS"], ["공용", "사설"], ["온프레미스", "클라우드"]],
+          stickers: [],
         },
         /** 문서 검색 결과가 없을 때(ㅋㅋㅋ 등) 안내 버블을 추가하기까지 대기 시간(ms) */
         noDocWelcomeDelayMs: 1600,
         modeIntros: {
           qa: "💬 Q&A 모드입니다. 클라우드에 대해 궁금한 무엇이든 물어보세요!",
-          source: "🔍 출처 찾기 모드입니다. 키워드가 있는 페이지를 바로 찾아드려요.",
+          source: "🔍 출처 찾기입니다. 학습 문서에서 관련 페이지를 찾습니다. (임베딩+키워드 혼합 검색)",
           summary: "📝 요약 모드입니다. 핵심 내용을 정리해 드립니다.",
           quiz: "🧠 퀴즈 모드입니다! 배운 내용을 문제를 풀며 복습해 보세요.",
+          mbti: "📊 나의 MBTI 찾기입니다. 질문에 하나씩 답하면 유형 안내와 간단 분석까지 이어집니다.(참고용)",
           wrong: "📌 오답노트입니다. 틀렸던 문제들을 다시 확인해 보세요.",
           compare: "⚖️ 용어 비교 모드입니다. 두 개념의 차이점을 분석해 드립니다.",
-          progress: "📊 진도 체크 모드입니다. 학습 현황을 한눈에 확인해 보세요.",
-          difficulty: "⚙️ 난이도 설정 모드입니다. 설명 수준을 조절할 수 있습니다."
+          stickers:
+            "🎨 나만의 스티커예요. 사진 한 장으로 손그림 느낌 12종을 만들어 보세요. (몇 분 걸릴 수 있어요)",
+          difficulty: "⚙️ 난이도 설정 모드입니다. Q&A·퀴즈 출제 난이도를 바꿀 수 있습니다."
         }
       };
 
-      const glossaryData = { terms: ["SSO", "RBAC", "ABAC", "MFA", "ACL", "HA", "DR", "IaaS", "PaaS", "SaaS", "VPC", "Subnet"] };
+      /** 모드 안내 칩 순서용: 학습 5종 + 헤더 드롭다운 두 메뉴 순서입니다. */
+      appConfig.mainTabs = (appConfig.mainTabGroups[0] && Array.isArray(appConfig.mainTabGroups[0].tabs)
+        ? appConfig.mainTabGroups[0].tabs.slice()
+        : []
+      ).concat(Array.isArray(appConfig.breakMenuItems) ? appConfig.breakMenuItems.slice() : []);
 
       const $ = (s) => document.querySelector(s);
       const el = {
         tabs: $("#tabs"), subtitle: $("#headerSubtitle"), docBtn: $("#docBtn"),
         drawerBg: $("#drawerBg"), drawer: $("#drawer"), docList: $("#docList"),
-        modalBg: $("#modalBg"), modalTitle: $("#modalTitle"), modalImage: $("#modalImage"),
+        modalBg: $("#modalBg"), modalTitle: $("#modalTitle"), modalImage: $("#modalImage"), modalMediaPanel: $("#modalMediaPanel"),
         qaMsgs: $("#qaMessages"), qaInput: $("#qaInput"), qaSendBtn: $("#qaSendBtn"), qaChips: $("#qaChips"),
         sourceKeyword: $("#sourceKeyword"), sourceSearchBtn: $("#sourceSearchBtn"), sourceResults: $("#sourceResults"), sourceChips: $("#sourceChips"),
         summaryMode: $("#summaryMode"), summaryTopicWrap: $("#summaryTopicWrap"), summaryRangeWrap: $("#summaryRangeWrap"),
         summaryTopic: $("#summaryTopic"), summaryStart: $("#summaryStart"),
         summaryEnd: $("#summaryEnd"), summaryRunBtn: $("#summaryRunBtn"), summaryPngBtn: $("#summaryPngBtn"), summaryResult: $("#summaryResult"),
-        quizSetup: $("#quizSetup"), quizPlay: $("#quizPlay"), quizDone: $("#quizDone"),
+        quizSetup: $("#quizSetup"), quizPlay: $("#quizPlay"), quizDone: $("#quizDone"), quizLoading: $("#quizLoading"),
+        quizStartBtn: $("#quizStartBtn"), quizResetBtn: $("#quizResetBtn"), quizCount: $("#quizCount"), quizType: $("#quizType"),
         quizScore: $("#quizScore"), quizIndex: $("#quizIndex"), quizBar: $("#quizBar"), quizQuestion: $("#quizQuestion"),
-        quizOptions: $("#quizOptions"), quizExplain: $("#quizExplain"), quizDoneText: $("#quizDoneText"),
-        wrongList: $("#wrongList"), compareResult: $("#compareResult"), progressTerms: $("#progressTerms"),
-        progressPct: $("#progressPct"), progressBar: $("#progressBar"), progressStats: $("#progressStats"),
+        quizOptions: $("#quizOptions"), quizExplain: $("#quizExplain"), quizNextWrap: $("#quizNextWrap"), quizDoneText: $("#quizDoneText"),
+        wrongList: $("#wrongList"),
+        compareRunBtn: $("#compareRunBtn"), termA: $("#termA"), termB: $("#termB"), compareResult: $("#compareResult"),
+        stickerFile: $("#stickerFile"),
+        stickerNeedPhotoHint: $("#stickerNeedPhotoHint"),
+        stickerPreviewWrap: $("#stickerPreviewWrap"),
+        stickerPreview: $("#stickerPreview"),
+        stickerRunBtn: $("#stickerRunBtn"),
+        stickerLoading: $("#stickerLoading"),
+        stickerLoadingMsg: $("#stickerLoadingMsg"),
+        stickerLoadingSub: $("#stickerLoadingSub"),
+        stickerHints: $("#stickerHints"),
+        stickerBatchWrap: $("#stickerBatchWrap"),
+        stickerZipBtn: $("#stickerZipBtn"),
+        stickerGrid: $("#stickerGrid"),
+        mbtiMessages: $("#mbtiMessages"),
+        mbtiInput: $("#mbtiInput"),
+        mbtiSendBtn: $("#mbtiSendBtn"),
+        mbtiStartBtn: $("#mbtiStartBtn"),
+        mbtiResetBtn: $("#mbtiResetBtn"),
         difficultyCards: $("#difficultyCards"), modeBanner: $("#modeBanner"), modeText: $("#modeText"),
         settingsWrap: $("#settingsWrap"), settingsBtn: $("#settingsBtn"), settingsMenu: $("#settingsMenu"),
-        termA: $("#termA"), termB: $("#termB"),
         ttsSpeakBtn: $("#ttsSpeakBtn"), ttsStopBtn: $("#ttsStopBtn"), ttsHint: $("#ttsHint"),
         voiceQaBtn: $("#voiceQaBtn"), voiceSourceBtn: $("#voiceSourceBtn")
       };
@@ -788,7 +1077,6 @@
         currentDoc: appConfig.docs[0],
         level: localStorage.getItem(appConfig.storage.level) || "초급",
         wrong: JSON.parse(localStorage.getItem(appConfig.storage.wrong) || "[]"),
-        progress: JSON.parse(localStorage.getItem(appConfig.storage.progress) || "[]"),
         quiz: { i: 0, s: 0, list: [] }
       };
 
@@ -819,7 +1107,96 @@
           }
           return data;
         },
-        getPdfPageUrl(filename, pageNum) { return `/api/pdf-page/${encodeURIComponent(filename)}/${pageNum}`; }
+        getPdfPageUrl(filename, pageNum) { return `/api/pdf-page/${encodeURIComponent(filename)}/${pageNum}`; },
+        getKbMediaUrl(filename) {
+          return `/api/kb-media/${encodeURIComponent(filename)}`;
+        },
+        getVideoPosterUrl(filename, sec) {
+          const t = typeof sec === "number" && !Number.isNaN(sec) ? sec : 35;
+          return `/api/video-poster/${encodeURIComponent(filename)}?t=${encodeURIComponent(String(t))}`;
+        },
+        async generateQuiz(type, count, difficulty) {
+          const res = await fetch("/api/generate-quiz", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type, count, difficulty })
+          });
+          let data = null;
+          try {
+            data = await res.json();
+          } catch (e) {
+            data = null;
+          }
+          if (!res.ok) {
+            const msg =
+              typeof data === "object" && data !== null && typeof data.detail === "string"
+                ? data.detail
+                : "퀴즈 문제를 받아 오지 못했습니다.";
+            throw new Error(msg);
+          }
+          return Array.isArray(data) ? data : [];
+        },
+        async compareTerms(termA, termB) {
+          const res = await fetch("/api/compare-terms", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ termA, termB })
+          });
+          let data = {};
+          try {
+            data = await res.json();
+          } catch (e) {
+            data = {};
+          }
+          if (!res.ok) {
+            const msg =
+              typeof data === "object" && data !== null && typeof data.detail === "string"
+                ? data.detail
+                : "용어 비교 요청에 실패했습니다.";
+            throw new Error(msg);
+          }
+          return data;
+        },
+        async createStickerPack(file) {
+          const fd = new FormData();
+          fd.append("file", file, file.name || "photo.jpg");
+          const res = await fetch("/api/sticker-pack", { method: "POST", body: fd });
+          let data = {};
+          try {
+            data = await res.json();
+          } catch (e) {
+            data = {};
+          }
+          if (!res.ok) {
+            const msg =
+              typeof data === "object" && data !== null && typeof data.detail === "string"
+                ? data.detail
+                : `스티커 요청 실패 (${res.status})`;
+            throw new Error(msg);
+          }
+          return data && typeof data === "object" ? data : { items: [], warnings: [] };
+        },
+        async mbtiChat(messages) {
+          const res = await fetch("/api/mbti-chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages }),
+          });
+          let data = {};
+          try {
+            data = await res.json();
+          } catch (e) {
+            data = {};
+          }
+          if (!res.ok) {
+            const msg =
+              typeof data === "object" && data !== null && typeof data.detail === "string"
+                ? data.detail
+                : "MBTI 대화 요청에 실패했습니다.";
+            throw new Error(msg);
+          }
+          return data && typeof data === "object" ? data : {};
+        },
       };
 
       const SummaryView = {
@@ -1002,37 +1379,1036 @@
         }
       };
 
+      /** 퀴즈: 서버(로컬 문제 풀)에서 문항을 받아 풀이·오답 노트(localStorage)까지 연결합니다. */
+      const QuizView = {
+        _locked: false,
+        /** 퀴즈 화면 상단 진행 막대 폭(%)을 갱신합니다. */
+        _setBar() {
+          const list = store.quiz.list;
+          const n = list.length;
+          const i = Math.min(store.quiz.i, Math.max(0, n - 1));
+          const pct = n > 0 ? Math.round(((i + (this._locked ? 1 : 0)) / n) * 100) : 0;
+          el.quizBar.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+        },
+        /** 요약 탭과 비슷한 로딩 패널을 켭니다(퀴즈 API 대기 중). */
+        showLoadingUi() {
+          el.quizSetup.style.display = "none";
+          el.quizPlay.style.display = "none";
+          el.quizDone.style.display = "none";
+          if (el.quizLoading) el.quizLoading.style.display = "";
+        },
+        /** 생성 완료·오류 시 로딩 패널을 끕니다. */
+        hideLoadingUi() {
+          if (el.quizLoading) el.quizLoading.style.display = "none";
+        },
+        backToSetup() {
+          this._locked = false;
+          this.hideLoadingUi();
+          el.quizPlay.style.display = "none";
+          el.quizDone.style.display = "none";
+          el.quizSetup.style.display = "";
+          if (el.quizNextWrap) el.quizNextWrap.innerHTML = "";
+          if (el.quizStartBtn) el.quizStartBtn.disabled = false;
+          store.quiz = { i: 0, s: 0, list: [] };
+        },
+        async start() {
+          if (!el.quizStartBtn || !el.quizCount || !el.quizType) return;
+          const count = Math.min(50, Math.max(1, parseInt(String(el.quizCount.value), 10) || 10));
+          const type = el.quizType.value || "mcq";
+          el.quizStartBtn.disabled = true;
+          if (el.quizCount) el.quizCount.disabled = true;
+          if (el.quizType) el.quizType.disabled = true;
+          this.showLoadingUi();
+          try {
+            const list = await fetchService.generateQuiz(type, count, store.level);
+            if (!list.length) throw new Error("문제 목록이 비어 있습니다.");
+            store.quiz = { i: 0, s: 0, list };
+            this._locked = false;
+            this.hideLoadingUi();
+            el.quizDone.style.display = "none";
+            el.quizPlay.style.display = "";
+            this.renderQuestion();
+          } catch (err) {
+            this.hideLoadingUi();
+            el.quizSetup.style.display = "";
+            window.alert(err && err.message ? err.message : "퀴즈를 시작할 수 없습니다. 서버 연결을 확인해 주세요.");
+          } finally {
+            el.quizStartBtn.disabled = false;
+            if (el.quizCount) el.quizCount.disabled = false;
+            if (el.quizType) el.quizType.disabled = false;
+          }
+        },
+        finish() {
+          this._locked = false;
+          el.quizPlay.style.display = "none";
+          el.quizDone.style.display = "";
+          const total = store.quiz.list.length;
+          const score = store.quiz.s;
+          el.quizDoneText.textContent =
+            total > 0 ? `총 ${total}문제 중 ${score}문제를 맞혔습니다 (${Math.round((score / total) * 100)}%).` : "퀴즈가 종료되었습니다.";
+          el.quizBar.style.width = "100%";
+        },
+        renderQuestion() {
+          this._locked = false;
+          el.quizExplain.textContent = "";
+          if (el.quizNextWrap) el.quizNextWrap.innerHTML = "";
+          const list = store.quiz.list;
+          const idx = store.quiz.i;
+          if (idx >= list.length || !list[idx]) {
+            this.finish();
+            return;
+          }
+          const q = list[idx];
+          const total = list.length;
+          el.quizIndex.textContent = `${idx + 1}/${total}`;
+          el.quizScore.textContent = `점수 ${store.quiz.s}`;
+          el.quizQuestion.textContent = q.q || "";
+          const opts = Array.isArray(q.c) ? q.c : [];
+          el.quizOptions.innerHTML = opts
+            .map(
+              (_, i) =>
+                `<button type="button" class="quiz-opt" data-i="${i}">` +
+                `<span class="quiz-opt__num" aria-hidden="true">${i + 1}</span>` +
+                `<span class="quiz-opt__text">${escMini(String(opts[i]))}</span>` +
+                `</button>`
+            )
+            .join("");
+          el.quizOptions.querySelectorAll(".quiz-opt").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const pi = parseInt(btn.getAttribute("data-i") || "-1", 10);
+              if (!Number.isFinite(pi) || pi < 0) return;
+              this.onPick(pi);
+            });
+          });
+          this._setBar();
+        },
+        /** 선택한 보기 인덱스에 대한 정오 판정·해설·오답 저장·다음 문항으로 이어집니다. */
+        onPick(picked) {
+          if (this._locked) return;
+          const list = store.quiz.list;
+          const idx = store.quiz.i;
+          const q = list[idx];
+          if (!q) return;
+          const correctIdx = typeof q.a === "number" ? q.a : 0;
+          const ok = picked === correctIdx;
+          this._locked = true;
+          if (ok) store.quiz.s += 1;
+          else {
+            const choices = Array.isArray(q.c) ? q.c : [];
+            const pickedLabel = choices[picked] != null ? String(choices[picked]) : String(picked);
+            const rightLabel = choices[correctIdx] != null ? String(choices[correctIdx]) : String(correctIdx);
+            const note = `[퀴즈] ${q.q} — 선택: ${pickedLabel} (정답: ${rightLabel})`;
+            store.wrong.push(note);
+            localStorage.setItem(appConfig.storage.wrong, JSON.stringify(store.wrong));
+          }
+          el.quizScore.textContent = `점수 ${store.quiz.s}`;
+          el.quizExplain.textContent = (ok ? "정답입니다. " : "오답입니다. ") + (q.e || "");
+          el.quizOptions.querySelectorAll(".quiz-opt").forEach((btn, i) => {
+            btn.disabled = true;
+            btn.classList.remove("quiz-opt--correct", "quiz-opt--wrong");
+            if (i === correctIdx) btn.classList.add("quiz-opt--correct");
+            else if (i === picked && !ok) btn.classList.add("quiz-opt--wrong");
+          });
+          const next = document.createElement("button");
+          next.type = "button";
+          next.className = "btn";
+          next.textContent = idx + 1 >= list.length ? "결과 보기" : "다음 문제";
+          next.addEventListener("click", () => {
+            store.quiz.i += 1;
+            if (store.quiz.i >= list.length) this.finish();
+            else this.renderQuestion();
+          });
+          if (el.quizNextWrap) {
+            el.quizNextWrap.innerHTML = "";
+            el.quizNextWrap.appendChild(next);
+          } else {
+            el.quizOptions.appendChild(next);
+          }
+          this._setBar();
+        },
+      };
+
+      /** 「나의 MBTI 찾기」: 순차 질문·유형 안내까지 멀티턴 `/api/mbti-chat` 으로 이어 줍니다. */
+      const MbtiView = {
+        _busy: false,
+        _begun: false,
+        _hist: [],
+
+        syncChrome() {
+          if (!el.mbtiSendBtn || !el.mbtiStartBtn || !el.mbtiResetBtn || !el.mbtiInput) return;
+          el.mbtiStartBtn.disabled = this._busy || this._begun;
+          el.mbtiResetBtn.disabled = this._busy || !this._begun;
+          el.mbtiSendBtn.disabled = this._busy || !this._begun;
+          el.mbtiInput.readOnly = this._busy || !this._begun;
+          el.mbtiInput.disabled = this._busy || !this._begun;
+          el.mbtiInput.placeholder =
+            this._begun && !this._busy
+              ? "답을 입력 후 전송 (예: A, B, 첫 번째)"
+              : "먼저 '대화 시작'을 누른 뒤 답을 입력해 주세요.";
+        },
+
+        scroll() {
+          if (el.mbtiMessages) el.mbtiMessages.scrollTop = el.mbtiMessages.scrollHeight;
+        },
+
+        appendUser(txt) {
+          const raw = txt == null ? "" : String(txt);
+          const d = document.createElement("div");
+          d.className = "bubble user";
+          d.textContent = raw;
+          el.mbtiMessages.appendChild(d);
+          this.scroll();
+        },
+
+        appendBot(markdown) {
+          const md = markdown == null ? "" : String(markdown);
+          const d = document.createElement("div");
+          d.className = "bubble bot";
+          const inner = document.createElement("div");
+          inner.className = "bot-md-root";
+          inner.style.lineHeight = "1.6";
+          inner.innerHTML = MarkdownLite.toHtml(md);
+          d.appendChild(inner);
+          el.mbtiMessages.appendChild(d);
+          this.scroll();
+          BotTTS.remember(markdownToSpeakable(md));
+        },
+
+        appendLoadingBubble() {
+          const h = document.createElement("div");
+          h.className = "bubble bot";
+          h.setAttribute("data-mbti-loading", "1");
+          h.innerHTML =
+            '<div class="qa-loading" role="status" aria-busy="true">' +
+            '<div class="qa-loading__spinner" aria-hidden="true"></div>' +
+            '<p class="qa-loading__text" style="margin:0;">생각 정리 중…</p>' +
+            "</div>";
+          el.mbtiMessages.appendChild(h);
+          this.scroll();
+          return h;
+        },
+
+        clearLoading(loadEl) {
+          if (loadEl && loadEl.parentNode) loadEl.parentNode.removeChild(loadEl);
+        },
+
+        _popLastOpeningUserBubble() {
+          const lastPop = this._hist.pop();
+          if (!lastPop || lastPop.role !== "user") return;
+          if (!el.mbtiMessages) return;
+          const users = el.mbtiMessages.querySelectorAll(".bubble.user");
+          const last = users[users.length - 1];
+          if (last && last.parentNode) last.parentNode.removeChild(last);
+        },
+
+        reset() {
+          if (this._busy) return;
+          this._hist = [];
+          this._begun = false;
+          if (el.mbtiMessages) el.mbtiMessages.innerHTML = "";
+          if (el.mbtiInput) el.mbtiInput.value = "";
+          this.syncChrome();
+        },
+
+        bind() {
+          if (el.mbtiStartBtn) el.mbtiStartBtn.addEventListener("click", () => void MbtiView.start());
+          if (el.mbtiResetBtn) el.mbtiResetBtn.addEventListener("click", () => MbtiView.reset());
+          if (el.mbtiSendBtn) el.mbtiSendBtn.addEventListener("click", () => void MbtiView.send());
+          if (el.mbtiInput) {
+            el.mbtiInput.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" && !e.shiftKey && MbtiView._begun) {
+                e.preventDefault();
+                void MbtiView.send();
+              }
+            });
+          }
+          this.syncChrome();
+        },
+
+        async start() {
+          if (this._busy || this._begun) return;
+          const opener = "시작해 줘.";
+          this._hist.push({ role: "user", content: opener });
+          this.appendUser(opener);
+          await this._afterUserCommitted({ rollbackOpeningOnError: true });
+        },
+
+        async send() {
+          if (!this._begun || this._busy || !el.mbtiInput) return;
+          const t = el.mbtiInput.value.trim();
+          if (!t) return;
+          el.mbtiInput.value = "";
+          this._hist.push({ role: "user", content: t });
+          this.appendUser(t);
+          await this._afterUserCommitted({ rollbackOpeningOnError: false });
+        },
+
+        /** 직전에 확정 반영된 사용자 입력을 바탕으로 서버 한 턴을 요청합니다. */
+        async _afterUserCommitted(opts) {
+          const rollbackOpen = !!(opts && opts.rollbackOpeningOnError);
+          this._busy = true;
+          this.syncChrome();
+
+          let loadBubble = null;
+          try {
+            loadBubble = this.appendLoadingBubble();
+            const payload = this._hist.map((row) => ({ role: row.role, content: row.content }));
+            const data = await fetchService.mbtiChat(payload);
+            this.clearLoading(loadBubble);
+            loadBubble = null;
+            const reply = data != null && data.reply != null ? String(data.reply) : "";
+            if (!reply) throw new Error("빈 응답이 돌아왔습니다.");
+            this._begun = true;
+            this._hist.push({ role: "assistant", content: reply });
+            this.appendBot(reply);
+          } catch (err) {
+            if (loadBubble) this.clearLoading(loadBubble);
+            if (rollbackOpen) {
+              this._popLastOpeningUserBubble();
+              this._begun = false;
+              const msg =
+                escMini(err && err.message ? String(err.message) : "요청 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+              this.appendBot("⚠️ " + msg);
+            } else {
+              const msg =
+                escMini(err && err.message ? String(err.message) : "요청 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+              const errMd = "⚠️ " + msg;
+              this._hist.push({ role: "assistant", content: errMd });
+              this.appendBot(errMd);
+            }
+          } finally {
+            this._busy = false;
+            this.syncChrome();
+            if (this._begun && el.mbtiInput && !this._busy) {
+              window.setTimeout(() => {
+                try {
+                  el.mbtiInput.focus();
+                } catch (e) { /* 예전 브라우저 */ }
+              }, 0);
+            }
+          }
+        },
+      };
+
+      /** 용어 비교: `/api/compare-terms`(지식 베이스 검색+LLM·폴백) 결과를 카드 세 개로 표시합니다. */
+      const CompareView = {
+        loadingHtml() {
+          return (
+            '<div role="status" aria-live="polite" aria-busy="true"><div class="qa-loading">' +
+            '<div class="qa-loading__spinner" aria-hidden="true"></div>' +
+            '<p class="qa-loading__text">학습 문서를 찾아 비교 카피를 만들고 있습니다…</p>' +
+            '<p class="qa-loading__hint meta">임베딩 검색 후 AI가 요약하면 표시됩니다. 잠시만 기다려 주세요.</p>' +
+            "</div></div>"
+          );
+        },
+        async run() {
+          const a = el.termA && el.termA.value != null ? String(el.termA.value).trim() : "";
+          const b = el.termB && el.termB.value != null ? String(el.termB.value).trim() : "";
+          if (!a || !b) {
+            if (el.compareResult) el.compareResult.innerHTML = '<p class="meta">용어 A와 B를 모두 입력해 주세요.</p>';
+            return;
+          }
+          if (el.compareRunBtn) el.compareRunBtn.disabled = true;
+          if (el.compareResult) el.compareResult.innerHTML = this.loadingHtml();
+          try {
+            const data = await fetchService.compareTerms(a, b);
+            const left = data.left != null ? String(data.left) : "";
+            const right = data.right != null ? String(data.right) : "";
+            const diff = data.diff != null ? String(data.diff) : "";
+            if (el.compareResult) {
+              el.compareResult.innerHTML =
+                `<article class="compare-card"><h4>① ${escMini(a)}</h4><p>${escMini(left)}</p></article>` +
+                `<article class="compare-card"><h4>② ${escMini(b)}</h4><p>${escMini(right)}</p></article>` +
+                `<article class="compare-card"><h4>차이·관계</h4><p>${escMini(diff)}</p></article>`;
+            }
+          } catch (err) {
+            if (el.compareResult)
+              el.compareResult.innerHTML = `<p class="meta">${escMini(err && err.message ? err.message : "오류")}</p>`;
+          } finally {
+            if (el.compareRunBtn) el.compareRunBtn.disabled = false;
+          }
+        }
+      };
+
+      /** `/api/sticker-pack`(Gemini 이미지)·업로드 사진 기준 LINE풍 패널 12장 그리드를 만듭니다. */
+      const StickerPackView = {
+        _blobUrl: null,
+        _runBtnDefault: "🪄 스티커 12종 만들기",
+        /** 마지막 그리드를 채운 패널 배열(API items 복사). ZIP 일괄 저장에만 씁니다. */
+        _lastPackItems: null,
+        disposePreview() {
+          if (!StickerPackView._blobUrl) return;
+          URL.revokeObjectURL(StickerPackView._blobUrl);
+          StickerPackView._blobUrl = null;
+        },
+        bind() {
+          const fileInp = document.getElementById("stickerFile");
+          const grid = document.getElementById("stickerGrid");
+          const ld = document.getElementById("stickerLoading");
+          const btn = document.getElementById("stickerRunBtn");
+          if (!fileInp || !btn || !ld || !grid) return;
+          fileInp.addEventListener("change", () => StickerPackView.onFilePick());
+          btn.addEventListener("click", () => {
+            void StickerPackView.run();
+          });
+          if (el.stickerZipBtn) {
+            el.stickerZipBtn.addEventListener("click", () => void StickerPackView.downloadZipAll());
+          }
+          StickerPackView._runBtnDefault = btn.textContent || StickerPackView._runBtnDefault;
+        },
+        /**
+         * 로딩 박스·버튼 문구 변경 직후 한 프레임 양보: 브라우저가 먼저 그리도록 합니다.
+         */
+        async _awaitPaint() {
+          await new Promise((resolve) => {
+            requestAnimationFrame(() => requestAnimationFrame(resolve));
+          });
+        },
+        _setGeneratingUi(active) {
+          if (el.stickerLoadingMsg) {
+            el.stickerLoadingMsg.textContent = active
+              ? "🎨 스티커 12종을 생성하고 있어요…"
+              : "생성 준비 중…";
+          }
+          if (el.stickerLoadingSub) {
+            el.stickerLoadingSub.textContent = active
+              ? "표정마다 순서대로 만들고 있어요. 몇 분 걸릴 수 있으며, 되면 아래에 하나씩 나타나니 이 탭을 닫지 말아 주세요."
+              : "";
+          }
+        },
+        onFilePick() {
+          if (!el.stickerFile) return;
+          StickerPackView.disposePreview();
+          const f = el.stickerFile.files && el.stickerFile.files[0] ? el.stickerFile.files[0] : null;
+          if (!f || !el.stickerPreview || !el.stickerPreviewWrap) {
+            if (el.stickerPreviewWrap) el.stickerPreviewWrap.style.display = "none";
+            if (el.stickerRunBtn) {
+              el.stickerRunBtn.classList.add("sticker-run--idle");
+              el.stickerRunBtn.removeAttribute("aria-disabled");
+            }
+            if (el.stickerNeedPhotoHint) el.stickerNeedPhotoHint.style.display = "";
+            return;
+          }
+          StickerPackView._blobUrl = URL.createObjectURL(f);
+          el.stickerPreview.src = StickerPackView._blobUrl;
+          el.stickerPreviewWrap.style.display = "";
+          if (el.stickerRunBtn) {
+            el.stickerRunBtn.classList.remove("sticker-run--idle");
+            el.stickerRunBtn.removeAttribute("aria-disabled");
+          }
+          if (el.stickerNeedPhotoHint) el.stickerNeedPhotoHint.style.display = "none";
+        },
+        _setBusy(busy) {
+          const bBusy = !!busy;
+          if (el.stickerRunBtn) {
+            el.stickerRunBtn.disabled = bBusy;
+            el.stickerRunBtn.textContent = bBusy ? "⏳ 스티커 생성 중…" : StickerPackView._runBtnDefault;
+          }
+          if (el.stickerZipBtn) {
+            const has = !!(StickerPackView._lastPackItems && StickerPackView._lastPackItems.length);
+            el.stickerZipBtn.disabled = bBusy || !has;
+          }
+          if (el.stickerLoading) {
+            el.stickerLoading.classList.toggle("is-active", bBusy);
+            if (bBusy) {
+              try {
+                el.stickerLoading.scrollIntoView({ block: "nearest", behavior: "smooth" });
+              } catch (e) { /* 오래된 브라우저 */ }
+            }
+          }
+          StickerPackView._setGeneratingUi(bBusy);
+        },
+        _mimeToExt(mt) {
+          const m = String(mt || "").split(";")[0].trim().toLowerCase();
+          if (m === "image/jpeg" || m === "image/jpg") return ".jpg";
+          if (m === "image/webp") return ".webp";
+          if (m === "image/gif") return ".gif";
+          return ".png";
+        },
+        _base64Bytes(b64Str) {
+          const s = String(b64Str || "").replace(/\s+/g, "");
+          const bin = atob(s);
+          const buf = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+          return buf;
+        },
+        _syncZipPackUi() {
+          if (!el.stickerBatchWrap || !el.stickerZipBtn) return;
+          const n = Array.isArray(StickerPackView._lastPackItems) ? StickerPackView._lastPackItems.length : 0;
+          el.stickerBatchWrap.style.display = n > 0 ? "flex" : "none";
+          el.stickerZipBtn.disabled = n === 0;
+        },
+        async downloadZipAll() {
+          const items = StickerPackView._lastPackItems;
+          if (!items || !items.length) return;
+          if (typeof JSZip !== "function") {
+            if (el.stickerHints) {
+              el.stickerHints.style.display = "block";
+              el.stickerHints.textContent =
+                "ZIP 저장을 위해 JSZip 스크립트가 필요합니다. 인터넷에 연결돼 있는지 확인하거나 새로고침해 보세요.";
+            }
+            return;
+          }
+          if (el.stickerZipBtn) {
+            el.stickerZipBtn.disabled = true;
+            el.stickerZipBtn.textContent = "ZIP 만드는 중…";
+          }
+          try {
+            const zip = new JSZip();
+            const folder = zip.folder("line-stickers");
+            if (!folder) throw new Error("ZIP 폴더 생성 실패");
+            for (const it of items) {
+              const idx = Number(it.idx) || 0;
+              const mt = it.mime_type != null ? String(it.mime_type) : "image/png";
+              const raw = it.image_base64 != null ? String(it.image_base64) : "";
+              const ext = StickerPackView._mimeToExt(mt);
+              const name = `sticker-${String(idx).padStart(2, "0")}${ext}`;
+              folder.file(name, StickerPackView._base64Bytes(raw), { binary: true });
+            }
+            const blob = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+            const url = URL.createObjectURL(blob);
+            /* ISO 앞부분만 잘라 yyyymmdd-hhmm 형태로 저장 파일명을 만든다 */
+            const stamp = new Date().toISOString().slice(0, 16).replace(/[-T:]/g, "").replace(/^(\d{8})(\d{4})$/, "$1-$2");
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `line-stickers-pack-${stamp}.zip`;
+            a.rel = "noopener";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.setTimeout(() => URL.revokeObjectURL(url), 2500);
+          } catch (e) {
+            if (el.stickerHints) {
+              el.stickerHints.style.display = "block";
+              el.stickerHints.textContent =
+                "ZIP 저장에 실패했습니다: " + (e && e.message ? escMini(e.message) : escMini(String(e)));
+            }
+          } finally {
+            if (el.stickerZipBtn) {
+              el.stickerZipBtn.disabled = !(StickerPackView._lastPackItems && StickerPackView._lastPackItems.length);
+              el.stickerZipBtn.textContent = "📦 ZIP으로 전체 저장";
+            }
+          }
+        },
+        renderGrid(data) {
+          const items = Array.isArray(data && data.items) ? data.items : [];
+          const warns = Array.isArray(data && data.warnings) ? data.warnings : [];
+          StickerPackView._lastPackItems =
+            items.length > 0
+              ? items.map((it) => ({
+                  idx: it.idx,
+                  label: it.label,
+                  mime_type: it.mime_type,
+                  image_base64: it.image_base64,
+                }))
+              : null;
+          StickerPackView._syncZipPackUi();
+          if (el.stickerHints) {
+            el.stickerHints.textContent = "";
+            if (!items.length || warns.length) {
+              el.stickerHints.style.display = "block";
+              if (warns.length) el.stickerHints.textContent = "참고 · " + warns.join(" · ");
+              else if (!items.length) el.stickerHints.textContent = "아직 패널이 없습니다.";
+            } else el.stickerHints.style.display = "none";
+          }
+          if (!items.length) {
+            el.stickerGrid.innerHTML = "";
+            return;
+          }
+          el.stickerGrid.innerHTML = items
+            .map((it) => {
+              const idx = Number(it.idx) || 0;
+              const labEsc = escMini(it.label != null ? String(it.label) : "");
+              const mt = it.mime_type != null ? String(it.mime_type) : "image/png";
+              const b64 = it.image_base64 != null ? String(it.image_base64) : "";
+              const src = "data:" + mt + ";base64," + b64;
+              const dl = "sticker-" + String(idx).padStart(2, "0") + StickerPackView._mimeToExt(mt);
+              return (
+                `<article class="sticker-card"><img alt="${labEsc}" loading="lazy" decoding="async" src="${src}" />` +
+                `<div class="sticker-label">${labEsc}</div>` +
+                `<a class="btn ghost" download="${dl}" href="${src}">저장</a></article>`
+              );
+            })
+            .join("");
+        },
+        async run() {
+          if (!el.stickerFile) return;
+          const fi = el.stickerFile.files && el.stickerFile.files[0] ? el.stickerFile.files[0] : null;
+          if (!fi) {
+            if (el.stickerHints) {
+              el.stickerHints.style.display = "block";
+              el.stickerHints.textContent =
+                "참조 사진을 먼저 선택해 주세요. 위쪽 \"참조 사진\"에서 파일을 고른 뒤, 미리보기가 보이면 다시 이 버튼을 눌러 주세요.";
+            }
+            return;
+          }
+          if (el.stickerHints) {
+            el.stickerHints.style.display = "none";
+            el.stickerHints.textContent = "";
+          }
+          el.stickerGrid.innerHTML = "";
+          StickerPackView._lastPackItems = null;
+          StickerPackView._syncZipPackUi();
+          StickerPackView._setBusy(true);
+          await StickerPackView._awaitPaint();
+          try {
+            const data = await fetchService.createStickerPack(fi);
+            StickerPackView.renderGrid(data);
+            const itemsOK = Array.isArray(data.items) ? data.items : [];
+            const warnsOK = Array.isArray(data.warnings) ? data.warnings : [];
+            if (!itemsOK.length && !warnsOK.length && el.stickerHints) {
+              el.stickerHints.style.display = "block";
+              el.stickerHints.textContent =
+                "그림을 불러오지 못했어요. 잠시 후 다시 시도하거나 연결 상태를 확인해 주세요.";
+            }
+          } catch (e) {
+            StickerPackView.renderGrid({
+              items: [],
+              warnings: [(e && e.message) ? e.message : String(e)]
+            });
+          } finally {
+            StickerPackView._setBusy(false);
+          }
+        }
+      };
+
       const DocDrawer = {
+
         open() { el.drawerBg.classList.add("open"); el.drawer.classList.add("open"); },
         close() { el.drawerBg.classList.remove("open"); el.drawer.classList.remove("open"); },
+        async hydrateFromApi() {
+          try {
+            const r = await fetch("/api/knowledge-documents");
+            if (!r.ok) return;
+            const j = await r.json();
+            const arr = j.documents;
+            if (!Array.isArray(arr) || arr.length === 0) return;
+            appConfig.docs = arr.map((e) => {
+              const kind = inferUploadedDocKind(e);
+              const known = KNOWN_DOC_META_FOR_KB[e.file];
+              const baseName = String(e.file || "").replace(/\.[^.]+$/, "");
+              const defaults =
+                kind === "video"
+                  ? {
+                      title: baseName || e.file,
+                      desc: "관리자가 업로드한 동영상입니다. 챗봇 Q&A·검색에는 요약 본문이 지식 베이스에 반영될 수 있습니다.",
+                      tags: ["동영상", "업로드"],
+                    }
+                  : kind === "image"
+                    ? {
+                        title: baseName || e.file,
+                        desc: "관리자가 업로드한 이미지입니다. 설명 텍스트가 지식 베이스에 반영될 수 있습니다.",
+                        tags: ["이미지", "업로드"],
+                      }
+                    : {
+                        title: String(e.file).replace(/\.pdf$/i, ""),
+                        desc: "관리자가 업로드한 학습 PDF입니다.",
+                        tags: ["업로드"],
+                      };
+              return {
+                file: e.file,
+                pages: typeof e.pages === "number" ? e.pages : 0,
+                kind,
+                ...(known || defaults),
+              };
+            });
+            const cur = store.currentDoc && store.currentDoc.file;
+            if (!cur || !appConfig.docs.some((d) => d.file === cur)) {
+              store.currentDoc = appConfig.docs[0];
+              el.docBtn.innerHTML = `📚 ${store.currentDoc.title} ▾`;
+            }
+          } catch (_) { /* API 미기동 등 — 기존 목록 유지 */ }
+        },
         render() {
-          el.docList.innerHTML = appConfig.docs.map(d => `
-            <div class="doc-card" onclick="DocDrawer.select('${d.file}')">
-              <div class="title"><span>📄 ${d.title}</span><span class="badge-info">${d.pages}p</span></div>
-              <div class="desc">${d.desc}</div>
-              <div class="tags">${d.tags.map(t => `<span class="tag">#${t}</span>`).join("")}</div>
-            </div>
-          `).join("");
+          el.docList.innerHTML = "";
+          appConfig.docs.forEach((d) => {
+            const card = document.createElement("div");
+            card.className = "doc-card";
+            card.setAttribute("role", "button");
+            card.tabIndex = 0;
+            const kind = d.kind || inferUploadedDocKind(d);
+            let icon = "📄";
+            let badgeRight = `${d.pages}p`;
+            if (kind === "video") {
+              icon = "🎬";
+              badgeRight = "동영상";
+            } else if (kind === "image") {
+              icon = "🖼";
+              badgeRight = "이미지";
+            }
+            card.innerHTML =
+              `<div class="title"><span>${icon} ${escMini(d.title)}</span><span class="badge-info">${escMini(badgeRight)}</span></div>` +
+              `<div class="desc">${escMini(d.desc)}</div>` +
+              `<div class="tags">${d.tags.map((t) => `<span class="tag">#${escMini(t)}</span>`).join("")}</div>`;
+            const openSel = () => DocDrawer.select(d.file);
+            card.addEventListener("click", openSel);
+            card.addEventListener("keydown", (ev) => {
+              if (ev.key === "Enter" || ev.key === " ") {
+                ev.preventDefault();
+                openSel();
+              }
+            });
+            el.docList.appendChild(card);
+          });
         },
         select(filename) {
-          const doc = appConfig.docs.find(d => d.file === filename);
-          if (doc) {
-            store.currentDoc = doc;
-            el.docBtn.innerHTML = `📚 ${doc.title} ▾`;
-            DocDrawer.close();
-            PageModal.open(1, doc.file);
+          const doc = appConfig.docs.find((d) => d.file === filename);
+          if (!doc) return;
+          store.currentDoc = doc;
+          el.docBtn.innerHTML = `📚 ${doc.title} ▾`;
+          DocDrawer.close();
+          const kind = doc.kind || inferUploadedDocKind(doc);
+          if (kind === "video" || kind === "image") {
+            const syntheticTitle =
+              kind === "video"
+                ? `${doc.file} (동영상)`
+                : `${doc.file} (이미지)`;
+            PageModal.openMedia({
+              titleLine: syntheticTitle,
+              badgeLabel:
+                kind === "image" ? "이미지" : "영상 전체 · 요약 근거",
+              kind,
+              mediaFile: kind === "video" ? doc.file : "",
+              thumbSec: 35,
+            });
+            return;
           }
+          PageModal.open(1, doc.file);
         }
       };
 
       const PageModal = {
         open(no, filename) {
-          el.modalTitle.textContent = `${filename} - ${no}페이지`;
+          el.modalMediaPanel.style.display = "none";
+          el.modalMediaPanel.innerHTML = "";
+          el.modalImage.style.display = "";
+          el.modalTitle.textContent = `${filename} · ${no}페이지`;
           el.modalImage.src = fetchService.getPdfPageUrl(filename, no);
           el.modalBg.classList.add("open");
         },
-        close() { el.modalBg.classList.remove("open"); el.modalImage.src = ""; }
+        /**
+         * 동영상·이미지 출처 카드 처리. meta는 객체 또는 (구형) 문자열 인자 3개.
+         *
+         * @param {{ titleLine:string, badgeLabel:string, kind:string, mediaFile?:string, thumbSec?:number, startSec?:number, endSec?:number }|string} first
+         */
+        openMedia(first, badgeLabelLegacy, kindLegacy) {
+          let titleLine;
+          let badgeLabel = "";
+          let kind = "video";
+          let mediaFile = "";
+          let thumbSec = 35;
+          let startSec = null;
+          let endSec = null;
+          if (first != null && typeof first === "object") {
+            titleLine = first.titleLine != null ? first.titleLine : first.rawTitle || "";
+            badgeLabel = (first.badgeLabel != null ? first.badgeLabel : first.badge) || "";
+            kind = first.kind || "video";
+            mediaFile = qaPageMediaFile(first);
+            const tsRaw = first.thumb_sec != null ? first.thumb_sec : first.thumbSec;
+            thumbSec =
+              typeof tsRaw === "number" && !Number.isNaN(tsRaw) ? tsRaw : 35;
+            const s0 = first.start_sec != null ? first.start_sec : first.startSec;
+            const s1 = first.end_sec != null ? first.end_sec : first.endSec;
+            startSec = typeof s0 === "number" && !Number.isNaN(s0) ? s0 : null;
+            endSec = typeof s1 === "number" && !Number.isNaN(s1) ? s1 : null;
+          } else {
+            titleLine = first || "";
+            badgeLabel = badgeLabelLegacy || "";
+            kind = kindLegacy || "video";
+          }
+          el.modalMediaPanel.style.display = "block";
+          el.modalMediaPanel.innerHTML = "";
+          el.modalImage.style.display = "none";
+          el.modalImage.removeAttribute("src");
+          const kt = kind === "image" ? "이미지" : "동영상";
+          const head =
+            qaFriendlySourceTitle(String(titleLine || ""), kind) ||
+            qaCleanDocTitle(titleLine || "") ||
+            kt + " 자료";
+          let lab =
+            badgeLabel && String(badgeLabel).trim()
+              ? String(badgeLabel).trim()
+              : kind === "image"
+                ? "이미지"
+                : "영상 전체";
+          if (kind === "video") lab = qaEvidenceBadgeFriendly("video", lab);
+          const metaObj = {
+            title: titleLine,
+            badge: badgeLabel || lab,
+            start_sec: startSec,
+            end_sec: endSec,
+            thumb_sec: thumbSec,
+          };
+          if (kind === "image") {
+            el.modalTitle.textContent = `${head} · 안내`;
+            el.modalMediaPanel.innerHTML =
+              `<p style="margin:0 0 6px;"><strong>이미지 자료</strong></p>` +
+              `<p class="meta" style="margin:0 0 10px;">화면 미리보기는 없습니다. 질문 근거는 지식 요약·이미지 설명에 있습니다.</p>` +
+              `<p style="margin:0;"><span class="badge">${escMini(lab)}</span></p>`;
+            el.modalBg.classList.add("open");
+            return;
+          }
+          el.modalTitle.textContent = `${head} · 재생`;
+          if (kind === "video" && mediaFile) {
+            const poster = fetchService.getVideoPosterUrl(mediaFile, thumbSec);
+            const src = fetchService.getKbMediaUrl(mediaFile);
+            const mime = qaVideoMimeFromFilename(mediaFile);
+            const timeNote = qaVideoTimeSubtitle(metaObj);
+            el.modalMediaPanel.innerHTML =
+              `<div class="modal-video-shell">` +
+              `<p class="meta" style="margin:0 0 8px;">${escMini(timeNote)} 같은 PDF 페이지 대신, 아래 플레이어로 장면을 확인할 수 있습니다.</p>` +
+              `<video class="modal-video-player" controls playsinline preload="metadata" poster="${escMini(poster)}">` +
+              `<source src="${escMini(src)}" type="${escMini(mime)}" /></video>` +
+              `<p class="meta" style="margin:10px 0 0;">구간 라벨: <span class="badge">${escMini(lab)}</span></p>` +
+              `</div>`;
+            el.modalBg.classList.add("open");
+            const vEl = el.modalMediaPanel.querySelector("video.modal-video-player");
+            const jump =
+              typeof thumbSec === "number" && !Number.isNaN(thumbSec)
+                ? Math.max(0.1, thumbSec)
+                : 0;
+            if (vEl && jump > 0.5) {
+              const go = () => {
+                try {
+                  vEl.currentTime = jump;
+                } catch (e) {
+                  /* 무시 */
+                }
+              };
+              vEl.addEventListener("loadeddata", go, { once: true });
+              vEl.addEventListener("loadedmetadata", go, { once: true });
+            }
+            return;
+          }
+          /* 이미지·동영상 파일명 불명: 안내문만 */
+          el.modalMediaPanel.innerHTML =
+            `<p style="margin:0 0 6px;"><strong>${escMini(kt)} 자료</strong></p>` +
+            `<p class="meta" style="margin:0 0 10px;">${
+              kind === "video"
+                ? "이 동영상 경로가 아직 내려오지 않았습니다. 새로고침 후 다시 시도해 주세요."
+                : "이 출처에는 PDF처럼 페이지 그림 미리보기가 없습니다. 요약 근거는 지식 내용입니다."
+            }</p>` +
+            `<p style="margin:0;"><span class="badge">${escMini(lab)}</span></p>`;
+          el.modalBg.classList.add("open");
+        },
+        close() {
+          el.modalBg.classList.remove("open");
+          el.modalImage.removeAttribute("src");
+          el.modalMediaPanel.style.display = "none";
+          el.modalMediaPanel.innerHTML = "";
+        },
       };
+
+      /** Q&A·모달 공통: PDF 페이지 표기에서는 (p.N) 접미만 뗍니다. */
+      function qaCleanDocTitle(raw) {
+        return String(raw || "").replace(/\s*\(p\.\d+\)\s*/gi, "").trim();
+      }
+
+      /**
+       * 출처 카드·모달에 쓸 **짧고 읽기 쉬운 제목**을 만듭니다.
+       * 동영상/이미지는 지식 베이스 원본 제목 뒤에 붙은 ``(동영상)``, 확장자 등을 빼 학습 자료처럼 보이게 합니다.
+       *
+       * @param {string} rawTitle API·청크의 원본 title
+       * @param {"page"|"video"|"image"} kind 출처 종류
+       * @returns {string} 카드 한 줄 표시용 문자열
+       */
+      function qaFriendlySourceTitle(rawTitle, kind) {
+        let t = String(rawTitle || "").trim();
+        try {
+          t = t.normalize("NFC");
+        } catch (e) {
+          /* ignore */
+        }
+        if (kind === "video") {
+          t = t.replace(/\s*\(동영상\)\s*$/i, "").trim();
+          t = t.replace(/\.(mp4|webm|mov|m4v|mpeg|mpg)$/i, "").trim();
+          t = t.replace(/_/g, " ");
+          t = t.replace(/\s{2,}/g, " ").trim();
+          return t || String(rawTitle || "").trim();
+        }
+        if (kind === "image") {
+          t = t.replace(/\s*\(이미지\)\s*$/i, "").trim();
+          t = t.replace(/\.(png|jpe?g|gif|webp)$/i, "").trim();
+          t = t.replace(/_/g, " ");
+          t = t.replace(/\s{2,}/g, " ").trim();
+          return t || String(rawTitle || "").trim();
+        }
+        return qaCleanDocTitle(rawTitle);
+      }
+
+      /** API PageRef 에서 업로드 동영상 파일명만 안전하게 꺼냅니다(snake_case·camelCase 둘 다 시도). */
+      function qaPageMediaFile(p) {
+        const mf = (p && (p.media_file != null ? p.media_file : p.mediaFile)) || "";
+        return String(mf).trim();
+      }
+
+      /** 초를 「N분 MM초」 형태 한글 문자열로 바꿉니다(출처·모달 안내용). */
+      function qaDurationKo(totalSec) {
+        const n = typeof totalSec === "number" && !Number.isNaN(totalSec) ? Math.max(0, totalSec) : 0;
+        const m = Math.floor(n / 60);
+        const s = Math.round(n % 60);
+        return `${m}분 ${String(s).padStart(2, "0")}초`;
+      }
+
+      /** 동영상 출처 카드·모달에 넣을 짧은 시간 안내 문구입니다. */
+      function qaVideoTimeSubtitle(p) {
+        const b = String((p && p.badge) || "").trim();
+        const hasRange =
+          typeof p.start_sec === "number" &&
+          !Number.isNaN(p.start_sec) &&
+          typeof p.end_sec === "number" &&
+          !Number.isNaN(p.end_sec) &&
+          p.end_sec >= p.start_sec;
+        const hasStart = typeof p.start_sec === "number" && !Number.isNaN(p.start_sec) && p.start_sec >= 0;
+        if (hasRange) {
+          return `이번 근거는 약 ${qaDurationKo(p.start_sec)} ~ ${qaDurationKo(p.end_sec)} 구간입니다. 플레이어는 해당 시각 근처로 맞춥니다.`;
+        }
+        if (hasStart) {
+          return `이번 근거는 약 ${qaDurationKo(p.start_sec)} 이후 대목입니다.`;
+        }
+        if (b && b !== "영상 전체" && b.indexOf("전체") !== 0) {
+          return `지식 저장소 구간 표기: ${b}`;
+        }
+        return "전체 영상을 바탕으로 한 요약·검색 근거입니다.";
+      }
+
+      /** 동영상 기본 구간 표기 등을 카드에서 조금 더 자연스러운 한 줄로 고칩니다. */
+      function qaEvidenceBadgeFriendly(kind, badge) {
+        const b = String(badge || "").trim();
+        if (kind !== "video") return b;
+        if (!b || b === "영상 전체") return "전체 영상";
+        return b;
+      }
+
+      /** 미디어는 PDF 미리보기가 없으므로 '보기' 대신 안내 성격의 단어를 씁니다. */
+      function qaSourceCtaLabel(kind) {
+        if (kind === "video" || kind === "image") return "자세히";
+        return "보기";
+      }
+
+      /** API가 주는 통일 뱃지: 비어 있으면 Np 형식. */
+      function qaBadgeFromPageObj(p) {
+        if (!p) return "1p";
+        if (p.badge != null && String(p.badge).trim() !== "") return String(p.badge).trim();
+        const n = p.no != null ? Number(p.no) : 1;
+        return `${n}p`;
+      }
+
+      function qaSourceKindFromHit(pOrIt) {
+        const st = pOrIt && pOrIt.source_type;
+        if (st === "video" || st === "image" || st === "page") return st;
+        const t = String((pOrIt && pOrIt.title) || (pOrIt && pOrIt.t) || "");
+        if (t.includes("(동영상)")) return "video";
+        if (t.includes("(이미지)")) return "image";
+        return "page";
+      }
+
+      /** 업로드 동영상 확장자에 맞춰 ``<video><source type>`` 용 MIME 을 고릅니다. */
+      function qaVideoMimeFromFilename(fname) {
+        const ext = (String(fname || "").split(".").pop() || "").toLowerCase();
+        if (ext === "webm") return "video/webm";
+        if (ext === "mov") return "video/quicktime";
+        if (ext === "mpeg" || ext === "mpg") return "video/mpeg";
+        if (ext === "m4v") return "video/x-m4v";
+        return "video/mp4";
+      }
+
+      /** Q&A 말풍선 안에 재생 가능한 미리보기(최대 2편)를 붙입니다. */
+      function qaAppendInlineVideos(containerEl, pages) {
+        const clips = (pages || []).filter((p) => qaSourceKindFromHit(p) === "video" && qaPageMediaFile(p)).slice(0, 2);
+        if (!clips.length || !containerEl) return;
+        const wrap = document.createElement("div");
+        wrap.className = "qa-inline-player-wrap";
+        clips.forEach((p) => {
+          const mf = qaPageMediaFile(p);
+          const seek =
+            typeof p.thumb_sec === "number" && !Number.isNaN(p.thumb_sec)
+              ? p.thumb_sec
+              : typeof p.start_sec === "number" && !Number.isNaN(p.start_sec)
+                ? p.start_sec
+                : 35;
+          const poster = fetchService.getVideoPosterUrl(mf, seek);
+          const src = fetchService.getKbMediaUrl(mf);
+          const mime = qaVideoMimeFromFilename(mf);
+          const caption = qaFriendlySourceTitle(String(p.title || ""), "video");
+          const sub = qaVideoTimeSubtitle(p);
+          const box = document.createElement("div");
+          box.innerHTML =
+            `<div class="qa-inline-video-cap">${escMini(caption)}</div>` +
+            `<div class="meta" style="margin:0 0 6px;">${escMini(sub)}</div>` +
+            `<video class="qa-inline-video" controls playsinline preload="metadata" poster="${escMini(poster)}">` +
+            `<source src="${escMini(src)}" type="${escMini(mime)}" />` +
+            `</video>`;
+          wrap.appendChild(box);
+          const v = box.querySelector("video");
+          if (v && seek > 0.5) {
+            v.addEventListener(
+              "loadedmetadata",
+              () => {
+                try {
+                  v.currentTime = seek;
+                } catch (e) {
+                  /* 미리보기 seek 실패는 무시 */
+                }
+              },
+              { once: true },
+            );
+          }
+        });
+        containerEl.appendChild(wrap);
+      }
+
+      /**
+       * Q&A 답변 말풍선 아래 **출처 버튼** 한 개의 클래스명과 innerHTML 을 만듭니다.
+       * 동영상·이미지는 세로 레이아웃으로 학습 단원 제목처럼 보이게 합니다.
+       *
+       * @param {object} p PageRef 형태 객체(title, badge, no, …)
+       * @returns {{ className: string, html: string }}
+       */
+      function qaEvidenceCardUi(p) {
+        const kind = qaSourceKindFromHit(p);
+        const badgeTxt = qaEvidenceBadgeFriendly(kind, qaBadgeFromPageObj(p));
+        const badge = escMini(badgeTxt);
+        const displayTitle = escMini(qaFriendlySourceTitle(String((p && p.title) || ""), kind));
+        const cta = escMini(qaSourceCtaLabel(kind));
+        if (kind === "video") {
+          const mf = qaPageMediaFile(p);
+          const thumbT =
+            typeof p.thumb_sec === "number" && !Number.isNaN(p.thumb_sec) ? p.thumb_sec : 35;
+          let thumbBlock = "";
+          if (mf) {
+            const pu = fetchService.getVideoPosterUrl(mf, thumbT);
+            thumbBlock =
+              `<div class="page-card__thumb-wrap" aria-hidden="true"><img class="page-card__thumb" src="${escMini(
+                pu,
+              )}" alt="" loading="lazy" decoding="async" onerror="this.closest('.page-card__thumb-wrap').style.display='none'"/></div>`;
+          }
+          const sub = escMini(qaVideoTimeSubtitle(p));
+          return {
+            className: "page-card page-card--media",
+            html:
+              thumbBlock +
+              `<span class="page-card__stack"><span class="badge">${badge}</span>` +
+              `<span class="page-card__title-line">${displayTitle}</span>` +
+              `<span class="meta page-card__hint-time">${sub}</span></span>` +
+              `<strong class="page-card__cta">${cta} →</strong>`,
+          };
+        }
+        if (kind === "image") {
+          return {
+            className: "page-card page-card--media",
+            html:
+              `<span class="page-card__stack"><span class="badge">${badge}</span>` +
+              `<span class="page-card__title-line">${displayTitle}</span></span>` +
+              `<strong class="page-card__cta">${cta} →</strong>`,
+          };
+        }
+        return {
+          className: "page-card",
+          html:
+            `<span><span class="badge">${badge}</span> ${displayTitle}</span><strong>${cta} →</strong>`,
+        };
+      }
 
       const MarkdownLite = (function () {
         function escapeHtml(s) {
@@ -1040,7 +2416,8 @@
         }
         function formatPlain(s) {
           if (!s) return "";
-          const parts = s.split(/(\*\*.+?\*\*)/g);
+          /* 줄바꿈이 있는 굵은 글(.+?는 개행 미포함) 깨짐 방지 */
+          const parts = s.split(/(\*\*[\s\S]+?\*\*)/g);
           let out = "";
           for (const part of parts) {
             if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
@@ -1211,12 +2588,34 @@
           d.className = `bubble ${isUser ? "user" : "bot"}`;
           d.innerHTML = text.replace(/\n/g, "<br>");
           if (pages && !isUser) {
-            pages.forEach(p => {
-              const b = document.createElement("button"); b.className = "page-card";
-              b.innerHTML = `<span><span class="badge">${p.no}p</span> ${p.title}</span><strong>보기 →</strong>`;
-              b.addEventListener("click", () => PageModal.open(p.no, p.title.replace(/\s*\(p\.\d+\)\s*/, "").trim()));
+            pages.forEach((p) => {
+              const b = document.createElement("button");
+              const kind = qaSourceKindFromHit(p);
+              const badgeTxt = qaBadgeFromPageObj(p);
+              const ui = qaEvidenceCardUi(p);
+              b.className = ui.className;
+              b.innerHTML = ui.html;
+              b.addEventListener("click", () => {
+                if (kind === "video" || kind === "image") {
+                  PageModal.openMedia({
+                    titleLine: p.title,
+                    badgeLabel: badgeTxt,
+                    kind,
+                    mediaFile: qaPageMediaFile(p),
+                    thumbSec:
+                      typeof p.thumb_sec === "number" && !Number.isNaN(p.thumb_sec) ? p.thumb_sec : 35,
+                    startSec:
+                      typeof p.start_sec === "number" && !Number.isNaN(p.start_sec) ? p.start_sec : null,
+                    endSec:
+                      typeof p.end_sec === "number" && !Number.isNaN(p.end_sec) ? p.end_sec : null,
+                  });
+                } else {
+                  PageModal.open(p.no, qaCleanDocTitle(p.title));
+                }
+              });
               d.appendChild(b);
             });
+            qaAppendInlineVideos(d, pages);
           }
           el.qaMsgs.appendChild(d); el.qaMsgs.scrollTop = el.qaMsgs.scrollHeight;
         },
@@ -1241,8 +2640,8 @@
           inner.style.lineHeight = "1.6";
           inner.innerHTML = MarkdownLite.toHtml(
             "**모드 전환**\n\n" +
-              "아래 버튼을 누르면 상단 탭과 같은 화면으로 바로 이동합니다. " +
-              "문서 검색(Q&A)은 **클라우드 용어·주제**로 질문해 주세요."
+              "아래 버튼으로 화면을 바꿀 수 있어요. **학습**(퀴즈 포함)은 왼쪽 상단 탭과 같고, **머리 식히기**는 **줄 맨 오른쪽** ☕ 버튼입니다. **설정**은 헤더 오른쪽 ▾메뉴입니다. " +
+              "Q&A는 **클라우드 용어·주제**로 질문해 주세요."
           );
           wrap.appendChild(inner);
 
@@ -1250,20 +2649,40 @@
           mainLabel.className = "meta";
           mainLabel.style.marginTop = "12px";
           mainLabel.style.marginBottom = "4px";
-          mainLabel.textContent = "메인 탭";
+          mainLabel.textContent = "학습(상단 탭과 동일)";
           wrap.appendChild(mainLabel);
 
-          const rowMain = document.createElement("div");
-          rowMain.className = "chips mode-switch-chips";
-          appConfig.mainTabs.forEach(([id, label]) => {
+          const rowLearn = document.createElement("div");
+          rowLearn.className = "chips mode-switch-chips";
+          const learnRows = appConfig.mainTabGroups[0] && Array.isArray(appConfig.mainTabGroups[0].tabs) ? appConfig.mainTabGroups[0].tabs : [];
+          learnRows.forEach(([id, label]) => {
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "chip mode-switch-chip";
             btn.textContent = label;
             btn.addEventListener("click", () => Tabs.switchTo(id));
-            rowMain.appendChild(btn);
+            rowLearn.appendChild(btn);
           });
-          wrap.appendChild(rowMain);
+          wrap.appendChild(rowLearn);
+
+          const relaxMeta = document.createElement("div");
+          relaxMeta.className = "meta";
+          relaxMeta.style.marginTop = "12px";
+          relaxMeta.style.marginBottom = "4px";
+          relaxMeta.textContent = "머리 식히기(줄 맨 오른쪽 ☕과 동일)";
+          wrap.appendChild(relaxMeta);
+
+          const rowRelax = document.createElement("div");
+          rowRelax.className = "chips mode-switch-chips";
+          (appConfig.breakMenuItems || []).forEach(([id, label]) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "chip mode-switch-chip";
+            btn.textContent = label;
+            btn.addEventListener("click", () => Tabs.switchTo(id));
+            rowRelax.appendChild(btn);
+          });
+          wrap.appendChild(rowRelax);
 
           const setLabel = document.createElement("div");
           setLabel.className = "meta";
@@ -1287,7 +2706,7 @@
           el.qaMsgs.appendChild(wrap);
           el.qaMsgs.scrollTop = el.qaMsgs.scrollHeight;
           BotTTS.remember(
-            "모드 전환 안내입니다. 메인 탭 또는 설정 화면으로 바로 이동하려면 아래 버튼을 누르세요. " +
+            "모드 전환 안내입니다. 학습 탭, 머리 식히기, 설정 중에서 골라 이동할 수 있어요. " +
               "문서 검색은 클라우드 용어나 주제로 질문해 주세요."
           );
         },
@@ -1301,12 +2720,34 @@
           const finish = () => {
             if (pages && pages.length) {
               pages.forEach((p) => {
-                const b = document.createElement("button"); b.className = "page-card";
-                b.innerHTML = `<span><span class="badge">${p.no}p</span> ${p.title}</span><strong>보기 →</strong>`;
-                b.addEventListener("click", () => PageModal.open(p.no, p.title.replace(/\s*\(p\.\d+\)\s*/, "").trim()));
+                const b = document.createElement("button");
+                const kind = qaSourceKindFromHit(p);
+                const badgeTxt = qaBadgeFromPageObj(p);
+                const ui = qaEvidenceCardUi(p);
+                b.className = ui.className;
+                b.innerHTML = ui.html;
+                b.addEventListener("click", () => {
+                  if (kind === "video" || kind === "image") {
+                    PageModal.openMedia({
+                      titleLine: p.title,
+                      badgeLabel: badgeTxt,
+                      kind,
+                      mediaFile: qaPageMediaFile(p),
+                      thumbSec:
+                        typeof p.thumb_sec === "number" && !Number.isNaN(p.thumb_sec) ? p.thumb_sec : 35,
+                      startSec:
+                        typeof p.start_sec === "number" && !Number.isNaN(p.start_sec) ? p.start_sec : null,
+                      endSec:
+                        typeof p.end_sec === "number" && !Number.isNaN(p.end_sec) ? p.end_sec : null,
+                    });
+                  } else {
+                    PageModal.open(p.no, qaCleanDocTitle(p.title));
+                  }
+                });
                 h.appendChild(b);
               });
             }
+            qaAppendInlineVideos(h, pages || []);
             BotTTS.remember(safeText);
             el.qaMsgs.scrollTop = el.qaMsgs.scrollHeight;
           };
@@ -1391,14 +2832,41 @@
       };
 
       const settingsViewIds = new Set(appConfig.settingsMenuItems.map((item) => item[0]));
+      const relaxViewIds = new Set(
+        (appConfig.breakMenuItems || []).map((row) => (row && row[0] != null ? String(row[0]) : "")).filter(Boolean)
+      );
 
       function escMini(s) {
         return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
       }
 
       const SourceView = {
+        _loadingHtml() {
+          return (
+            '<div class="source-results-loading" role="status" aria-live="polite" aria-busy="true">' +
+            '<div class="qa-loading">' +
+            '<div class="qa-loading__spinner" aria-hidden="true"></div>' +
+            '<p class="qa-loading__text">문서에서 페이지를 찾고 있습니다…</p>' +
+            '<p class="qa-loading__hint meta">임베딩·키워드 검색에 따라 잠시 걸릴 수 있어요.</p>' +
+            "</div></div>"
+          );
+        },
+        _setSearchingUi(busy) {
+          el.sourceSearchBtn.disabled = busy;
+          el.sourceKeyword.readOnly = busy;
+          if (el.voiceSourceBtn) {
+            el.voiceSourceBtn.disabled = busy || !VoiceSearch.supported();
+          }
+        },
         pdfForHits() {
-          return store.currentDoc && store.currentDoc.file ? store.currentDoc.file : appConfig.docs[0].file;
+          const docs = appConfig.docs || [];
+          const isPdf = (f) => /\.pdf$/i.test(String(f || ""));
+          if (store.currentDoc && store.currentDoc.file && isPdf(store.currentDoc.file)) {
+            return store.currentDoc.file;
+          }
+          const firstPdf = docs.find((d) => isPdf(d.file));
+          if (firstPdf) return firstPdf.file;
+          return store.currentDoc && store.currentDoc.file ? store.currentDoc.file : docs[0] && docs[0].file;
         },
         resolvePdfForHit(hitTitle) {
           const t = String(hitTitle || "").trim();
@@ -1412,37 +2880,109 @@
         async search() {
           const kw = el.sourceKeyword.value.trim();
           if (!kw) {
-            el.sourceResults.innerHTML = '<p class="meta">검색할 키워드를 입력해 주세요.</p>';
+            el.sourceResults.innerHTML = '<p class="meta">검색어나 짧은 질문을 입력해 주세요.</p>';
             return;
           }
-          el.sourceSearchBtn.disabled = true;
-          el.sourceResults.innerHTML = '<p class="meta">검색 중…</p>';
+          SourceView._setSearchingUi(true);
+          el.sourceResults.innerHTML = SourceView._loadingHtml();
           try {
             const items = await fetchService.searchSource(kw);
             if (!Array.isArray(items) || !items.length) {
-              el.sourceResults.innerHTML = '<p class="meta">결과가 없습니다. 다른 키워드를 시도해 보세요.</p>';
+              el.sourceResults.innerHTML =
+                '<p class="meta">결과가 없습니다. 다른 단어를 넣거나, 문구를 짧게 바꿔 보세요.</p>';
               return;
             }
             el.sourceResults.innerHTML = items
               .map((it) => {
                 const p = it.p != null ? Number(it.p) : 1;
-                const title = escMini(it.t != null ? String(it.t) : "");
+                const rawT = String(it.t != null ? it.t : "");
+                const st = qaSourceKindFromHit(it);
+                const srcTitle = qaFriendlySourceTitle(rawT, st);
+                const title = escMini(srcTitle);
                 const desc = escMini(it.d != null ? String(it.d) : "");
                 const pdfFile = escMini(SourceView.resolvePdfForHit(it.t));
-                return `<article class="source-hit page-card" role="button" tabindex="0" data-page="${p}" data-pdf="${pdfFile}">
-                  <div style="flex:1;min-width:0;">
-                    <span class="badge">${p}p</span>
-                    <strong style="margin-left:6px;">${title}</strong>
+                const mf = (it.media_file != null ? String(it.media_file) : "").trim();
+                const ts = typeof it.thumb_sec === "number" && !Number.isNaN(it.thumb_sec) ? it.thumb_sec : 35;
+                const s0 = typeof it.start_sec === "number" && !Number.isNaN(it.start_sec) ? it.start_sec : "";
+                const s1 = typeof it.end_sec === "number" && !Number.isNaN(it.end_sec) ? it.end_sec : "";
+                let thumbHtml = "";
+                if (st === "video" && mf) {
+                  const pu = fetchService.getVideoPosterUrl(mf, ts);
+                  thumbHtml =
+                    `<div class="page-card__thumb-wrap" aria-hidden="true"><img class="page-card__thumb" src="${escMini(
+                      pu,
+                    )}" alt="" loading="lazy" decoding="async" onerror="this.closest('.page-card__thumb-wrap').style.display='none'"/></div>`;
+                }
+                const timeHint =
+                  st === "video"
+                    ? escMini(qaVideoTimeSubtitle(it))
+                    : "";
+                const badgeRaw =
+                  it.badge != null && String(it.badge).trim() !== ""
+                    ? String(it.badge).trim()
+                    : st === "page"
+                      ? `${p}p`
+                      : st === "video"
+                        ? "영상 전체"
+                        : "이미지";
+                const badgeFriendly = qaEvidenceBadgeFriendly(st, badgeRaw);
+                const badgeEsc = escMini(badgeFriendly);
+                const extraMedia = st === "video" || st === "image" ? " page-card--media" : "";
+                const ctaLbl = escMini(qaSourceCtaLabel(st));
+                return `<article class="source-hit page-card${extraMedia}" role="button" tabindex="0" data-page="${p}" data-pdf="${pdfFile}" data-k="${st}" data-b="${encodeURIComponent(
+                  badgeRaw
+                )}" data-tt="${encodeURIComponent(String(it.t || ""))}" data-mf="${encodeURIComponent(
+                  mf,
+                )}" data-ts="${encodeURIComponent(String(ts))}" data-s0="${encodeURIComponent(
+                  String(s0),
+                )}" data-s1="${encodeURIComponent(String(s1))}">
+                  ${thumbHtml}
+                  <div class="${st === "video" || st === "image" ? "page-card__stack" : ""}" style="flex:1;min-width:0;">
+                    <span class="badge">${badgeEsc}</span>
+                    ${
+                      st === "video" || st === "image"
+                        ? `<strong class="page-card__title-line">${title}</strong>`
+                        : `<strong style="margin-left:6px;">${title}</strong>`
+                    }
+                    ${
+                      st === "video" && timeHint
+                        ? `<p class="meta page-card__hint-time" style="margin:6px 0 0;line-height:1.35;">${timeHint}</p>`
+                        : ""
+                    }
                     <p class="meta" style="margin:6px 0 0;line-height:1.45;">${desc}</p>
                   </div>
-                  <strong style="flex-shrink:0;">보기 →</strong>
+                  <strong class="page-card__cta" style="flex-shrink:0;">${ctaLbl} →</strong>
                 </article>`;
               })
               .join("");
             el.sourceResults.querySelectorAll(".source-hit").forEach((node) => {
+              const kind = node.getAttribute("data-k") || "page";
               const pg = parseInt(node.getAttribute("data-page"), 10) || 1;
               const pdfFile = node.getAttribute("data-pdf") || SourceView.pdfForHits();
-              const open = () => PageModal.open(pg, pdfFile);
+              const open = () => {
+                if (kind === "video" || kind === "image") {
+                  const badge = decodeURIComponent(node.getAttribute("data-b") || "");
+                  const tt = decodeURIComponent(node.getAttribute("data-tt") || "");
+                  const mf = decodeURIComponent(node.getAttribute("data-mf") || "").trim();
+                  const tsRaw = parseFloat(decodeURIComponent(node.getAttribute("data-ts") || "35"));
+                  const thumbSec = Number.isFinite(tsRaw) ? tsRaw : 35;
+                  const s0r = decodeURIComponent(node.getAttribute("data-s0") || "");
+                  const s1r = decodeURIComponent(node.getAttribute("data-s1") || "");
+                  const startSec = s0r !== "" && Number.isFinite(parseFloat(s0r)) ? parseFloat(s0r) : null;
+                  const endSec = s1r !== "" && Number.isFinite(parseFloat(s1r)) ? parseFloat(s1r) : null;
+                  PageModal.openMedia({
+                    titleLine: tt,
+                    badgeLabel: badge,
+                    kind,
+                    mediaFile: mf,
+                    thumbSec,
+                    startSec,
+                    endSec,
+                  });
+                } else {
+                  PageModal.open(pg, pdfFile);
+                }
+              };
               node.addEventListener("click", open);
               node.addEventListener("keydown", (e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -1454,7 +2994,7 @@
           } catch {
             el.sourceResults.innerHTML = '<p class="meta">검색 요청에 실패했습니다. 서버 연결을 확인해 주세요.</p>';
           } finally {
-            el.sourceSearchBtn.disabled = false;
+            SourceView._setSearchingUi(false);
           }
         }
       };
@@ -1517,6 +3057,64 @@
         });
       }
 
+      /** 학습 탭 줄 우측 뭉치: 「☕ 머리 식히기」만(퀴즈는 학습 탭 순서 속). DOM은 ``Tabs.render`` 가 매번 새로 채웁니다. */
+      const RelaxMenu = {
+        _wired: false,
+        relaxBtnEl() {
+          return document.getElementById("relaxBtn");
+        },
+        relaxMenuEl() {
+          return document.getElementById("relaxMenu");
+        },
+        close() {
+          const btn = RelaxMenu.relaxBtnEl();
+          const menu = RelaxMenu.relaxMenuEl();
+          if (!menu || !btn) return;
+          menu.classList.remove("open");
+          btn.setAttribute("aria-expanded", "false");
+          menu.setAttribute("aria-hidden", "true");
+        },
+        toggle() {
+          const btn = RelaxMenu.relaxBtnEl();
+          const menu = RelaxMenu.relaxMenuEl();
+          if (!menu || !btn) return;
+          const open = !menu.classList.contains("open");
+          menu.classList.toggle("open", open);
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          menu.setAttribute("aria-hidden", open ? "false" : "true");
+        },
+        fillMenuDom() {
+          const menu = RelaxMenu.relaxMenuEl();
+          if (!menu) return;
+          menu.innerHTML = (appConfig.breakMenuItems || [])
+            .map(
+              ([vid, label]) =>
+                `<button type="button" class="settings-item" role="menuitem" data-view="${vid}">${escMini(label)}</button>`
+            )
+            .join("");
+        },
+        bindGlobalsOnce() {
+          if (RelaxMenu._wired) return;
+          RelaxMenu._wired = true;
+          /** 주의: 캡처 단계에서 `#relaxWrap` 안에서 ``stopPropagation`` 하면 `#relaxBtn`까지 이벤트가 안 내려가 고정됩니다(메뉴가 안 열림). */
+          el.tabs.addEventListener("click", (e) => {
+            const trig = e.target.closest("#relaxBtn");
+            if (!trig) return;
+            e.stopPropagation();
+            SettingsMenu.close();
+            RelaxMenu.toggle();
+          });
+          el.tabs.addEventListener("click", (e) => {
+            const item = e.target.closest("#relaxMenu .settings-item");
+            if (!item) return;
+            e.stopPropagation();
+            Tabs.switchTo(item.getAttribute("data-view") || "qa");
+            RelaxMenu.close();
+          });
+          document.addEventListener("click", () => RelaxMenu.close());
+        },
+      };
+
       const SettingsMenu = {
         close() {
           if (!el.settingsMenu || !el.settingsBtn) return;
@@ -1525,6 +3123,7 @@
           el.settingsMenu.setAttribute("aria-hidden", "true");
         },
         toggle() {
+          RelaxMenu.close();
           const open = !el.settingsMenu.classList.contains("open");
           el.settingsMenu.classList.toggle("open", open);
           el.settingsBtn.setAttribute("aria-expanded", open ? "true" : "false");
@@ -1534,12 +3133,16 @@
           if (!el.settingsBtn || !el.settingsMenu || !el.settingsWrap) return;
           el.settingsBtn.addEventListener("click", (e) => {
             e.stopPropagation();
+            RelaxMenu.close();
             SettingsMenu.toggle();
           });
           document.addEventListener("click", () => SettingsMenu.close());
           el.settingsWrap.addEventListener("click", (e) => e.stopPropagation());
           document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") SettingsMenu.close();
+            if (e.key === "Escape") {
+              SettingsMenu.close();
+              RelaxMenu.close();
+            }
           });
           el.settingsMenu.innerHTML = appConfig.settingsMenuItems
             .map(([vid, label]) => `<button type="button" class="settings-item" role="menuitem" data-view="${vid}">${label}</button>`)
@@ -1555,10 +3158,32 @@
 
       const Tabs = {
         render() {
-          el.tabs.innerHTML = appConfig.mainTabs
-            .map(([id, txt]) => `<button type="button" class="tab ${store.view === id ? "active" : ""}" data-tab="${id}">${txt}</button>`)
+          const learnGrp = appConfig.mainTabGroups[0];
+          const learnTabsRaw = learnGrp && Array.isArray(learnGrp.tabs) ? learnGrp.tabs.slice() : [];
+
+          const learnButtons = learnTabsRaw
+            .map(([tid, txt]) => {
+              const id = tid != null ? String(tid) : "";
+              const label = txt != null ? String(txt) : id;
+              if (!id) return "";
+              return `<button type="button" class="tab ${store.view === id ? "active" : ""}" data-tab="${id}">${escMini(label)}</button>`;
+            })
+            .filter(Boolean)
             .join("");
-          el.tabs.querySelectorAll(".tab").forEach((b) => {
+
+          const relaxOn = relaxViewIds.has(store.view);
+          const relaxWrap =
+            `<div class="settings-wrap tabs-relax-wrap" id="relaxWrap">` +
+            `<button type="button" class="tab tab--relax ${relaxOn ? "active" : ""}" id="relaxBtn" aria-expanded="false" aria-haspopup="true" aria-controls="relaxMenu">☕ 머리 식히기 ▾</button>` +
+            `<div id="relaxMenu" class="settings-menu" role="menu" aria-hidden="true"></div>` +
+            `</div>`;
+
+          const trailing = `<div class="tabs-cluster tabs-cluster--trailing">${relaxWrap}</div>`;
+          el.tabs.innerHTML =
+            `<div class="tabs-cluster tabs-cluster--learn">${learnButtons}</div>` + trailing;
+          RelaxMenu.fillMenuDom();
+
+          el.tabs.querySelectorAll("button.tab[data-tab]").forEach((b) => {
             b.addEventListener("click", () => Tabs.switchTo(b.dataset.tab));
           });
           if (el.settingsBtn) el.settingsBtn.classList.toggle("active", settingsViewIds.has(store.view));
@@ -1566,6 +3191,7 @@
         switchTo(id) {
           VoiceSearch.stop();
           SettingsMenu.close();
+          RelaxMenu.close();
           store.view = id;
           Tabs.render();
           document.querySelectorAll(".view").forEach((v) => v.classList.toggle("active", v.dataset.view === id));
@@ -1578,29 +3204,15 @@
           if (id === "source") wireSourceChips();
           if (id === "compare") wireCompareChips();
           if (id === "wrong") renderWrongView();
-          if (id === "progress") ProgressView.render();
           if (id === "difficulty") renderDifficultyView();
         }
       };
 
-      const ProgressView = {
-        render() {
-          const done = store.progress.length, total = glossaryData.terms.length;
-          const pct = Math.round((done / total) * 100);
-          el.progressPct.textContent = `${pct}%`; el.progressBar.style.width = `${pct}%`;
-          el.progressTerms.innerHTML = glossaryData.terms.map(t => `<button class="term ${store.progress.includes(t) ? "done" : ""}" onclick="ProgressView.toggle('${t}')">${t}</button>`).join("");
-        },
-        toggle(t) {
-          const s = new Set(store.progress); s.has(t) ? s.delete(t) : s.add(t);
-          store.progress = [...s]; localStorage.setItem(appConfig.storage.progress, JSON.stringify(store.progress)); ProgressView.render();
-        }
-      };
-
       window.DocDrawer = DocDrawer;
-      window.ProgressView = ProgressView;
 
-      function init() {
+      async function init() {
         el.subtitle.textContent = `현재 난이도: ${store.level}`;
+        RelaxMenu.bindGlobalsOnce();
         SettingsMenu.bind();
         el.docBtn.addEventListener("click", () => DocDrawer.open());
         $("#modalCloseBtn").addEventListener("click", () => PageModal.close());
@@ -1629,12 +3241,28 @@
         if (el.voiceSourceBtn) el.voiceSourceBtn.addEventListener("click", () => VoiceSearch.toggleSource());
         updateVoiceMicUi();
 
+        if (el.quizStartBtn) el.quizStartBtn.addEventListener("click", () => QuizView.start());
+        if (el.quizResetBtn) el.quizResetBtn.addEventListener("click", () => QuizView.backToSetup());
+
+        if (el.compareRunBtn) el.compareRunBtn.addEventListener("click", () => CompareView.run());
+        if (el.termA) el.termA.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") CompareView.run();
+        });
+        if (el.termB) el.termB.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") CompareView.run();
+        });
+
+        StickerPackView.bind();
+        StickerPackView.onFilePick();
+        MbtiView.bind();
+
+        await DocDrawer.hydrateFromApi();
         DocDrawer.render();
         Tabs.switchTo("qa");
         QnA.appendBotMarkdown(homeIntroMarkdown());
       }
 
-      init();
+      init().catch((e) => console.error(e));
     })();
   </script>
 </body>

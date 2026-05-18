@@ -1,0 +1,13 @@
+.env
+.venv
+__pycache__
+*.py[cod]
+.DS_Store
+.git
+.cursor
+*.log
+
+# 로컬 대용량( Git 미추적 ) — 배포 이미지에는 PDF·vector.json 만 포함
+uploads/**/*.mp4
+uploads/**/*_backup*
+uploads/**/*.mov

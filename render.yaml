@@ -1,0 +1,19 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# GitHub 연결 후 "New > Blueprint" 또는 Web Service(Docker) 수동 생성 가능
+
+services:
+  - type: web
+    name: cloud-chatbot
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: LLM_API_KEY
+        sync: false
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: PYTHONUNBUFFERED
+        value: "1"

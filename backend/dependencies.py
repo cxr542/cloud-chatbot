@@ -14,17 +14,18 @@ class Services:
     rag: RagService
     quiz: QuizEngine
     glossary: GlossaryEngine
-    progress: dict[str, list[str]]
+    llm: LLMService
 
 
 store = FileVectorStore()
 # 기본 더미 데이터를 더 이상 사용하지 않으며, uploads 폴더의 실제 데이터만 사용합니다.
 
+_llm = LLMService()
 _services = Services(
-    rag=RagService(store, LLMService()),
-    quiz=QuizEngine(),
-    glossary=GlossaryEngine(),
-    progress={"completed_terms": []},
+    rag=RagService(store, _llm),
+    quiz=QuizEngine(store, _llm),
+    glossary=GlossaryEngine(store, _llm),
+    llm=_llm,
 )
 
 

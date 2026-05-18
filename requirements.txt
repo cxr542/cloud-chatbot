@@ -3,7 +3,8 @@ uvicorn[standard]>=0.32.0
 python-multipart
 pydantic-settings
 pydantic
-python-dotenv
 pymupdf
+Pillow>=10.0.0
 google-generativeai
+sentence-transformers>=3.0.0
 

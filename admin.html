@@ -2,16 +2,54 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>관리자 대시보드</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f4f7f6; }
+        /*
+         * 세로 스크롤: 일부 환경(내장 미리보기·OS 전체 스크롤바 숨김 등)에서는 body 직접 스크롤이
+         * 잘 안 보이거나 막힐 수 있어, 뷰포트 높이에 고정된 .admin-scroll 안에서만 스크롤합니다.
+         */
+        html {
+            box-sizing: border-box;
+            height: 100%;
+            overflow: hidden;
+        }
+        *, *::before, *::after { box-sizing: inherit; }
+        @supports (height: 100dvh) {
+            html { height: 100dvh; }
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #f4f7f6;
+        }
+        @supports (height: 100dvh) {
+            body { height: 100dvh; min-height: 100dvh; }
+        }
+        .admin-scroll {
+            height: 100%;
+            max-height: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 20px 20px 32px;
+            scrollbar-gutter: stable;
+        }
+        @supports (height: 100dvh) {
+            .admin-scroll { max-height: 100dvh; }
+        }
         .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         h1 { color: #333; }
         h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 30px; font-size: 1.2rem; }
         .box { border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 15px; }
         button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
         button:hover { background: #004494; }
-        input[type="text"], input[type="file"], textarea { width: 100%; padding: 12px; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
+        button:disabled { background: #94a3b8; cursor: not-allowed; opacity: 0.85; }
+        input[type="text"], input[type="password"], input[type="file"], textarea { width: 100%; padding: 12px; margin-top: 5px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
         textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
@@ -19,17 +57,200 @@
         .delete-btn { background: #ef4444; padding: 6px 12px; font-size: 0.8rem;}
         .delete-btn:hover { background: #dc2626; }
         .fallback { background: #fff1f2; }
+        #upload-status {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-top: 10px;
+            line-height: 1.45;
+            min-height: 1.35em;
+        }
+        #doc-refresh-status {
+            font-size: 0.85rem;
+            color: #334155;
+            margin: 10px 0 6px 0;
+            line-height: 1.45;
+            min-height: 1.35em;
+        }
+        #doc-refresh-status.is-error {
+            color: #b91c1c;
+        }
+        #doc-table.doc-table-highlight {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.45);
+            border-radius: 4px;
+            transition: box-shadow 0.2s ease;
+        }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .stats-card { padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
         .stats-card.blue { background: #eff6ff; border-color: #bfdbfe; }
         .stats-card.green { background: #f0fdf4; border-color: #bbf7d0; }
         .stats-card h4 { margin: 0 0 5px 0; font-size: 0.85rem; color: #64748b; }
         .stats-card .value { font-size: 1.5rem; font-weight: bold; color: #1e293b; }
+        /* 관리자 로그인 모달 (prompt 대신 — 브라우저·설정에 따라 prompt 가 안 뜨는 경우 대비) */
+        #admin-login-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: saturate(140%) blur(4px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        #admin-login-modal .card {
+            background: #fff;
+            padding: 0;
+            border-radius: 14px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            max-height: calc(100vh - 40px);
+            max-height: calc(100dvh - 40px);
+            display: flex;
+            flex-direction: column;
+        }
+        #admin-login-modal .card::before {
+            content: "";
+            display: block;
+            height: 4px;
+            background: linear-gradient(90deg, #004494, #2563eb 45%, #38bdf8);
+        }
+        #admin-login-modal .card-inner {
+            padding: 26px 28px 24px;
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+        #admin-login-modal .admin-login-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        #admin-login-modal .admin-login-head-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1px solid #bfdbfe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+        }
+        #admin-login-modal .admin-login-head h3 {
+            margin: 2px 0 4px 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+        #admin-login-modal .admin-login-head .sub {
+            margin: 0;
+            font-size: 0.78rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+        #admin-login-modal .hint {
+            font-size: 0.8125rem;
+            color: #64748b;
+            margin: 0 0 20px 0;
+            line-height: 1.55;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        #admin-login-modal .field {
+            margin-bottom: 16px;
+        }
+        #admin-login-modal .field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+        #admin-login-modal input[type="text"],
+        #admin-login-modal input[type="password"] {
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 12px 14px;
+            font-size: 0.9375rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #fff;
+            color: #0f172a;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        #admin-login-modal input::placeholder {
+            color: #94a3b8;
+        }
+        #admin-login-modal input:hover {
+            border-color: #94a3b8;
+        }
+        #admin-login-modal input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+        }
+        /* Chrome 자동완성 시 노란 배경·테두리 완화 */
+        #admin-login-modal input:-webkit-autofill,
+        #admin-login-modal input:-webkit-autofill:hover,
+        #admin-login-modal input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #0f172a;
+            box-shadow: 0 0 0 1000px #f1f5f9 inset;
+            border-color: #94a3b8;
+            transition: background-color 5000s ease-out;
+        }
+        #admin-login-modal .err {
+            color: #dc2626;
+            font-size: 0.8125rem;
+            min-height: 1.25em;
+            margin: 4px 0 0 0;
+        }
+        #admin-login-modal .row {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+            justify-content: flex-end;
+        }
+        #admin-login-modal .row button {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        #admin-login-modal .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+        }
+        #admin-login-modal .btn-secondary:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+        }
+        #admin-login-modal #admin-login-submit {
+            box-shadow: 0 2px 6px rgba(0, 86, 179, 0.25);
+        }
+        .admin-top-actions { position: absolute; top: 20px; right: 20px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; max-width: 280px; }
+        .admin-top-actions a, .admin-top-actions button { font-size: 0.8rem; color: #666; text-decoration: none; padding: 6px 12px; border: 1px solid #ddd; border-radius: 6px; background: #f9f9f9; cursor: pointer; font-family: inherit; }
+        .admin-top-actions button:hover { background: #eef2f7; }
     </style>
 </head>
 <body>
-    <div class="container" style="position: relative;">
-        <a href="http://localhost:9999/home" style="position: absolute; top: 20px; right: 20px; font-size: 0.8rem; color: #666; text-decoration: none; padding: 6px 12px; border: 1px solid #ddd; border-radius: 6px; background: #f9f9f9;">🏠 홈으로</a>
+    <div class="admin-scroll">
+        <div class="container" style="position: relative;">
+        <div class="admin-top-actions">
+            <a href="/home">🏠 홈으로</a>
+            <button type="button" id="admin-relogin-btn" title=".env 의 ADMIN_USERNAME / ADMIN_PASSWORD">🔑 로그인·계정 변경</button>
+        </div>
         <h1>🛠️ 클라우드 챗봇 관리자 대시보드</h1>
         <p>챗봇의 시스템 프롬프트, 지식 베이스 문서, 그리고 대화 로그를 관리합니다.</p>
 
@@ -56,11 +277,18 @@
             </div>
         </div>
         <div class="box">
-            <p style="margin-bottom:10px; font-size:0.9rem; color:#666;">PDF 또는 TXT 파일을 업로드하여 챗봇에게 새로운 지식을 가르칠 수 있습니다.</p>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <input type="file" id="file-input" accept=".txt,.pdf" style="margin:0;">
-                <button onclick="uploadFile()" style="white-space:nowrap;">파일 업로드</button>
+            <p style="margin-bottom:10px; font-size:0.9rem; color:#666; line-height:1.55;">
+                <strong>PDF와 TEXT(txt)</strong> — 페이지/본문에서 텍스트를 뽑아 청크로 저장합니다.<br>
+                <strong>이미지</strong>(png, jpg, jpeg, gif, webp) — <code>.env</code> LLM 키가 있으면 <strong>LLM 모델</strong>이 내용을 글로 바꿔 같은 방식으로 쌓습니다.<br>
+                <strong>동영상</strong>(mp4 등) — 먼저 파일만 받고 즉시 응답한 뒤, 서버가 <strong>LLM 모델</strong>로 요약을 이어 처리합니다. 아래 목록은 1~수 분 뒤 새로고침하면 채워집니다. 기본 최대 <strong>256MB</strong>(<code>.env</code>의 <code>MAX_VIDEO_UPLOAD_MB</code>, 최대 512, 키에 공백 없음).
+            </p>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <input type="file" id="file-input" accept=".txt,.pdf,.png,.jpg,.jpeg,.gif,.webp,.mp4,.webm,.mov,.mpeg,.mpg,.m4v" style="margin:0;">
+                <button type="button" id="upload-btn" onclick="void uploadFile();" style="white-space:nowrap;">파일 업로드</button>
+                <button type="button" id="doc-refresh-btn" onclick="void loadDocs();" style="white-space:nowrap;background:#475569;">목록 새로고침</button>
             </div>
+            <p id="upload-status" aria-live="polite" style="margin-top:8px;"></p>
+            <p id="doc-refresh-status" aria-live="polite"></p>
             
             <table id="doc-table">
                 <thead>
@@ -89,22 +317,212 @@
                 <tbody></tbody>
             </table>
         </div>
+        </div>
+    </div>
+
+    <div id="admin-login-modal" aria-modal="true" role="dialog" aria-labelledby="admin-login-title">
+        <div class="card">
+            <div class="card-inner">
+                <div class="admin-login-head">
+                    <div class="admin-login-head-icon" aria-hidden="true">🔐</div>
+                    <div>
+                        <h3 id="admin-login-title">관리자 로그인</h3>
+                        <p class="sub">`.env`에 설정한 계정으로 API에 접속합니다.</p>
+                    </div>
+                </div>
+                <p class="hint"><strong>ADMIN_USERNAME</strong>과 <strong>ADMIN_PASSWORD</strong>를 입력하세요. 브라우저 기본 창 대신 이 창에서만 입력합니다.</p>
+                <div class="field">
+                    <label for="admin-login-user">아이디</label>
+                    <input type="text" id="admin-login-user" name="username" autocomplete="username" placeholder="예: admin" />
+                </div>
+                <div class="field">
+                    <label for="admin-login-pass">비밀번호</label>
+                    <input type="password" id="admin-login-pass" name="password" autocomplete="current-password" placeholder="비밀번호" />
+                </div>
+                <div class="field" style="margin-top:6px;">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:500;">
+                        <input type="checkbox" id="admin-login-remember" />
+                        이 브라우저에 아이디·비밀번호 저장 (공용 PC에서는 끄세요)
+                    </label>
+                </div>
+                <p class="err" id="admin-login-err" role="alert"></p>
+                <div class="row">
+                    <button type="button" class="btn-secondary" id="admin-login-cancel">취소</button>
+                    <button type="button" id="admin-login-submit">로그인</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        const ADMIN_BASIC_KEY = "admin_basic_b64";
+        /** 로컬 브라우저 저장(교육·개발 편의). 공용 기기에서는 사용하지 마세요. */
+        const ADMIN_REMEMBER_YES = "admin_remember_credentials_v1";
+        const ADMIN_SAVED_USER_KEY = "admin_saved_username_v1";
+        const ADMIN_SAVED_PASS_KEY = "admin_saved_password_v1";
+
+        /**
+         * 저장해 둔 ID/PW로 sessionStorage 토큰을 채웁니다.
+         *
+         * @returns {boolean} 토큰을 채웠으면 true
+         */
+        function hydrateSessionFromRememberedCredentials() {
+            try {
+                if (localStorage.getItem(ADMIN_REMEMBER_YES) !== "1") return false;
+                const u = (localStorage.getItem(ADMIN_SAVED_USER_KEY) || "").trim();
+                const p = localStorage.getItem(ADMIN_SAVED_PASS_KEY) || "";
+                if (!u || !p) return false;
+                sessionStorage.setItem(ADMIN_BASIC_KEY, encodeBasicAuth(u, p));
+                return true;
+            } catch (_e) {
+                return false;
+            }
+        }
+
+        /**
+         * 「아이디·비밀번호 저장」 선택에 따라 localStorage 에 반영합니다.
+         *
+         * @param {string} user
+         * @param {string} pass
+         * @param {boolean} remember 저장 여부
+         */
+        function persistRememberedCredentials(user, pass, remember) {
+            try {
+                if (remember) {
+                    localStorage.setItem(ADMIN_REMEMBER_YES, "1");
+                    localStorage.setItem(ADMIN_SAVED_USER_KEY, user.trim());
+                    localStorage.setItem(ADMIN_SAVED_PASS_KEY, pass);
+                } else {
+                    localStorage.removeItem(ADMIN_REMEMBER_YES);
+                    localStorage.removeItem(ADMIN_SAVED_USER_KEY);
+                    localStorage.removeItem(ADMIN_SAVED_PASS_KEY);
+                }
+            } catch (_e) { /* 저장소 비허용 등 */ }
+        }
+
+        /** user:password 를 RFC 7617에 맞게 UTF-8 기반 Basic 토큰으로 만듭니다. */
+        function encodeBasicAuth(user, password) {
+            const raw = new TextEncoder().encode(user + ":" + password);
+            let bin = "";
+            for (let i = 0; i < raw.length; i++) bin += String.fromCharCode(raw[i]);
+            return btoa(bin);
+        }
+
+        let _loginInProgress = null;
+
+        /**
+         * 관리자 ID/PW를 화면 모달로 받습니다.
+         * window.prompt 는 브라우저·설정에 따라 뜨지 않을 수 있어 사용하지 않습니다.
+         * 여러 API가 동시에 401이면 같은 Promise를 공유합니다.
+         *
+         * @param clearSession true면 기존 sessionStorage 토큰을 지웁니다(401 처리 시).
+         */
+        function promptForAdminCredentials(clearSession = true) {
+            if (_loginInProgress) return _loginInProgress;
+            _loginInProgress = new Promise((resolve) => {
+                if (clearSession) sessionStorage.removeItem(ADMIN_BASIC_KEY);
+                const modal = document.getElementById("admin-login-modal");
+                const errEl = document.getElementById("admin-login-err");
+                const userEl = document.getElementById("admin-login-user");
+                const passEl = document.getElementById("admin-login-pass");
+                const rememberEl = document.getElementById("admin-login-remember");
+                const submitBtn = document.getElementById("admin-login-submit");
+                const cancelBtn = document.getElementById("admin-login-cancel");
+
+                errEl.textContent = "";
+                const hadSaved =
+                    localStorage.getItem(ADMIN_REMEMBER_YES) === "1" &&
+                    (localStorage.getItem(ADMIN_SAVED_USER_KEY) || "").trim();
+                rememberEl.checked = !!hadSaved;
+                userEl.value = hadSaved ? (localStorage.getItem(ADMIN_SAVED_USER_KEY) || "").trim() : "";
+                passEl.value = hadSaved ? localStorage.getItem(ADMIN_SAVED_PASS_KEY) || "" : "";
+                modal.style.display = "flex";
+                userEl.focus();
+
+                const finish = (token) => {
+                    modal.style.display = "none";
+                    submitBtn.removeEventListener("click", onSubmit);
+                    cancelBtn.removeEventListener("click", onCancel);
+                    passEl.removeEventListener("keydown", onPassKey);
+                    _loginInProgress = null;
+                    resolve(token);
+                };
+
+                const onSubmit = () => {
+                    const u = userEl.value.trim();
+                    const p = passEl.value;
+                    if (!u || !p) {
+                        errEl.textContent = "아이디와 비밀번호를 모두 입력하세요.";
+                        return;
+                    }
+                    const token = encodeBasicAuth(u, p);
+                    sessionStorage.setItem(ADMIN_BASIC_KEY, token);
+                    persistRememberedCredentials(u, p, rememberEl.checked);
+                    finish(token);
+                };
+
+                const onCancel = () => finish(null);
+
+                const onPassKey = (e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        onSubmit();
+                    }
+                };
+
+                submitBtn.addEventListener("click", onSubmit);
+                cancelBtn.addEventListener("click", onCancel);
+                passEl.addEventListener("keydown", onPassKey);
+            });
+            return _loginInProgress;
+        }
+
+        /**
+         * 관리 API 호출용 fetch. 저장된 자격 증명을 헤더에 넣고, 401이면 로그인 모달을 띄웁니다.
+         */
+        async function adminFetch(url, options = {}) {
+            const buildHeaders = () => {
+                const hdrs = new Headers(options.headers || {});
+                // multipart는 브라우저가 boundary 포함 Content-Type을 붙여야 함
+                if (options.body instanceof FormData) {
+                    hdrs.delete("Content-Type");
+                }
+                const saved = sessionStorage.getItem(ADMIN_BASIC_KEY);
+                if (saved) hdrs.set("Authorization", "Basic " + saved);
+                return hdrs;
+            };
+
+            let res = await fetch(url, { ...options, headers: buildHeaders(), credentials: "include" });
+
+            if (res.status !== 401) return res;
+
+            const token = await promptForAdminCredentials(true);
+            if (!token) return res;
+
+            res = await fetch(url, { ...options, headers: buildHeaders(), credentials: "include" });
+            if (res.status === 401) {
+                sessionStorage.removeItem(ADMIN_BASIC_KEY);
+                alert("아이디 또는 비밀번호가 올바르지 않습니다. .env 설정을 확인하세요.");
+            }
+            return res;
+        }
+
         // 서버와 같은 도메인/포트에서 서빙되므로 상대경로 사용
         async function loadPrompt() {
-            const res = await fetch("/api/admin/settings/prompt");
+            const res = await adminFetch("/api/admin/settings/prompt");
             if (res.ok) {
                 const data = await res.json();
                 document.getElementById('current-prompt').innerText = data.system_prompt;
                 document.getElementById('prompt-input').value = data.system_prompt;
+            } else {
+                document.getElementById('current-prompt').innerText =
+                    "불러오지 못했습니다. 위 안내에 따라 로그인했는지 확인하세요.";
             }
         }
 
         async function savePrompt() {
             const prompt = document.getElementById('prompt-input').value;
-            const res = await fetch("/api/admin/settings/prompt", {
+            const res = await adminFetch("/api/admin/settings/prompt", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({prompt})
@@ -112,51 +530,305 @@
             if (res.ok) {
                 alert("프롬프트가 변경되었습니다!");
                 loadPrompt();
+                return;
+            }
+            let msg = "프롬프트 저장에 실패했습니다. (" + res.status + ")";
+            try {
+                const err = await res.json();
+                if (err.detail !== undefined) {
+                    msg += "\n" + (typeof err.detail === "string" ? err.detail : JSON.stringify(err.detail));
+                }
+            } catch (e) { /* 본문 없음 */ }
+            alert(msg);
+        }
+
+        function docBaseFromChunkTitle(title) {
+            let t = String(title)
+                .replace(/\s*\(p\.\d+\)\s*$/i, "")
+                .replace(/\s*\(이미지\)\s*$/i, "")
+                .replace(/\s*\(동영상\)\s*$/i, "")
+                .trim();
+            return t || String(title);
+        }
+
+        /** 목록 표에 넣을 때 HTML 특수 문자를 무력화합니다(브라우저/HTML 파서 오류 예방). */
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        /** 지식 표에서 삭제 버튼 클릭 시 ``data-doc-title``(URI 인코딩)을 복원해 삭제합니다. */
+        function onDocTableDeleteClick(ev) {
+            const b = ev.target.closest("button.delete-doc-btn[data-doc-title]");
+            if (!b) return;
+            const enc = b.getAttribute("data-doc-title");
+            if (!enc) return;
+            let title = "";
+            try {
+                title = decodeURIComponent(enc);
+            } catch (err) {
+                alert("제목을 해석하지 못했습니다. 페이지를 새로 고침해 보세요.");
+                return;
+            }
+            void deleteDoc(title);
+        }
+
+        /** 지식 청크 표를 서버에서 다시 읽습니다. 새로 고침 시각·실패 안내를 ``#doc-refresh-status`` 에 띄웁니다. */
+        async function loadDocs() {
+            const statusEl = document.getElementById("doc-refresh-status");
+            const btn = document.getElementById("doc-refresh-btn");
+            const docTable = document.getElementById("doc-table");
+            const tbody = document.querySelector("#doc-table tbody");
+            const defaultBtnLabel = "목록 새로고침";
+
+            const stamp = () => {
+                const d = new Date();
+                const pad = (n) => String(n).padStart(2, "0");
+                return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+            };
+
+            if (statusEl) {
+                statusEl.classList.remove("is-error");
+                statusEl.textContent = "목록을 서버에서 불러오는 중…";
+            }
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = "불러오는 중…";
+            }
+
+            if (!tbody) {
+                if (statusEl) {
+                    statusEl.classList.add("is-error");
+                    statusEl.textContent = "표 본문(tbody)을 찾지 못했습니다. admin.html 에 #doc-table tbody 가 있는지 확인하세요.";
+                }
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = defaultBtnLabel;
+                }
+                return;
+            }
+
+            try {
+                const res = await adminFetch("/api/admin/docs/");
+                if (!res.ok) {
+                    if (statusEl) {
+                        statusEl.classList.add("is-error");
+                        statusEl.textContent =
+                            "목록을 가져오지 못했습니다. (" +
+                            res.status +
+                            ") 로그인·주소(http://…:9998/)를 확인하세요. [" +
+                            stamp() +
+                            "]";
+                    }
+                    return;
+                }
+                let data;
+                const rawTxt = await res.text();
+                try {
+                    data = JSON.parse(rawTxt);
+                } catch (parseErr) {
+                    const head = rawTxt.slice(0, 160).replace(/\s+/g, " ");
+                    throw new Error(
+                        "JSON 해석 실패: " +
+                            (parseErr && parseErr.message ? parseErr.message : String(parseErr)) +
+                            ". 응답 앞부분: " +
+                            head
+                    );
+                }
+                const rawChunks = Array.isArray(data.chunks) ? data.chunks : [];
+                tbody.innerHTML = "";
+
+                const chunks = rawChunks.map((c, i) => ({ ...c, _i: i }));
+                const lastIdxByBase = new Map();
+                chunks.forEach((c) => {
+                    const b = docBaseFromChunkTitle(c.title);
+                    lastIdxByBase.set(b, Math.max(lastIdxByBase.get(b) ?? -1, c._i));
+                });
+                chunks.sort((a, b) => {
+                    const ba = docBaseFromChunkTitle(a.title);
+                    const bb = docBaseFromChunkTitle(b.title);
+                    const ra = lastIdxByBase.get(ba) ?? 0;
+                    const rb = lastIdxByBase.get(bb) ?? 0;
+                    if (rb !== ra) return rb - ra;
+                    if (ba !== bb) return ba.localeCompare(bb, "ko");
+                    return (a.page || 0) - (b.page || 0);
+                });
+
+                const docDistinct = new Set(chunks.map((c) => docBaseFromChunkTitle(c.title))).size;
+                const docCountEl = document.getElementById("doc-count");
+                const chunkCountEl = document.getElementById("chunk-count");
+                if (docCountEl) docCountEl.innerText = docDistinct;
+                if (chunkCountEl) chunkCountEl.innerText = chunks.length;
+
+                if (chunks.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="3" style="color:#64748b;padding:14px;text-align:center;">등록된 지식 청크가 없습니다. PDF 등을 업로드하거나 잠시 뒤 동영상 요약이 끝났는지 다시 새로 고침해 보세요.</td></tr>';
+                } else {
+                    chunks.forEach((c) => {
+                        const titleHtml = escapeHtml(c.title || "");
+                        const excerpt = escapeHtml(String(c.content || "").substring(0, 100));
+                        const hint = c.issue_hint
+                            ? '<div style="color:#c2410c;font-size:12px;margin-top:6px;line-height:1.35;"><strong>주의</strong> · ' +
+                              escapeHtml(String(c.issue_hint)) +
+                              "</div>"
+                            : "";
+                        const encTitle = encodeURIComponent(String(c.title || ""));
+                        tbody.innerHTML += `<tr>
+                        <td>${titleHtml}</td>
+                        <td>${excerpt}${String(c.content || "").length >= 100 ? "…" : ""}${hint}</td>
+                        <td><button type="button" class="delete-btn delete-doc-btn" data-doc-title="${encTitle}">삭제</button></td>
+                    </tr>`;
+                    });
+                }
+
+                if (statusEl) {
+                    statusEl.textContent =
+                        "표를 갱신했습니다 · 문서(묶음) " +
+                        docDistinct +
+                        "개 · 청크 " +
+                        chunks.length +
+                        "개 · " +
+                        stamp();
+                }
+                if (docTable) {
+                    docTable.classList.add("doc-table-highlight");
+                    setTimeout(() => docTable.classList.remove("doc-table-highlight"), 550);
+                }
+            } catch (e) {
+                const m = e && e.message ? String(e.message) : String(e);
+                if (statusEl) {
+                    statusEl.classList.add("is-error");
+                    statusEl.textContent =
+                        "목록 요청 오류: " + m + " [" + stamp() + "]";
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = defaultBtnLabel;
+                }
             }
         }
 
-        async function loadDocs() {
-            const res = await fetch("/api/admin/docs/");
-            if (res.ok) {
-                const data = await res.json();
-                const tbody = document.querySelector('#doc-table tbody');
-                tbody.innerHTML = '';
-                
-                // 통계 업데이트
-                const uniqueDocs = new Set(data.chunks.map(c => c.title.split(' (p.')[0])).size;
-                document.getElementById('doc-count').innerText = uniqueDocs;
-                document.getElementById('chunk-count').innerText = data.chunks.length;
+        let _videoChunkPollTimer = null;
 
-                data.chunks.forEach(c => {
-                    tbody.innerHTML += `<tr>
-                        <td>${c.title}</td>
-                        <td>${c.content.substring(0, 100)}...</td>
-                        <td><button class="delete-btn" onclick="deleteDoc('${c.title}')">삭제</button></td>
-                    </tr>`;
-                });
+        function clearVideoChunkPoll() {
+            if (_videoChunkPollTimer) {
+                clearInterval(_videoChunkPollTimer);
+                _videoChunkPollTimer = null;
             }
+        }
+
+        /**
+         * 서버가 내려준 chunk_title 이 목록에 나타나면 알림을 띄웁니다.
+         * 브라우저를 닫기 전까지 5초마다 확인하며 최대 약 10분입니다.
+         */
+        function startVideoChunkPoll(chunkTitle) {
+            clearVideoChunkPoll();
+            if (!chunkTitle) return;
+            let tries = 0;
+            const maxTries = 120;
+            const intervalMs = 5000;
+            _videoChunkPollTimer = setInterval(async () => {
+                tries++;
+                try {
+                    const res = await adminFetch("/api/admin/docs/");
+                    if (res.ok) {
+                        const data = await res.json();
+                        const hit = (data.chunks || []).some((c) => c.title === chunkTitle);
+                        if (hit) {
+                            clearVideoChunkPoll();
+                            const st = document.getElementById("upload-status");
+                            if (st) st.textContent = "";
+                            alert("동영상 요약이 목록에 반영되었습니다.");
+                            await loadDocs();
+                            return;
+                        }
+                    }
+                } catch (_e) { /* 일시적인 네트워크 오류는 다음 턴에 재시도 */ }
+                if (tries >= maxTries) clearVideoChunkPoll();
+            }, intervalMs);
         }
 
         async function uploadFile() {
-            const file = document.getElementById('file-input').files[0];
-            if (!file) return alert("파일을 선택하세요.");
-            const formData = new FormData();
-            formData.append("file", file);
-            const res = await fetch("/api/admin/docs/upload", { method: "POST", body: formData });
-            if (res.ok) {
-                alert("업로드 완료!");
-                loadDocs();
+            clearVideoChunkPoll();
+            const file = document.getElementById("file-input").files[0];
+            if (!file) {
+                alert("파일을 선택하세요.");
+                return;
+            }
+            const btn = document.getElementById("upload-btn");
+            const statusEl = document.getElementById("upload-status");
+            const isVideo = /\.(mp4|webm|mov|mpeg|mpg|m4v)$/i.test(file.name || "");
+            const mb = (file.size / (1024 * 1024)).toFixed(1);
+
+            const setStatus = (t) => { if (statusEl) statusEl.textContent = t; };
+            setStatus(
+                isVideo
+                    ? `서버로 파일 전송 중… (${mb}MB) 저장이 끝나면 즉시 안내합니다. LLM 모델 요약은 그다음 서버에서 이어서 처리됩니다.`
+                    : `업로드 요청 중… (${mb}MB) 잠시만 기다려 주세요.`
+            );
+            if (btn) btn.disabled = true;
+
+            try {
+                const formData = new FormData();
+                formData.append("file", file);
+                const res = await adminFetch("/api/admin/docs/upload", { method: "POST", body: formData });
+
+                if (res.ok) {
+                    let payload = {};
+                    try {
+                        payload = await res.json();
+                    } catch (e) { /* 본문 없음 */ }
+
+                    if (payload.kind === "video" && payload.status === "accepted") {
+                        alert(
+                            payload.message ||
+                                "동영상은 서버에 저장되었습니다.\n요약이 끝나면 아래 표에 청크가 나타납니다.\n잠시 뒤 「목록 새로고침」을 눌러 보세요."
+                        );
+                        setStatus(
+                            "저장은 끝났습니다. 지금은 LLM 모델이 요약하는 중이에요(약 1~수 분). 위의 「목록 새로고침」으로 표를 갱신해 보세요."
+                        );
+                        if (payload.chunk_title) startVideoChunkPoll(payload.chunk_title);
+                    } else {
+                        alert("업로드 완료!");
+                        setStatus("");
+                    }
+                    loadDocs();
+                } else {
+                    let msg = "업로드에 실패했습니다. (" + res.status + ")";
+                    try {
+                        const err = await res.json();
+                        if (err.detail !== undefined) {
+                            msg += "\n" + (typeof err.detail === "string" ? err.detail : JSON.stringify(err.detail));
+                        }
+                    } catch (e) { /* 본문 없음 */ }
+                    alert(msg);
+                    setStatus("실패했습니다. 위 알림 내용을 확인하세요.");
+                }
+            } catch (e) {
+                const m = e && e.message ? String(e.message) : String(e);
+                alert(
+                    "네트워크 또는 브라우저 오류로 요청이 끝나지 않았을 수 있습니다.\n" +
+                        m +
+                        "\n\n동영상은 용량·시간제한으로 끊기기도 합니다. 터미널(관리자 서버) 로그와 주소가 /admin/ (관리자) 인지 확인해 주세요."
+                );
+                setStatus("오류: " + m);
+            } finally {
+                if (btn) btn.disabled = false;
             }
         }
 
         async function deleteDoc(title) {
-            if(!confirm(`'${title}' 문서를 삭제하시겠습니까?`)) return;
-            const res = await fetch(`/api/admin/docs/${title}`, { method: "DELETE" });
+            if (!confirm(`'${title}' 문서를 삭제하시겠습니까?`)) return;
+            const res = await adminFetch("/api/admin/docs/" + encodeURIComponent(title), { method: "DELETE" });
             if (res.ok) loadDocs();
         }
 
         async function loadLogs() {
-            const res = await fetch("/api/admin/stats/logs");
+            const res = await adminFetch("/api/admin/stats/logs");
             if (res.ok) {
                 const data = await res.json();
                 const tbody = document.querySelector('#log-table tbody');
@@ -174,10 +846,26 @@
             }
         }
 
-        window.onload = () => {
-            loadPrompt();
-            loadDocs();
-            loadLogs();
+        window.onload = async () => {
+            document.getElementById("admin-relogin-btn").addEventListener("click", async () => {
+                sessionStorage.removeItem(ADMIN_BASIC_KEY);
+                await promptForAdminCredentials(true);
+                await loadPrompt();
+                await loadDocs();
+                await loadLogs();
+            });
+
+            document.getElementById("doc-table")?.addEventListener("click", onDocTableDeleteClick);
+
+            // 브라우저에 저장한 계정이 있으면 세션만 채우고, 없을 때만 모달을 띄웁니다.
+            hydrateSessionFromRememberedCredentials();
+            if (!sessionStorage.getItem(ADMIN_BASIC_KEY)) {
+                await promptForAdminCredentials(true);
+            }
+
+            await loadPrompt();
+            await loadDocs();
+            await loadLogs();
         };
     </script>
 </body>

@@ -4,7 +4,8 @@ from fastapi import APIRouter
 
 from backend.db.database import log_chat
 from backend.dependencies import get_services
-from backend.models.schemas import AskQuestionRequest, AskQuestionResponse, ChatRequest, ChatResponse, PageRef
+from backend.models.schemas import AskQuestionRequest, AskQuestionResponse, ChatRequest, ChatResponse
+from backend.services.kb_refs import chunk_to_page_ref, stagger_duplicate_video_thumbs_page_refs
 
 router = APIRouter()
 
@@ -13,7 +14,9 @@ router = APIRouter()
 def ask_question(body: AskQuestionRequest) -> AskQuestionResponse:
     services = get_services()
     reply, chunks = services.rag.ask(body.text, body.difficulty)
-    pages = [PageRef(no=c.page, title=c.title) for c in chunks]
+    pages = stagger_duplicate_video_thumbs_page_refs(
+        [chunk_to_page_ref(c) for c in chunks],
+    )
     
     # SQLite에 로그 저장
     is_fallback = not chunks
