@@ -7,7 +7,7 @@ services:
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: starter
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: LLM_API_KEY
         sync: false
