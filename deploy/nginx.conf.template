@@ -20,7 +20,7 @@ http {
   }
 
   server {
-    listen ${PORT};
+    listen 0.0.0.0:${PORT};
     server_name _;
 
     location /api/admin/ {
