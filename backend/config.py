@@ -74,14 +74,41 @@ class Settings:
     )
 
     # unary generate_content 가 DeadlineExceeded(peers 504)일 때 같은 파일 요약을 몇 번 더 시도할지(중간 대기 포함).
+    # 기본 1: 영상 1회 업로드당 video/audio 토큰 과금을 줄이기 위함(과거 기본 4는 재시도마다 동일 영상 재전송).
     GEMINI_VIDEO_UNARY_ATTEMPTS: int = _int_env_range(
-        "GEMINI_VIDEO_UNARY_ATTEMPTS", default=4, lo=1, hi=10
+        "GEMINI_VIDEO_UNARY_ATTEMPTS", default=1, lo=1, hi=10
+    )
+
+    # unary 본문이 비었을 때 같은 ACTIVE 파일로 즉시 한 번 더 호출(0이면 생략).
+    GEMINI_VIDEO_EMPTY_BODY_RETRIES: int = _int_env_range(
+        "GEMINI_VIDEO_EMPTY_BODY_RETRIES", default=1, lo=0, hi=2
+    )
+
+    # unary(·빈 본문 재시도) 후에도 실패하면 스트리밍 폴백 1회를 시도할지(0/false 면 끔).
+    GEMINI_VIDEO_USE_STREAM_FALLBACK: bool = (os.getenv("GEMINI_VIDEO_USE_STREAM_FALLBACK", "1").strip().lower() not in (
+        "0",
+        "false",
+        "no",
+        "off",
+    ))
+
+    # 동영상 요약 출력 토큰 상한(기본 4096). 과거 8192+장문 프롬프트는 출력·입력 비용을 키웁니다.
+    GEMINI_VIDEO_MAX_OUTPUT_TOKENS: int = _int_env_range(
+        "GEMINI_VIDEO_MAX_OUTPUT_TOKENS", default=4096, lo=512, hi=8192
     )
 
     # DeadlineExceeded 발생 후 재시도 전 대기(초). 피크 시간대 일시 과부하를 피하기 위함입니다.
     GEMINI_VIDEO_RETRY_WAIT_SEC: int = _int_env_range(
-        "GEMINI_VIDEO_RETRY_WAIT_SEC", default=60, lo=15, hi=180
+        "GEMINI_VIDEO_RETRY_WAIT_SEC", default=20, lo=15, hi=180
     )
+
+    # 관리자가 같은 파일명 동영상을 다시 올릴 때, 이미 정상 요약 청크가 있으면 Gemini 호출 생략.
+    GEMINI_VIDEO_SKIP_IF_INDEXED: bool = (os.getenv("GEMINI_VIDEO_SKIP_IF_INDEXED", "1").strip().lower() not in (
+        "0",
+        "false",
+        "no",
+        "off",
+    ))
 
     # 관리자 업로드 동영상 크기 상한(MB). RAM에 전부 읽히므로 너무 크게 두지 마세요(최대 512).
     # 값은 ``max_video_upload_mb`` 프로퍼티로 읽어 ``MAX_VIDEO_UPLOAD_MB`` 를 매번 확인합니다.

@@ -13,6 +13,7 @@ from backend.services.local_embeddings import chunk_to_embed_text, embed_texts_s
 from backend.services.media_extract import (
     extract_text_from_image_bytes_for_kb,
     extract_text_from_video_path_for_kb,
+    is_video_kb_summarized_content,
     strip_kb_ref_time_footer,
     video_mime_type_for_suffix,
 )
@@ -51,6 +52,33 @@ def _configure_docs_logger() -> None:
 _configure_docs_logger()
 
 
+def _find_usable_video_kb_chunk(chunks: list[RetrievalChunk], chunk_title: str) -> RetrievalChunk | None:
+    """같은 제목의 동영상 청크 중 Gemini 요약이 이미 성공한 항목을 찾습니다.
+
+    Args:
+        chunks: ``vector.json`` 에서 읽은 전체 청크.
+        chunk_title: 예: ``강의.mp4 (동영상)``.
+
+    Returns:
+        재사용 가능한 청크 또는 None.
+    """
+    for c in chunks:
+        if c.title != chunk_title:
+            continue
+        if is_video_kb_summarized_content(c.content or ""):
+            return c
+    return None
+
+
+def _form_flag_true(form, key: str) -> bool:
+    """multipart 폼의 ``force`` 등 불리언 플래그를 해석합니다."""
+    raw = form.get(key)
+    if raw is None:
+        return False
+    val = raw if isinstance(raw, str) else getattr(raw, "filename", None) or str(raw)
+    return str(val).strip().lower() in ("1", "true", "yes", "on")
+
+
 def _index_video_kb_after_upload(save_path: Path, filename: str, mime_type: str | None) -> None:
     """저장된 동영상에 대해 **LLM(클라우드) 요약**·로컬 임베딩을 실행하고 청크를 ``vector.json`` 에 넣습니다.
 
@@ -69,7 +97,7 @@ def _index_video_kb_after_upload(save_path: Path, filename: str, mime_type: str 
         raw = extract_text_from_video_path_for_kb(save_path, filename, mime_type=mime_type) or ""
         body, band_parsed = strip_kb_ref_time_footer(raw)
         ref_band = (band_parsed or "").strip() or "영상 전체"
-        body = body[:8800]
+        body = body[:6000]
         c0 = RetrievalChunk(
             page=1,
             title=title,
@@ -78,7 +106,7 @@ def _index_video_kb_after_upload(save_path: Path, filename: str, mime_type: str 
             ref_time_band=ref_band,
         )
         vecs = embed_texts_safe(
-            [chunk_to_embed_text(c0.title, c0.content, max_content_chars=5500)],
+            [chunk_to_embed_text(c0.title, c0.content, max_content_chars=4500)],
         )
         v0 = vecs[0] if vecs else None
         merged = RetrievalChunk(
@@ -289,8 +317,27 @@ async def upload_doc(request: Request, background_tasks: BackgroundTasks):
         with open(save_path, "wb") as f:
             f.write(content)
         mime = video_mime_type_for_suffix(suffix)
-        background_tasks.add_task(_index_video_kb_after_upload, save_path, filename, mime)
         chunk_title = f"{filename} (동영상)"
+        force_reindex = _form_flag_true(form, "force")
+        skip_gemini = settings.GEMINI_VIDEO_SKIP_IF_INDEXED and not force_reindex
+        if skip_gemini:
+            existing = _find_usable_video_kb_chunk(store.load_chunks(), chunk_title)
+            if existing is not None:
+                logger.info(
+                    "동영상 Gemini 요약 생략(기존 청크 재사용): %s — 재요약은 force=1",
+                    filename,
+                )
+                return {
+                    "status": "skipped",
+                    "filename": filename,
+                    "kind": "video",
+                    "chunk_title": chunk_title,
+                    "message": (
+                        "파일은 저장되었고, 지식 베이스에 이미 요약된 동영상이 있어 Gemini 호출을 건너뛰었습니다. "
+                        "다시 요약하려면 업로드 시 force=1 을 함께 보내세요."
+                    ),
+                }
+        background_tasks.add_task(_index_video_kb_after_upload, save_path, filename, mime)
         logger.info("동영상 업로드 접수 — 저장 완료, 백그라운드 요약 시작: %s", filename)
         return {
             "status": "accepted",
